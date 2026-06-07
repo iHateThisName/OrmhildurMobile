@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: e475de688836d3948a3bc509704d1957
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - tap: {fileID: 3001919216989983466, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

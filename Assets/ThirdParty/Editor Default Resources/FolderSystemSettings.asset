@@ -74,3 +74,9 @@ MonoBehaviour:
       value: {fileID: 2800000, guid: 1186d0bd2455c0d40893d09c6282368c, type: 3}
     - key: Utilities
       value: {fileID: 2800000, guid: 31457f98e84a82a409141b55fe95f795, type: 3}
+    - key: _Scripts
+      value: {fileID: 2800000, guid: 8b8684f3c3817004688057f2aeb4c149, type: 3}
+    - key: Graphics
+      value: {fileID: 2800000, guid: cdf4cdeffc492cc4f84625d2fd701645, type: 3}
+    - key: ThirdParty
+      value: {fileID: 2800000, guid: 706b43f6183020a48a25f50bb849ef8e, type: 3}

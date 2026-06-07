@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 91786e8c0b756b941aa575b9d92890c9
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - <Grid>k__BackingField: {instanceID: 0}
+  - tilemap: {instanceID: 0}
+  - tilePrefab: {fileID: 3387041701688198452, guid: 0bcc6084535af324cafb3ac9d6ca3611, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
