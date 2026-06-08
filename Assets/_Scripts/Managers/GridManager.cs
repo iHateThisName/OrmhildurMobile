@@ -221,7 +221,7 @@ public class GridManager : Singleton<GridManager> {
     }
     private void CreateGridMargin() {
         // Expand the GridBounds by the size of the cell to make a margin around the grid.
-        //this.GridBounds.Expand(this.Grid.cellSize);
+        this.GridBounds.Expand(this.Grid.cellSize);
         //this.GridBounds.Expand(this.Grid.cellSize);
     }
 

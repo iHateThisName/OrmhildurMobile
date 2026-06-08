@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -7,17 +8,30 @@ public class PlayerGridInputHandler : Assets._Scripts.Utilities.Singleton.Single
     [SerializeField] private InputActionReference tap;
     [SerializeField] private float cooldownDuration = 0.25f;
 
+    [SerializeField] private InputActionReference hold;
+
     private InputAction tapAction;
+    private InputAction holdAction;
+
     private bool isOnCooldown = false;
 
     private Plane raycastHitPlane;
     private void OnEnable() {
         this.tapAction = tap.action;
+        this.holdAction = hold.action;
         this.tapAction.Enable();
+        this.holdAction.Enable();
+
+        this.holdAction.performed += ProcessPointerHold;
+        this.holdAction.canceled += ProcessPointerHold;
     }
 
     private void OnDisable() {
         this.tapAction.Disable();
+        this.holdAction.Disable();
+
+        this.holdAction.performed -= ProcessPointerHold;
+        this.holdAction.canceled -= ProcessPointerHold;
     }
 
     private void Update() {
@@ -85,10 +99,20 @@ public class PlayerGridInputHandler : Assets._Scripts.Utilities.Singleton.Single
         this.isOnCooldown = false;
     }
 
-    private static Plane CreateGridPlaneToRaycastHit() {
+    private Plane CreateGridPlaneToRaycastHit() {
         // Create a plane based on the Grid's position and forward direction
         Transform gridTransform = GridManager.Instance.Grid.transform;
         Plane gridPlane = new Plane(gridTransform.forward, gridTransform.position);
         return gridPlane;
+    }
+
+    private void ProcessPointerHold(InputAction.CallbackContext context) {
+        if (context.performed) {
+            // Handle hold start logic here
+            Debug.Log("Pointer hold started.");
+        } else if (context.canceled) {
+            // Handle hold end logic here
+            Debug.Log("Pointer hold ended.");
+        }
     }
 }
