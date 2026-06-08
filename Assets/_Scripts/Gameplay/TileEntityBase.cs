@@ -20,7 +20,7 @@ public class TileEntityBase : MonoBehaviour {
 
         // Additional initialization logic...
     }
-    public void OnTileClicked() {
+    public virtual void OnTileClicked() {
         // Called when the tile is clicked, can be overridden by derived classes to implement specific behavior.
         if (this.sequence.IsActive() && this.sequence?.IsPlaying() == true) {
             StopAnimations();

@@ -1,0 +1,102 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &32649215478519452
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2314641390756688983, guid: 0bcc6084535af324cafb3ac9d6ca3611, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -712631045867808456, guid: 8c7ad7205b4ab2d4fac0539a613f87bc, type: 3}
+    - target: {fileID: 2314641390756688983, guid: 0bcc6084535af324cafb3ac9d6ca3611, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2314641390756688983, guid: 0bcc6084535af324cafb3ac9d6ca3611, type: 3}
+      propertyPath: m_DrawMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3387041701688198452, guid: 0bcc6084535af324cafb3ac9d6ca3611, type: 3}
+      propertyPath: m_Name
+      value: HexTilePrefab
+      objectReference: {fileID: 0}
+    - target: {fileID: 3927637784467257857, guid: 0bcc6084535af324cafb3ac9d6ca3611, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6511825554259506863, guid: 0bcc6084535af324cafb3ac9d6ca3611, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6511825554259506863, guid: 0bcc6084535af324cafb3ac9d6ca3611, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6511825554259506863, guid: 0bcc6084535af324cafb3ac9d6ca3611, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6511825554259506863, guid: 0bcc6084535af324cafb3ac9d6ca3611, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6511825554259506863, guid: 0bcc6084535af324cafb3ac9d6ca3611, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6511825554259506863, guid: 0bcc6084535af324cafb3ac9d6ca3611, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6511825554259506863, guid: 0bcc6084535af324cafb3ac9d6ca3611, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6511825554259506863, guid: 0bcc6084535af324cafb3ac9d6ca3611, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6511825554259506863, guid: 0bcc6084535af324cafb3ac9d6ca3611, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6511825554259506863, guid: 0bcc6084535af324cafb3ac9d6ca3611, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 5953911915845302209, guid: 0bcc6084535af324cafb3ac9d6ca3611, type: 3}
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3387041701688198452, guid: 0bcc6084535af324cafb3ac9d6ca3611, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1065283591058845040}
+  m_SourcePrefab: {fileID: 100100000, guid: 0bcc6084535af324cafb3ac9d6ca3611, type: 3}
+--- !u!212 &2336449414530147019 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 2314641390756688983, guid: 0bcc6084535af324cafb3ac9d6ca3611, type: 3}
+  m_PrefabInstance: {fileID: 32649215478519452}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3419021784060892072 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3387041701688198452, guid: 0bcc6084535af324cafb3ac9d6ca3611, type: 3}
+  m_PrefabInstance: {fileID: 32649215478519452}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1065283591058845040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3419021784060892072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29741cd9f0828954ca62ee4148d4358b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HexTile
+  <VisualRenderer>k__BackingField: {fileID: 2336449414530147019}

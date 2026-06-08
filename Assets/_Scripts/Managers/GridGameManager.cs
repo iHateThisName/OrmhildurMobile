@@ -11,6 +11,8 @@ public class GridGameManager : Singleton<GridGameManager> {
         //EnumGridGameState.EnemyTurn
     };
 
+    [field:SerializeField] public EnumGridTool CurrentTool { get; private set; } = EnumGridTool.None;
+
     private void Start() {
         ChangeGameState(EnumGridGameState.GeneratingGrid);
     }
@@ -56,6 +58,17 @@ public class GridGameManager : Singleton<GridGameManager> {
         }
 
         OnGameStateChanged?.Invoke(newState);
+    }
+
+    public int GetToolDamagePoint(EnumGridTool tool) {
+        switch (tool) {
+            case EnumGridTool.IcePick:
+                return 1;
+            case EnumGridTool.Hammer:
+                return 3;
+            default:
+                return 0;
+        }
     }
 }
 public enum EnumGridGameState {

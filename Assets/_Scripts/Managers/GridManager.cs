@@ -1,16 +1,15 @@
 using Assets._Scripts.Utilities.Singleton;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-[RequireComponent(typeof(Grid))]
 public class GridManager : Singleton<GridManager> {
 
     [SerializeField] private Vector2Int size;
     [field: SerializeField] public Grid Grid { get; private set; }
-
-    [SerializeField] private Tilemap tilemap;
+    [field: SerializeField] public Tilemap Tilemap { get; private set; }
     [SerializeField] private List<Tile> randomTiles;
 
     public Dictionary<Vector2Int, TileEntityBase> TileDictionary { get; private set; } = new Dictionary<Vector2Int, TileEntityBase>();
@@ -20,12 +19,14 @@ public class GridManager : Singleton<GridManager> {
     private Bounds GridBounds;
 
     private bool isAllowingTileInteractions = false;
-    private bool isGridLandScapeMode = false;
+    private bool isGridLandScapeMode = true;
     private bool isScreenLandscape => Screen.width > Screen.height;
 
     protected override void Awake() {
         base.Awake();
-        if (Grid == null) Grid = GetComponent<Grid>();
+        if (this.Grid == null) Debug.LogError($"{GetType().Name}: Grid reference is not set in the inspector.");
+        if (this.Tilemap == null) Debug.LogError($"{GetType().Name}: Tilemap reference is not set in the inspector.");
+
         this.cam = Camera.main;
     }
 
@@ -46,8 +47,16 @@ public class GridManager : Singleton<GridManager> {
     }
 
     public void Initialize() {
-        CheckStartUpOrientation();
-        CheckGridRotation();
+        //CheckStartUpOrientation();
+        //CheckGridRotation();
+
+        // if grid is hex layout then switch the size values
+        if (this.Grid.cellLayout == GridLayout.CellLayout.Hexagon) {
+            int temp = this.size.x;
+            this.size.x = this.size.y;
+            this.size.y = temp;
+        }
+
         GenerateGrid();
         SetCamera();
         GridGameManager.Instance.ChangeGameState(EnumGridGameState.PlayerTurn);
@@ -76,16 +85,32 @@ public class GridManager : Singleton<GridManager> {
     }
 
     private void OnDrawGizmos() {
-        if (Grid == null) Grid = GetComponent<Grid>();
+        if (Grid == null) return;
+        if (Application.isPlaying) return;
 
         Gizmos.color = Color.green;
 
-        for (int x = 0; x < size.x; x++) {
-            for (int y = 0; y < size.y; y++) {
+        int drawWidth = this.size.x;
+        int drawHeight = this.size.y;
+
+        if (this.Grid.cellLayout == GridLayout.CellLayout.Hexagon) {
+            drawWidth = this.size.y;
+            drawHeight = this.size.x;
+        }
+
+        for (int x = 0; x < drawWidth; x++) {
+            for (int y = 0; y < drawHeight; y++) {
+
                 Vector3Int cell = new Vector3Int(x, y, 0);
                 Vector3 center = Grid.GetCellCenterWorld(cell);
                 Vector3 cellSize = Grid.cellSize;
-                Gizmos.DrawWireCube(center, cellSize);
+
+                if (this.Grid.cellLayout == GridLayout.CellLayout.Rectangle) {
+                    Gizmos.DrawWireCube(center, cellSize);
+
+                } else if (this.Grid.cellLayout == GridLayout.CellLayout.Hexagon) {
+                    Gizmos.DrawWireSphere(center, cellSize.x / 2);
+                }
             }
         }
     }
@@ -114,18 +139,19 @@ public class GridManager : Singleton<GridManager> {
 
     private void SetCamera() {
 
-        bool isOrthographic = cam.orthographic;
+        bool isOrthographic = this.cam.orthographic;
 
         var vertical = this.GridBounds.size.y;
-        var horizontal = this.GridBounds.size.x * (float)cam.pixelHeight / (float)cam.pixelWidth;
+        var horizontal = this.GridBounds.size.x * (float)this.cam.pixelHeight / (float)this.cam.pixelWidth;
         Vector3 distanceback = Vector3.back * this.size.magnitude;
-        this.cam.transform.position = this.GridBounds.center + distanceback;
 
         if (isOrthographic) {
             this.cam.orthographicSize = Mathf.Max(horizontal, vertical) * 0.5f;
+            this.cam.transform.position = this.GridBounds.center + distanceback;
         } else {
-            // Not the best way to do this esier with a orthographic camera.
-            this.cam.transform.LookAt(this.GridBounds.center);
+            this.cam.transform.position = this.GridBounds.center + new Vector3(0, 0, this.cam.transform.position.z);
+            //this.cam.transform.position = new Vector3((float)this.size.x / 2 - 0.5f, (float)this.size.y / 2 - 0.5f, this.cam.transform.position.z);
+
         }
     }
 
@@ -150,7 +176,7 @@ public class GridManager : Singleton<GridManager> {
                     GridBounds.Encapsulate(this.Grid.GetCellCenterWorld(cellPosition));
                     continue;
 
-                } else if (!this.tilemap.HasTile(cellPosition) && !this.TileDictionary.ContainsKey(new Vector2Int(x, y))) {
+                } else if (!this.Tilemap.HasTile(cellPosition) && !this.TileDictionary.ContainsKey(new Vector2Int(x, y))) {
                     // Check if the current selected tile is empty, if it is, select a random tile from the list of tile
 
                     // Select a random tile
@@ -161,7 +187,7 @@ public class GridManager : Singleton<GridManager> {
                     node.Initialize(prefab: randomTile.TilePrefab, color: randomTile.TileColor);
 
                     // Set the tile at the current cell position
-                    this.tilemap.SetTile(cellPosition, node);
+                    this.Tilemap.SetTile(cellPosition, node);
 
                     // Encapsulate the cell position in the GridBounds
                     GridBounds.Encapsulate(this.Grid.GetCellCenterWorld(cellPosition));
@@ -195,13 +221,13 @@ public class GridManager : Singleton<GridManager> {
     }
     private void CreateGridMargin() {
         // Expand the GridBounds by the size of the cell to make a margin around the grid.
-        this.GridBounds.Expand(this.Grid.cellSize);
-        this.GridBounds.Expand(this.Grid.cellSize);
+        //this.GridBounds.Expand(this.Grid.cellSize);
+        //this.GridBounds.Expand(this.Grid.cellSize);
     }
 
     private void RegisterExistingTiles() {
         // Find all pre-existing Tiles
-        foreach (Transform child in this.tilemap.transform) {
+        foreach (Transform child in this.Tilemap.transform) {
             Vector3Int item = this.Grid.WorldToCell(child.position);
             child.name = child.name + $" ({item.x}, {item.y})";
 
@@ -248,6 +274,7 @@ public class GridManager : Singleton<GridManager> {
         TileDictionary[new Vector2Int(position.x, position.y)] = entity;
     }
 
+
     internal void SimulateGrid(bool isPlayerTurn) {
         StringBuilder builder = new StringBuilder();
 
@@ -263,6 +290,56 @@ public class GridManager : Singleton<GridManager> {
         } else {
             Debug.Log($"{GetType().Name}: SimulatingEnemyEnd Grid... \n {builder} \n");
             GridGameManager.Instance.ChangeGameState(EnumGridGameState.PlayerTurn);
+        }
+    }
+
+    public List<TileEntityBase> GetNeighbors(Vector2Int position) {
+        HashSet<TileEntityBase> neighbors = new HashSet<TileEntityBase>();
+        Vector2Int[] offsets = GetOffset(position);
+
+        foreach (Vector2Int offset in offsets) {
+            Vector2Int currentPosition = position + offset;
+            if (TileDictionary.TryGetValue(currentPosition, out TileEntityBase neighbor)) {
+                neighbors.Add(neighbor);
+            }
+        }
+        return neighbors.ToList<TileEntityBase>();
+    }
+    private Vector2Int[] GetOffset(Vector2Int position) { // Make static and Move this in a utility class if we need to use it outside of the GridManager.
+        bool isEvenRow = (position.y % 2) == 0;
+        bool isHex = GridManager.Instance.Grid.cellLayout == GridLayout.CellLayout.Hexagon;
+
+        Vector2Int[] squareOffsets = {
+            Vector2Int.up,      // Up
+            Vector2Int.down,    // Down
+            Vector2Int.left,    // Left
+            Vector2Int.right    // Right
+        };
+        Vector2Int[] hexEvenOffsets = {
+            new(0, 1),   // Up
+            new(0, -1),  // Down
+            new(-1, 0),  // Left
+            new(1, 0),   // Right
+            new(-1, 1),  // Upper Left
+            new(-1, -1)  // Lower Left
+        };
+        Vector2Int[] hexOddOffsets = {
+            new(0, 1),   // Up
+            new(0, -1),  // Down
+            new(-1, 0),  // Left
+            new(1, 0),   // Right
+            new(1, 1),   // Upper Right
+            new(1, -1)   // Lower Right
+        };
+
+        if (!isHex) {
+            return squareOffsets;
+
+        } else if (isEvenRow) {
+            return hexEvenOffsets;
+
+        } else {
+            return hexOddOffsets;
         }
     }
 }
