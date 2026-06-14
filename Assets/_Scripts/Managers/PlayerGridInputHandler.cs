@@ -14,6 +14,7 @@ public class PlayerGridInputHandler : Assets._Scripts.Utilities.Singleton.Single
     private InputAction holdAction;
 
     private bool isOnCooldown = false;
+    private bool isOnHold = false;
 
     private Plane raycastHitPlane;
     private void OnEnable() {
@@ -108,10 +109,12 @@ public class PlayerGridInputHandler : Assets._Scripts.Utilities.Singleton.Single
 
     private void ProcessPointerHold(InputAction.CallbackContext context) {
         if (context.performed) {
-            // Handle hold start logic here
+            this.isOnHold = true;
             Debug.Log("Pointer hold started.");
-        } else if (context.canceled) {
-            // Handle hold end logic here
+
+        } else if (context.canceled && this.isOnHold) {
+
+            this.isOnHold = false;
             Debug.Log("Pointer hold ended.");
         }
     }

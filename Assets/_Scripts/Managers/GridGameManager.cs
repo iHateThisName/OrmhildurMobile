@@ -1,4 +1,5 @@
 using Assets._Scripts.Utilities.Singleton;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,11 +12,29 @@ public class GridGameManager : Singleton<GridGameManager> {
         //EnumGridGameState.EnemyTurn
     };
 
-    [field:SerializeField] public EnumGridTool CurrentTool { get; private set; } = EnumGridTool.None;
+    [SerializeField] private EnumGridTool _currentTool;
+    private EnumGridTool _previousTool;
+    public EnumGridTool CurrentTool { get => _currentTool; set { ValidateToolChange(value); } }
+
+    public static event System.Action<EnumGridTool> OnToolChanged;
 
     private void Start() {
         ChangeGameState(EnumGridGameState.GeneratingGrid);
+        CurrentTool = EnumGridTool.Hand;
     }
+    private void OnValidate() {
+        if (this._currentTool != this._previousTool) {
+            this.CurrentTool = this._currentTool;
+        }
+    }
+
+    private void ValidateToolChange(EnumGridTool value) {
+        if (_currentTool == value) return;
+        this._currentTool = value;
+        this._previousTool = value;
+        OnToolChanged?.Invoke(this._currentTool);
+    }
+
     public async void ChangeGameState(EnumGridGameState newState) {
         await Awaitable.NextFrameAsync();
         if (newState != EnumGridGameState.SimulatingPlayerEnd) await Awaitable.WaitForSecondsAsync(3f); // TODO; for testing purposes.
