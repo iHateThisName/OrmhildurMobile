@@ -13,6 +13,11 @@ public class UIGridGame : MonoBehaviour {
     [SerializeField] private TMP_Text currentToolText;
     [SerializeField] private Button restartButton;
 
+    public void OnMainMenuButton()
+    {
+        GameSceneManager.Instance.LoadScene(EnumScene.MainMenuScene);
+    }
+
     public void OnEnable() {
         //GridGameManager.OnGameStateChanged += HandleGameStateChanged;
         GridGameManager.OnToolChanged += HandleToolChanged;

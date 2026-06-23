@@ -43,6 +43,10 @@ MonoBehaviour:
     m_Key: UI.Button.Bestiary
     m_Metadata:
       m_Items: []
+  - m_Id: 5713326088437760
+    m_Key: UI.Button.MainMenu
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

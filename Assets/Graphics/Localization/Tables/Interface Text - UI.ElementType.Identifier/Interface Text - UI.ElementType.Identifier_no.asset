@@ -38,6 +38,10 @@ MonoBehaviour:
     m_Localized: Monsterpedia
     m_Metadata:
       m_Items: []
+  - m_Id: 5713326088437760
+    m_Localized: Hovedmeny
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

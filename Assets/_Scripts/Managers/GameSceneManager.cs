@@ -56,7 +56,7 @@ public class GameSceneManager : PersistentSingleton<GameSceneManager> {
         return this.transistionManager;
     }
 }
-
+[Serializable]
 public enum EnumScene {
     MainMenuScene,
     LoadingScene,

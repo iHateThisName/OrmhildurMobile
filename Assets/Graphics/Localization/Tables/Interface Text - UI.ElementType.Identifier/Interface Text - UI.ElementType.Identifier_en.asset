@@ -46,6 +46,10 @@ MonoBehaviour:
     m_Localized: Bestiary
     m_Metadata:
       m_Items: []
+  - m_Id: 5713326088437760
+    m_Localized: MainMenu
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
