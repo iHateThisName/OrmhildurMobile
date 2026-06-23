@@ -38,9 +38,16 @@ public class GameSceneManager : PersistentSingleton<GameSceneManager> {
         await transistionController.FadeIn();
 
         // Unload all scenes that are not the target scene
-        for (int i = 0; i < SceneManager.sceneCount; i++) {
+        for (int i = 0; i < SceneManager.sceneCount; i++)
+        {
             Scene sceneToUnload = SceneManager.GetSceneAt(i);
-            if (sceneToUnload.name != scene.ToString()) {
+
+            // THE FIX: Protect the minigames from being purged!
+            bool isTargetScene = sceneToUnload.name == scene.ToString();
+            bool isMinigame = sceneToUnload.name.Contains("Minigame");
+
+            if (!isTargetScene && !isMinigame)
+            {
                 await SceneManager.UnloadSceneAsync(sceneToUnload);
             }
         }
@@ -55,14 +62,42 @@ public class GameSceneManager : PersistentSingleton<GameSceneManager> {
         }
         return this.transistionManager;
     }
+
+    //Minigame test
+    public async Awaitable PreloadSceneAdditiveAsync(EnumScene scene)
+    {
+        AsyncOperation loadOperation = SceneManager.LoadSceneAsync(scene.ToString(), LoadSceneMode.Additive);
+
+        // Wait until Unity finishes reading the scene into memory
+        while (!loadOperation.isDone)
+        {
+            await Awaitable.NextFrameAsync();
+        }
+
+        Debug.Log($"Silently preloaded {scene} into memory.");
+    }
+
+    // Instantly flushes the minigame out of RAM when finished
+    public async Awaitable UnloadSceneAdditiveAsync(EnumScene scene)
+    {
+        AsyncOperation unloadOperation = SceneManager.UnloadSceneAsync(scene.ToString());
+
+        while (!unloadOperation.isDone)
+        {
+            await Awaitable.NextFrameAsync();
+        }
+    }
 }
+
+
+
 [Serializable]
 public enum EnumScene {
     MainMenuScene,
     LoadingScene,
     BestiaryBookScene,
-    GameScene,
+    MainGame,
 
-    // PlaceHolder
-    EinarsCopyScene,
+    //Minigames
+    TapToWinMinigame,
 }

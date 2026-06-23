@@ -17,7 +17,7 @@ public class UIMainMenu : MonoBehaviour {
     }
 
     private void OnPlayButtonClicked() {
-        GameSceneManager.Instance.LoadScene(EnumScene.EinarsCopyScene);
+        GameSceneManager.Instance.LoadScene(EnumScene.MainGame);
     }
     private void OnBestiaryButtonClicked() {
         GameSceneManager.Instance.LoadScene(EnumScene.BestiaryBookScene);

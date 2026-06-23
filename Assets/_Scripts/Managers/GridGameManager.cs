@@ -99,4 +99,5 @@ public enum EnumGridGameState {
     SimulatingEnemyEnd,
     Win,
     GameOver,
+    MinigameActive,
 }
