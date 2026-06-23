@@ -2428,7 +2428,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f55be826de8a53745addade82dc3b844, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MinigameManager
-  MinigameScenes: 04000000
+  MinigameScenes: 0400000005000000
 --- !u!4 &1569318936
 Transform:
   m_ObjectHideFlags: 0
