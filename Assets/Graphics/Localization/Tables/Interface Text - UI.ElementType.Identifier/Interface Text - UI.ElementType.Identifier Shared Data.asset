@@ -19,6 +19,10 @@ MonoBehaviour:
     m_Key: UI.Button.StartGame
     m_Metadata:
       m_Items: []
+  - m_Id: 5658907982372864
+    m_Key: UI.Button.Play
+    m_Metadata:
+      m_Items: []
   - m_Id: 105459392512
     m_Key: UI.Button.Quit
     m_Metadata:
@@ -33,6 +37,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 105467781120
     m_Key: UI.Button.Credits
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5661477031321600
+    m_Key: UI.Button.Bestiary
     m_Metadata:
       m_Items: []
   m_Metadata:

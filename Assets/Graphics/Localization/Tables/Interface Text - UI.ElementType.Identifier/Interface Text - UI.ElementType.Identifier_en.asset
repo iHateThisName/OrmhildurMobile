@@ -38,6 +38,14 @@ MonoBehaviour:
     m_Localized: Credits
     m_Metadata:
       m_Items: []
+  - m_Id: 5658907982372864
+    m_Localized: Play
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5661477031321600
+    m_Localized: Bestiary
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

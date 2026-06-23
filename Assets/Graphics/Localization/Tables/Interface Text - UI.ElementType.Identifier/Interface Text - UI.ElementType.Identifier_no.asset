@@ -26,6 +26,18 @@ MonoBehaviour:
     m_Localized: Innstillinger
     m_Metadata:
       m_Items: []
+  - m_Id: 105392283648
+    m_Localized: Start Spill
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5658907982372864
+    m_Localized: Start
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5661477031321600
+    m_Localized: Monsterpedia
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

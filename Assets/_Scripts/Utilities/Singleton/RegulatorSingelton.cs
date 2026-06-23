@@ -35,7 +35,7 @@ namespace Assets._Scripts.Utilities.Singleton {
             InitializationTime = Time.time;
             DontDestroyOnLoad(gameObject);
 
-            T[] oldInstances = FindObjectsByType<T>(FindObjectsSortMode.None);
+            T[] oldInstances = FindObjectsByType<T>();
 
             foreach (T old in oldInstances) {
                 if (old.GetComponent<RegulatorSingelton<T>>().InitializationTime < InitializationTime) {
