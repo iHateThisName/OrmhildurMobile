@@ -62,4 +62,7 @@ public enum EnumScene {
     LoadingScene,
     BestiaryBookScene,
     GameScene,
+
+    // PlaceHolder
+    EinarsCopyScene,
 }
