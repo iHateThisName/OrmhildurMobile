@@ -222,6 +222,7 @@ public class ProtoManager : MonoBehaviour
         activeMinigameCube = Instantiate(trapMinigamePrefab, spawnPos, Quaternion.identity);
     }
 
+    //MINIGAME
     private void ProcessMinigameClick()
     {
         minigameClicksRequired--;
