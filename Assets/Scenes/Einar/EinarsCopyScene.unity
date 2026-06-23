@@ -694,6 +694,8 @@ MonoBehaviour:
     TileColor: {r: 0.8018868, g: 0.8018868, b: 0.8018868, a: 1}
   - TilePrefab: {fileID: 7846000070693780782, guid: bb27ac3af91b4d44388564301ba7cdea, type: 3}
     TileColor: {r: 0.8000001, g: 0.8000001, b: 0.8000001, a: 1}
+  - TilePrefab: {fileID: 5996270381264232650, guid: 801f83a4e404dbb4498bce4142717d51, type: 3}
+    TileColor: {r: 0.8000001, g: 0.8000001, b: 0.8000001, a: 1}
 --- !u!4 &268919108
 Transform:
   m_ObjectHideFlags: 0
@@ -1280,6 +1282,61 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 535837599}
   m_CullTransparentMesh: 1
+--- !u!1 &588406829
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 588406831}
+  - component: {fileID: 588406830}
+  m_Layer: 0
+  m_Name: LevelSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &588406830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 588406829}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ee10559d6ec14b469410387604136db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LevelSpawner
+  TotalCreaturesToSpawn: 3
+  MinigameCount: 4
+  CreaturePool:
+  - Shape: {fileID: 11400000, guid: 75b53e8397015f647bcf88feb6d515ec, type: 2}
+    Weight: 30
+  - Shape: {fileID: 11400000, guid: 12974f932c4c0fd49a3c93d41c2b0ec4, type: 2}
+    Weight: 60
+  - Shape: {fileID: 11400000, guid: 065d158391a7fac499848c4215e9e303, type: 2}
+    Weight: 10
+  MinigamePrefab: {fileID: 2384036911072492645, guid: 801f83a4e404dbb4498bce4142717d51, type: 3}
+  EmptyPrefab: {fileID: 3419021784060892072, guid: 45a6bf92075afbc469fb80990af75cb0, type: 3}
+--- !u!4 &588406831
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 588406829}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 4.47978, y: 3.73767, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &733900290
 GameObject:
   m_ObjectHideFlags: 0
@@ -2030,6 +2087,50 @@ Transform:
   - {fileID: 164907568}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1570577518
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1570577520}
+  - component: {fileID: 1570577519}
+  m_Layer: 0
+  m_Name: CreatureTracker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1570577519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1570577518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 803d80dccae928c4987165ae7e825d0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CreatureTracker
+--- !u!4 &1570577520
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1570577518}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.62928, y: 3.2462, z: -9.30736}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1672584012
 GameObject:
   m_ObjectHideFlags: 0
@@ -2212,3 +2313,5 @@ SceneRoots:
   - {fileID: 1321883117}
   - {fileID: 1088466841}
   - {fileID: 1177585777}
+  - {fileID: 588406831}
+  - {fileID: 1570577520}

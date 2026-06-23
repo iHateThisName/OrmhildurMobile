@@ -155,52 +155,65 @@ public class GridManager : Singleton<GridManager> {
         }
     }
 
-    private void GenerateGrid() {
-        // Clear the tile dictionary before generating the grid.
+    private void GenerateGrid()
+    {
         this.TileDictionary.Clear();
-
-        // Get the center of the grid in world space.
         Vector3 center = this.Grid.GetCellCenterWorld(new Vector3Int((size.x - 1) / 2, (size.y - 1) / 2, 0));
-
-        // StartUp the GridBounds with the center of the grid and a size of zero, we will expand it as we add tiles to it.
         this.GridBounds = new Bounds(center, Vector3.zero);
 
-        RegisterExistingTiles();
+        // Call the new generation logic
+        FindAnyObjectByType<LevelSpawner>().GenerateLevel(this.size);
 
-        for (int x = 0; x < size.x; x++) {
-            for (int y = 0; y < size.y; y++) {
-                Vector3Int cellPosition = new Vector3Int(x, y, 0);
-
-                if (TileDictionary.ContainsKey(new Vector2Int(x, y))) {
-                    // If the tile is already registered, then we can just skip.
-                    GridBounds.Encapsulate(this.Grid.GetCellCenterWorld(cellPosition));
-                    continue;
-
-                } else if (!this.Tilemap.HasTile(cellPosition) && !this.TileDictionary.ContainsKey(new Vector2Int(x, y))) {
-                    // Check if the current selected tile is empty, if it is, select a random tile from the list of tile
-
-                    // Select a random tile
-                    Tile randomTile = randomTiles[Random.Range(0, randomTiles.Count)];
-
-                    // Create a new GridTileAsset
-                    GridTileAsset node = ScriptableObject.CreateInstance<GridTileAsset>();
-                    node.Initialize(prefab: randomTile.TilePrefab, color: randomTile.TileColor);
-
-                    // Set the tile at the current cell position
-                    this.Tilemap.SetTile(cellPosition, node);
-
-                    // Encapsulate the cell position in the GridBounds
-                    GridBounds.Encapsulate(this.Grid.GetCellCenterWorld(cellPosition));
-                } else {
-                    // Somthing is wrong, the tile is not empty but also not registered in the TileDictionary, this should not happen, log a warning.
-                    Debug.LogWarning($"Tile at position {cellPosition} is not registered in the TileDictionary.");
-                }
-
-            }
-        }
-
-        CreateGridMargin();
+        // Recalculate bounds based on the newly placed tiles
+        CalculateBounds();
     }
+
+    //private void GenerateGrid() {
+    //    // Clear the tile dictionary before generating the grid.
+    //    this.TileDictionary.Clear();
+
+    //    // Get the center of the grid in world space.
+    //    Vector3 center = this.Grid.GetCellCenterWorld(new Vector3Int((size.x - 1) / 2, (size.y - 1) / 2, 0));
+
+    //    // StartUp the GridBounds with the center of the grid and a size of zero, we will expand it as we add tiles to it.
+    //    this.GridBounds = new Bounds(center, Vector3.zero);
+
+    //    RegisterExistingTiles();
+
+    //    for (int x = 0; x < size.x; x++) {
+    //        for (int y = 0; y < size.y; y++) {
+    //            Vector3Int cellPosition = new Vector3Int(x, y, 0);
+
+    //            if (TileDictionary.ContainsKey(new Vector2Int(x, y))) {
+    //                // If the tile is already registered, then we can just skip.
+    //                GridBounds.Encapsulate(this.Grid.GetCellCenterWorld(cellPosition));
+    //                continue;
+
+    //            } else if (!this.Tilemap.HasTile(cellPosition) && !this.TileDictionary.ContainsKey(new Vector2Int(x, y))) {
+    //                // Check if the current selected tile is empty, if it is, select a random tile from the list of tile
+
+    //                // Select a random tile
+    //                Tile randomTile = randomTiles[Random.Range(0, randomTiles.Count)];
+
+    //                // Create a new GridTileAsset
+    //                GridTileAsset node = ScriptableObject.CreateInstance<GridTileAsset>();
+    //                node.Initialize(prefab: randomTile.TilePrefab, color: randomTile.TileColor);
+
+    //                // Set the tile at the current cell position
+    //                this.Tilemap.SetTile(cellPosition, node);
+
+    //                // Encapsulate the cell position in the GridBounds
+    //                GridBounds.Encapsulate(this.Grid.GetCellCenterWorld(cellPosition));
+    //            } else {
+    //                // Somthing is wrong, the tile is not empty but also not registered in the TileDictionary, this should not happen, log a warning.
+    //                Debug.LogWarning($"Tile at position {cellPosition} is not registered in the TileDictionary.");
+    //            }
+
+    //        }
+    //    }
+
+    //    CreateGridMargin();
+    //}
 
 
     private void CalculateBounds() {
