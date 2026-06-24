@@ -47,7 +47,7 @@ public class HexTile : TileEntityBase, IScannable
         Debug.Log($"<color=yellow>[HexTile]</color> Success! Sprite changed.");
     }
 
-    public override void OnTileClicked() {
+    public override void OnTileClicked(EnumGridTool? tool) {
 
         if (digClip != null && audioSource != null)
         {
@@ -56,7 +56,7 @@ public class HexTile : TileEntityBase, IScannable
 
         if (!this.IsInteractable) return;
 
-        switch (GridGameManager.Instance.CurrentTool) {
+        switch (tool.HasValue ? tool.Value : GridGameManager.Instance.CurrentTool) {
             case EnumGridTool.None:
                 Debug.Log($"HexTile at {CurrentGridPosition} was clicked with no tool.");
                 break;

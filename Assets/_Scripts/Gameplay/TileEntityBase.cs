@@ -20,7 +20,7 @@ public class TileEntityBase : MonoBehaviour {
 
         // Additional initialization logic...
     }
-    public virtual void OnTileClicked() {
+    public virtual void OnTileClicked(EnumGridTool? tool) {
         // Called when the tile is clicked, can be overridden by derived classes to implement specific behavior.
         if (this.sequence.IsActive() && this.sequence?.IsPlaying() == true) {
             StopAnimations();

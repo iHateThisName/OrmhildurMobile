@@ -22,11 +22,11 @@ public class MiniGameTile : TileEntityBase, IScannable
         }
     }
 
-    public override void OnTileClicked()
+    public override void OnTileClicked(EnumGridTool? tool)
     {
         if (hasBeenTriggered) return;
 
-        if (GridGameManager.Instance.CurrentTool == EnumGridTool.MagnifyingGlass)
+        if ((tool.HasValue && tool.Value == EnumGridTool.MagnifyingGlass) || (!tool.HasValue && GridGameManager.Instance.CurrentTool == EnumGridTool.MagnifyingGlass))
         {
             if (InventoryManager.Instance.TryConsumeToolCharge(EnumGridTool.MagnifyingGlass))
             {
@@ -39,7 +39,7 @@ public class MiniGameTile : TileEntityBase, IScannable
 
         hasBeenTriggered = true;
 
-        base.OnTileClicked();
+        base.OnTileClicked(tool);
         this.VisualRenderer.sprite = defaultSprite;
         VisualRenderer.color = Color.red;
 

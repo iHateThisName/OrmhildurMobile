@@ -155,8 +155,7 @@ public class GridManager : Singleton<GridManager> {
         }
     }
 
-    private void GenerateGrid()
-    {
+    private void GenerateGrid() {
         this.TileDictionary.Clear();
         Vector3 center = this.Grid.GetCellCenterWorld(new Vector3Int((size.x - 1) / 2, (size.y - 1) / 2, 0));
         this.GridBounds = new Bounds(center, Vector3.zero);
@@ -253,23 +252,26 @@ public class GridManager : Singleton<GridManager> {
         }
     }
 
-    public void InteractWithTile(Vector3Int cellPosition) {
+    public void InteractWithTile(Vector3Int cellPosition, EnumGridTool? tool) {
+        Vector2Int cellPositionVector2Int = new(cellPosition.x, cellPosition.y);
+
         // Only allow interactions during certain game states, this is to prevent interactions during cutscenes or other non-interactive moments.
         if (!this.isAllowingTileInteractions) return;
 
-        if (TileDictionary.TryGetValue(new Vector2Int(cellPosition.x, cellPosition.y), out TileEntityBase entity)) {
-            if (this.TileSelectedQueue.Contains((new Vector2Int(cellPosition.x, cellPosition.y), entity))) {
-                // remove from select queue if already selected, this allows the player to deselect a tile by clicking on it again.
-                RemoveFromSelectedQueue(entity);
-                entity.OnTileClicked(); // handles toggle click
-            } else {
-                this.TileSelectedQueue.Enqueue((new Vector2Int(cellPosition.x, cellPosition.y), entity));
-                entity.OnTileClicked();
-            }
+        // Only interact with tiles that are within the bounds of the grid, this prevents interactions with tiles that are outside of the grid.
+        if (!TileDictionary.TryGetValue(cellPositionVector2Int, out TileEntityBase entity)) return;
+
+
+        if (this.TileSelectedQueue.Contains((cellPositionVector2Int, entity))) {
+            // remove from select queue if already selected, this allows the player to deselect a tile by clicking on it again.
+            RemoveFromSelectedQueue(entity);
+            entity.OnTileClicked(tool); // handles toggle click
         } else {
-            //Debug.Log("Tapped out of GridBounds or empty tile!");
+            this.TileSelectedQueue.Enqueue((cellPositionVector2Int, entity));
+            entity.OnTileClicked(tool);
         }
     }
+
 
     private void RemoveFromSelectedQueue(TileEntityBase entityToRemove) {
         // Rebuild the queue without the removed entity to preserve exact click order

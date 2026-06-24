@@ -16,7 +16,7 @@ public class PlayerGridInputHandler : Assets._Scripts.Utilities.Singleton.Single
     private bool isOnCooldown = false;
     private bool isOnHold = false;
 
-    private Plane raycastHitPlane;
+    public static Plane RaycastHitPlane;
     private void OnEnable() {
         this.tapAction = tap.action;
         this.holdAction = hold.action;
@@ -42,7 +42,7 @@ public class PlayerGridInputHandler : Assets._Scripts.Utilities.Singleton.Single
     }
 
     private void Start() {
-        this.raycastHitPlane = CreateGridPlaneToRaycastHit();
+        RaycastHitPlane = CreateGridPlaneToRaycastHit();
     }
 
     /// <summary>
@@ -75,7 +75,7 @@ public class PlayerGridInputHandler : Assets._Scripts.Utilities.Singleton.Single
         } else {
             Ray ray = mainCamera.ScreenPointToRay(screenPosition);
 
-            if (this.raycastHitPlane.Raycast(ray, out float distance)) {
+            if (RaycastHitPlane.Raycast(ray, out float distance)) {
                 worldPosition = ray.GetPoint(distance);
             } else {
                 this.isOnCooldown = false;
@@ -108,6 +108,7 @@ public class PlayerGridInputHandler : Assets._Scripts.Utilities.Singleton.Single
     }
 
     private void ProcessPointerHold(InputAction.CallbackContext context) {
+        return;
         if (context.performed) {
             this.isOnHold = true;
             Debug.Log("Pointer hold started.");
@@ -118,4 +119,30 @@ public class PlayerGridInputHandler : Assets._Scripts.Utilities.Singleton.Single
             Debug.Log("Pointer hold ended.");
         }
     }
+
+    public static Vector3 ScreenToWorldPosition(Vector2 screenPosition, out bool success) {
+        // Convert to World, then to Grid 
+        Camera mainCamera = Camera.main;
+        success = false;
+        Vector3 worldPosition = Vector3.zero;
+
+        if (mainCamera.orthographic) {
+            worldPosition = mainCamera.ScreenToWorldPoint(screenPosition);
+            worldPosition.z = 0;
+
+            success = true;
+        } else {
+            Ray ray = mainCamera.ScreenPointToRay(screenPosition);
+
+            if (RaycastHitPlane.Raycast(ray, out float distance)) {
+                worldPosition = ray.GetPoint(distance);
+                success = true;
+            } else {
+                success = false;
+            }
+        }
+        return worldPosition;
+    }
+
+
 }
