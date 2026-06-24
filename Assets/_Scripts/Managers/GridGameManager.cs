@@ -85,6 +85,8 @@ public class GridGameManager : Singleton<GridGameManager> {
                 return 1;
             case EnumGridTool.Hammer:
                 return 3;
+            case EnumGridTool.MagnifyingGlass:
+                return 0;
             default:
                 return 0;
         }

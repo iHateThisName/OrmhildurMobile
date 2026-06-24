@@ -29,6 +29,31 @@ public class TileEntityBase : MonoBehaviour {
         }
     }
 
+    public void PerformRadarScan()
+    {
+        Debug.Log($"<color=cyan>[Radar]</color> Triggered on {this.gameObject.name} at {this.CurrentGridPosition}");
+
+        if (this is IScannable selfScannable)
+        {
+            selfScannable.ApplyScannedVisual();
+        }
+        else
+        {
+            Debug.LogWarning($"<color=cyan>[Radar]</color> {this.gameObject.name} does NOT implement IScannable!");
+        }
+
+        var neighbors = GridManager.Instance.GetNeighbors(this.CurrentGridPosition);
+        Debug.Log($"<color=cyan>[Radar]</color> Found {System.Linq.Enumerable.Count(neighbors)} neighbors to scan.");
+
+        foreach (TileEntityBase neighbor in neighbors)
+        {
+            if (neighbor is IScannable scannableNeighbor)
+            {
+                scannableNeighbor.ApplyScannedVisual();
+            }
+        }
+    }
+
     public void StopAnimations() {
         this.sequence?.Kill();
         this.VisualRenderer.transform.localScale = Vector3.one;

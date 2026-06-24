@@ -2,17 +2,56 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class HexTile : TileEntityBase {
+public class HexTile : TileEntityBase, IScannable
+{
     private int healthPoints = 5;
     public bool IsInteractable { get; private set; } = true;
+
+    [Header("Audio (SFX)")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip digClip;
+
+    [Header("Magnifying Glass Visuals")]
+    [SerializeField] private Sprite emptyScannedSprite;
 
     public override void Initialize(Vector2Int gridPosition, Color? visualColor = null) {
         base.Initialize(gridPosition);
         // Additional initialization logic specific to HexTile can be added here.
     }
 
+    public void ApplyScannedVisual()
+    {
+        Debug.Log($"<color=yellow>[HexTile]</color> Attempting to apply visual to {this.CurrentGridPosition}...");
+
+        if (!this.IsInteractable || this.healthPoints <= 0)
+        {
+            Debug.Log($"<color=yellow>[HexTile]</color> Tile is not interactable or is destroyed. Aborting.");
+            return;
+        }
+
+        if (emptyScannedSprite == null)
+        {
+            Debug.LogError($"<color=red>[CRITICAL]</color> Empty Scanned Sprite is MISSING in the Inspector on {this.gameObject.name}!");
+            return;
+        }
+
+        if (this.VisualRenderer == null)
+        {
+            Debug.LogError($"<color=red>[CRITICAL]</color> VisualRenderer is null on {this.gameObject.name}!");
+            return;
+        }
+
+        this.VisualRenderer.sprite = emptyScannedSprite;
+        this.VisualRenderer.color = Color.white;
+        Debug.Log($"<color=yellow>[HexTile]</color> Success! Sprite changed.");
+    }
+
     public override void OnTileClicked() {
-        // Additional click behavior specific to HexTile can be added here.
+
+        if (digClip != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(digClip);
+        }
 
         if (!this.IsInteractable) return;
 
@@ -28,6 +67,10 @@ public class HexTile : TileEntityBase {
             case EnumGridTool.Hammer:
                 DealTileDamage(GridGameManager.Instance.GetToolDamagePoint(EnumGridTool.Hammer));
                 DealSplashDamage((int)GridGameManager.Instance.GetToolDamagePoint(EnumGridTool.Hammer) / 2);
+                break;
+
+            case EnumGridTool.MagnifyingGlass:
+                PerformRadarScan();
                 break;
 
             default:

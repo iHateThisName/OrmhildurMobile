@@ -2,24 +2,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
-using UnityEngine.Tilemaps;
+using Assets._Scripts.Utilities.Singleton;
 
-public class LevelSpawner : MonoBehaviour
+public class LevelSpawner : Singleton<LevelSpawner>
 {
     [Header("Level Settings")]
-    public int TotalCreaturesToSpawn = 5; // How many creatures to pull from the pool
+    public int TotalCreaturesToSpawn = 5;
     public int MinigameCount = 4;
 
     [Header("Spawns")]
-    public List<WeightedCreature> CreaturePool; // The loot table!
+    public List<WeightedCreature> CreaturePool;
     public GameObject MinigamePrefab;
     public GameObject EmptyPrefab;
 
+    // To track restricted spawn zones for the buffer
     private HashSet<Vector2Int> RestrictedZones = new HashSet<Vector2Int>();
 
     public void GenerateLevel(Vector2Int gridSize)
     {
         CreatureTracker.Instance.ClearTracker();
+
         List<Vector2Int> AvailablePool = new List<Vector2Int>();
         for (int x = 0; x < gridSize.x; x++)
         {
@@ -65,7 +67,6 @@ public class LevelSpawner : MonoBehaviour
 
         for (int i = 0; i < TotalCreaturesToSpawn; i++)
         {
-            // Pass the total weight into our updated picker
             WeightedCreature PickedData = PickRandomCreature(TotalWeight);
             CreatureShape ShapeTemplate = PickedData.Shape;
 
@@ -135,18 +136,17 @@ public class LevelSpawner : MonoBehaviour
             }
         }
 
-        // 3. Print the final tally to the console
+        // Print the creature spawns and weights to console
         PrintSpawnSummary(SpawnTally, TotalWeight);
     }
 
-    //Logic for buffer around spawned creatures
+    // Buffer around spawned creatures
     private Vector2Int[] GetHexOffsets(Vector2Int position)
     {
         bool IsEvenRow = (position.y % 2) == 0;
 
         if (IsEvenRow)
         {
-            // From an Even row, the row above is shifted LEFT in coordinate space
             return new Vector2Int[] {
                 new(0, 1),   // Top-Right
                 new(-1, 1),  // Top-Left
@@ -158,7 +158,6 @@ public class LevelSpawner : MonoBehaviour
         }
         else
         {
-            // From an Odd row, the row above is shifted RIGHT in coordinate space
             return new Vector2Int[] {
                 new(1, 1),   // Top-Right
                 new(0, 1),   // Top-Left
@@ -228,10 +227,6 @@ public class LevelSpawner : MonoBehaviour
             Node.Initialize(prefab: entityPrefab, color: Color.white);
 
             GridManager.Instance.Tilemap.SetTile(CellPosition, Node);
-
-            // Register it in GridManager's dictionary so InteractWithTile() works
-            // Note: In your current setup, registration happens in RegisterExistingTiles() 
-            // after placement, or you can register it directly here if GridManager allows it.
         }
         else
         {

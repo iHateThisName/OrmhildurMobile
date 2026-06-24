@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class MiniGameTile : TileEntityBase
+public class MiniGameTile : TileEntityBase, IScannable
 {
     private bool hasBeenTriggered = false;
 
@@ -8,10 +8,32 @@ public class MiniGameTile : TileEntityBase
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip miniGameClip;
 
+    [Header("Magnifying Glass Visuals")]
+    [SerializeField] private Sprite questionMarkSprite;
+
+    public void ApplyScannedVisual()
+    {
+        if (hasBeenTriggered) return;
+
+        if (questionMarkSprite != null && this.VisualRenderer != null)
+        {
+            this.VisualRenderer.sprite = questionMarkSprite;
+            this.VisualRenderer.color = Color.white;
+        }
+    }
+
     public override void OnTileClicked()
     {
-        // 1. Prevent the player from clicking this tile multiple times
         if (hasBeenTriggered) return;
+
+        if (GridGameManager.Instance.CurrentTool == EnumGridTool.MagnifyingGlass)
+        {
+            PerformRadarScan();
+            return;
+        }
+
+
+
         hasBeenTriggered = true;
 
         base.OnTileClicked();

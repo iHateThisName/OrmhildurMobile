@@ -1,11 +1,14 @@
 using UnityEngine;
 
-public class CreatureTile : TileEntityBase
+public class CreatureTile : TileEntityBase, IScannable
 {
     [Header("Audio (SFX)")]
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip digCreaturePartClip;
     [SerializeField] private AudioClip creatureCompleteClip;
+
+    [Header("Magnifying Glass Visuals")]
+    [SerializeField] private Sprite questionMarkSprite;
 
     private bool hasBeenDug = false; 
 
@@ -15,9 +18,27 @@ public class CreatureTile : TileEntityBase
         hasBeenDug = false;
     }
 
+    public void ApplyScannedVisual()
+    {
+        if (hasBeenDug) return;
+
+        if (questionMarkSprite != null && this.VisualRenderer != null)
+        {
+            this.VisualRenderer.sprite = questionMarkSprite;
+            this.VisualRenderer.color = Color.white;
+        }
+    }
+
     public override void OnTileClicked()
     {
-        if (hasBeenDug) return; // Don't do anything if already dug
+        if (hasBeenDug) return;
+
+        if (GridGameManager.Instance.CurrentTool == EnumGridTool.MagnifyingGlass)
+        {
+            PerformRadarScan();
+            return;
+        }
+
         hasBeenDug = true;
 
         base.OnTileClicked();

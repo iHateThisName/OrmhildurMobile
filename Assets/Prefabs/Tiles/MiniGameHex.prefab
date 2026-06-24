@@ -86,11 +86,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MiniGameTile
   <VisualRenderer>k__BackingField: {fileID: 3317955144173063430}
-  isMinigameActive: 0
-  minigameClicksRequired: 10
-  trapMinigamePrefab: {fileID: 4611194315315608722, guid: 20bda3a732ac19c45aa9bddb7606b83b, type: 3}
   audioSource: {fileID: 5165997604215686269}
   miniGameClip: {fileID: 8300000, guid: 39a72e975b377204d8e935277eba6496, type: 3}
+  questionMarkSprite: {fileID: 21300000, guid: fb70930b9d3c7b44cb49715585278384, type: 3}
 --- !u!82 &5165997604215686269
 AudioSource:
   m_ObjectHideFlags: 0

@@ -44,6 +44,7 @@ public class UIGridGame : MonoBehaviour {
     public void OnHandButton() => OnChangeTool(EnumGridTool.Hand);
     public void OnIcePickButton() => OnChangeTool(EnumGridTool.IcePick);
     public void OnHammerButton() => OnChangeTool(EnumGridTool.Hammer);
+    public void OnMagnifyingGlassButton() => OnChangeTool(EnumGridTool.MagnifyingGlass);
     private void OnChangeTool(EnumGridTool tool) => GridGameManager.Instance.CurrentTool = tool;
 
     //private void HandleGameStateChanged(EnumGridGameState state) {
