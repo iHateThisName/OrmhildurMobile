@@ -37,7 +37,7 @@ public class GridGameManager : Singleton<GridGameManager> {
 
     public async void ChangeGameState(EnumGridGameState newState) {
         await Awaitable.NextFrameAsync();
-        if (newState != EnumGridGameState.SimulatingPlayerEnd) await Awaitable.WaitForSecondsAsync(3f); // TODO; for testing purposes.
+        //if (newState != EnumGridGameState.SimulatingPlayerEnd) await Awaitable.WaitForSecondsAsync(3f); // TODO; for testing purposes.
 
         this.CurrentState = newState;
 

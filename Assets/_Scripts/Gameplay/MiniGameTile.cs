@@ -28,7 +28,10 @@ public class MiniGameTile : TileEntityBase, IScannable
 
         if (GridGameManager.Instance.CurrentTool == EnumGridTool.MagnifyingGlass)
         {
-            PerformRadarScan();
+            if (InventoryManager.Instance.TryConsumeToolCharge(EnumGridTool.MagnifyingGlass))
+            {
+                PerformRadarScan();
+            }
             return;
         }
 

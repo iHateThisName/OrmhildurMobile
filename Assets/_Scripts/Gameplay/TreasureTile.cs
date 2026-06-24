@@ -1,17 +1,16 @@
 using UnityEngine;
 
-public class CreatureTile : TileEntityBase, IScannable
+public class TreasureTile : TileEntityBase, IScannable
 {
     [Header("Audio (SFX)")]
     [SerializeField] private AudioSource audioSource;
-    [SerializeField] private AudioClip digCreaturePartClip;
-    [SerializeField] private AudioClip creatureCompleteClip;
+    [SerializeField] private AudioClip treasureClip;
 
     [Header("Magnifying Glass Visuals")]
     [SerializeField] private Sprite questionMarkSprite;
     [SerializeField] private Sprite defaultSprite;
 
-    private bool hasBeenDug = false; 
+    private bool hasBeenDug = false;
 
     public override void Initialize(Vector2Int gridPosition, Color? visualColor = null)
     {
@@ -47,21 +46,28 @@ public class CreatureTile : TileEntityBase, IScannable
 
         base.OnTileClicked();
 
-        this.VisualRenderer.sprite = defaultSprite;
-        VisualRenderer.color = Color.green;
-
-        // Ask the tracker if this was the final piece
-        bool isFullyDiscovered = CreatureTracker.Instance.ReportTileDug(this.CurrentGridPosition);
-
-        if (isFullyDiscovered)
+        if (treasureClip != null && audioSource != null)
         {
-            audioSource.PlayOneShot(creatureCompleteClip);
+            audioSource.PlayOneShot(treasureClip);
+        }
 
-            //Sparkles
+        this.VisualRenderer.sprite = defaultSprite;
+        VisualRenderer.color = Color.gold;
+
+        GrantRandomLoot();
+    }
+
+    private void GrantRandomLoot()
+    {
+        int lootRoll = Random.Range(0, 2);
+
+        if (lootRoll == 0)
+        {
+            InventoryManager.Instance.AddToolCharge(EnumGridTool.IcePick, 3);
         }
         else
         {
-            audioSource.PlayOneShot(digCreaturePartClip);
+            InventoryManager.Instance.AddToolCharge(EnumGridTool.MagnifyingGlass, 1);
         }
     }
 }

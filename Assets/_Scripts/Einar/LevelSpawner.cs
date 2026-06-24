@@ -9,11 +9,20 @@ public class LevelSpawner : Singleton<LevelSpawner>
     [Header("Level Settings")]
     public int TotalCreaturesToSpawn = 5;
     public int MinigameCount = 4;
+    public int TreasureCount = 2; // NEW
+    public int TrackCount = 3;    // NEW
 
     [Header("Spawns")]
     public List<WeightedCreature> CreaturePool;
     public GameObject MinigamePrefab;
     public GameObject EmptyPrefab;
+    public GameObject TreasurePrefab;
+    public GameObject TrackPrefab;
+
+    [Header("Level Starting Resources")]
+    public int StartingIcePicks = 15;
+    public int StartingHammers = 5;
+    public int StartingMagnifyingGlasses = 2;
 
     // To track restricted spawn zones for the buffer
     private HashSet<Vector2Int> RestrictedZones = new HashSet<Vector2Int>();
@@ -21,6 +30,9 @@ public class LevelSpawner : Singleton<LevelSpawner>
     public void GenerateLevel(Vector2Int gridSize)
     {
         CreatureTracker.Instance.ClearTracker();
+
+        // Feed the level's specific resource limits to the inventory
+        InventoryManager.Instance.InitializeLevelResources(StartingIcePicks, StartingHammers, StartingMagnifyingGlasses);
 
         List<Vector2Int> AvailablePool = new List<Vector2Int>();
         for (int x = 0; x < gridSize.x; x++)
@@ -33,6 +45,8 @@ public class LevelSpawner : Singleton<LevelSpawner>
 
         SpawnCreatureShapes(AvailablePool);
         SpawnMinigames(AvailablePool);
+        SpawnTreasures(AvailablePool); // NEW
+        SpawnTracks(AvailablePool);    // NEW
         FillRemainingWithEmpties(AvailablePool);
     }
 
@@ -116,7 +130,6 @@ public class LevelSpawner : Singleton<LevelSpawner>
                         }
                     }
 
-                    // ---> TRACK THE SUCCESSFUL SPAWN <---
                     if (SpawnTally.ContainsKey(PickedData))
                     {
                         SpawnTally[PickedData]++;
@@ -136,11 +149,9 @@ public class LevelSpawner : Singleton<LevelSpawner>
             }
         }
 
-        // Print the creature spawns and weights to console
         PrintSpawnSummary(SpawnTally, TotalWeight);
     }
 
-    // Buffer around spawned creatures
     private Vector2Int[] GetHexOffsets(Vector2Int position)
     {
         bool IsEvenRow = (position.y % 2) == 0;
@@ -148,23 +159,15 @@ public class LevelSpawner : Singleton<LevelSpawner>
         if (IsEvenRow)
         {
             return new Vector2Int[] {
-                new(0, 1),   // Top-Right
-                new(-1, 1),  // Top-Left
-                new(-1, 0),  // Left
-                new(-1, -1), // Bottom-Left
-                new(0, -1),  // Bottom-Right
-                new(1, 0)    // Right
+                new(0, 1),   new(-1, 1),  new(-1, 0),
+                new(-1, -1), new(0, -1),  new(1, 0)
             };
         }
         else
         {
             return new Vector2Int[] {
-                new(1, 1),   // Top-Right
-                new(0, 1),   // Top-Left
-                new(-1, 0),  // Left
-                new(0, -1),  // Bottom-Left
-                new(1, -1),  // Bottom-Right
-                new(1, 0)    // Right
+                new(1, 1),   new(0, 1),   new(-1, 0),
+                new(0, -1),  new(1, -1),  new(1, 0)
             };
         }
     }
@@ -174,7 +177,6 @@ public class LevelSpawner : Singleton<LevelSpawner>
         int PlacedCount = 0;
         int Attempts = 0;
 
-        // Loop until we place all minigames or run out of safe attempts
         while (PlacedCount < MinigameCount && Attempts < 100)
         {
             Attempts++;
@@ -183,19 +185,66 @@ public class LevelSpawner : Singleton<LevelSpawner>
             int RandomIndex = Random.Range(0, availablePool.Count);
             Vector2Int ChosenPos = availablePool[RandomIndex];
 
-            // Check if the chosen spot is safely outside the buffer zones
             if (!RestrictedZones.Contains(ChosenPos))
             {
                 PlaceTileOnGrid(ChosenPos, MinigamePrefab);
                 availablePool.RemoveAt(RandomIndex);
 
-                // Add the minigame and its neighbors to the restricted zones
+                // REVISED: Only restrict the tile itself, removing the neighbor buffer
                 RestrictedZones.Add(ChosenPos);
-                Vector2Int[] NeighborOffsets = GetHexOffsets(ChosenPos);
-                foreach (Vector2Int Offset in NeighborOffsets)
-                {
-                    RestrictedZones.Add(ChosenPos + Offset);
-                }
+
+                PlacedCount++;
+            }
+        }
+    }
+
+    // NEW: Spawns Treasure Chests
+    private void SpawnTreasures(List<Vector2Int> availablePool)
+    {
+        int PlacedCount = 0;
+        int Attempts = 0;
+
+        while (PlacedCount < TreasureCount && Attempts < 100)
+        {
+            Attempts++;
+            if (availablePool.Count == 0) break;
+
+            int RandomIndex = Random.Range(0, availablePool.Count);
+            Vector2Int ChosenPos = availablePool[RandomIndex];
+
+            if (!RestrictedZones.Contains(ChosenPos))
+            {
+                PlaceTileOnGrid(ChosenPos, TreasurePrefab);
+                availablePool.RemoveAt(RandomIndex);
+
+                // Restrict the tile so nothing else overlaps it
+                RestrictedZones.Add(ChosenPos);
+
+                PlacedCount++;
+            }
+        }
+    }
+
+    // NEW: Spawns Track Tiles
+    private void SpawnTracks(List<Vector2Int> availablePool)
+    {
+        int PlacedCount = 0;
+        int Attempts = 0;
+
+        while (PlacedCount < TrackCount && Attempts < 100)
+        {
+            Attempts++;
+            if (availablePool.Count == 0) break;
+
+            int RandomIndex = Random.Range(0, availablePool.Count);
+            Vector2Int ChosenPos = availablePool[RandomIndex];
+
+            if (!RestrictedZones.Contains(ChosenPos))
+            {
+                PlaceTileOnGrid(ChosenPos, TrackPrefab);
+                availablePool.RemoveAt(RandomIndex);
+
+                RestrictedZones.Add(ChosenPos);
 
                 PlacedCount++;
             }
@@ -217,15 +266,10 @@ public class LevelSpawner : Singleton<LevelSpawner>
 
         Vector3Int CellPosition = new Vector3Int(pos.x, pos.y, 0);
 
-        // Extract the required TileEntityBase from the GameObject
         if (prefab.TryGetComponent<TileEntityBase>(out TileEntityBase entityPrefab))
         {
-            // Bridge into your existing Tilemap logic
             GridTileAsset Node = ScriptableObject.CreateInstance<GridTileAsset>();
-
-            // Assuming default color is white now that the struct is gone
             Node.Initialize(prefab: entityPrefab, color: Color.white);
-
             GridManager.Instance.Tilemap.SetTile(CellPosition, Node);
         }
         else
@@ -238,7 +282,6 @@ public class LevelSpawner : Singleton<LevelSpawner>
     public struct WeightedCreature
     {
         public CreatureShape Shape;
-
         [Tooltip("Higher number = more common. E.g., Common = 10, Rare = 5")]
         public int Weight;
     }
@@ -252,10 +295,7 @@ public class LevelSpawner : Singleton<LevelSpawner>
         {
             WeightedCreature creature = kvp.Key;
             int count = kvp.Value;
-
-            // Calculate the exact percentage chance
             float chance = ((float)creature.Weight / totalWeight) * 100f;
-
             sb.AppendLine($"- {creature.Shape.ShapeName}: Spawned <b>{count}</b> time(s) (Chance: {chance:F1}%)");
         }
 

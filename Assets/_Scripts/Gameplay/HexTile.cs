@@ -71,7 +71,10 @@ public class HexTile : TileEntityBase, IScannable
                 break;
 
             case EnumGridTool.MagnifyingGlass:
-                PerformRadarScan();
+                if (InventoryManager.Instance.TryConsumeToolCharge(EnumGridTool.MagnifyingGlass))
+                {
+                    PerformRadarScan();
+                }
                 break;
 
             default:
