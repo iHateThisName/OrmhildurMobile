@@ -13,6 +13,7 @@ public class HexTile : TileEntityBase, IScannable
 
     [Header("Magnifying Glass Visuals")]
     [SerializeField] private Sprite emptyScannedSprite;
+    [SerializeField] private Sprite defaultSprite;
 
     public override void Initialize(Vector2Int gridPosition, Color? visualColor = null) {
         base.Initialize(gridPosition);
@@ -112,6 +113,7 @@ public class HexTile : TileEntityBase, IScannable
         switch (this.healthPoints) {
             case 5: break;
             case 4:
+                this.VisualRenderer.sprite = defaultSprite;
                 this.VisualRenderer.color = Color.darkOrange;
                 break;
             case 3:

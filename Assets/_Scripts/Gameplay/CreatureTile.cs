@@ -9,6 +9,7 @@ public class CreatureTile : TileEntityBase, IScannable
 
     [Header("Magnifying Glass Visuals")]
     [SerializeField] private Sprite questionMarkSprite;
+    [SerializeField] private Sprite defaultSprite;
 
     private bool hasBeenDug = false; 
 
@@ -43,6 +44,7 @@ public class CreatureTile : TileEntityBase, IScannable
 
         base.OnTileClicked();
 
+        this.VisualRenderer.sprite = defaultSprite;
         VisualRenderer.color = Color.green;
 
         // Ask the tracker if this was the final piece

@@ -10,7 +10,7 @@ public class MiniGameTile : TileEntityBase, IScannable
 
     [Header("Magnifying Glass Visuals")]
     [SerializeField] private Sprite questionMarkSprite;
-
+    [SerializeField] private Sprite defaultSprite;
     public void ApplyScannedVisual()
     {
         if (hasBeenTriggered) return;
@@ -37,6 +37,7 @@ public class MiniGameTile : TileEntityBase, IScannable
         hasBeenTriggered = true;
 
         base.OnTileClicked();
+        this.VisualRenderer.sprite = defaultSprite;
         VisualRenderer.color = Color.red;
 
         if (miniGameClip != null && audioSource != null)
