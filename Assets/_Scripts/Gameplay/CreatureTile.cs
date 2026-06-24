@@ -12,7 +12,7 @@ public class CreatureTile : TileEntityBase, IScannable
     [SerializeField] private Sprite questionMarkSprite;
     [SerializeField] private Sprite defaultSprite;
 
-    private bool hasBeenDug = false; 
+    private bool hasBeenDug = false;
 
     public override void Initialize(Vector2Int gridPosition, Color? visualColor = null)
     {
@@ -44,25 +44,36 @@ public class CreatureTile : TileEntityBase, IScannable
             return;
         }
 
-        hasBeenDug = true;
-
-        base.OnTileClicked(tool);
-
-        this.VisualRenderer.sprite = defaultSprite;
-        VisualRenderer.color = Color.green;
-
-        // Ask the tracker if this was the final piece
-        bool isFullyDiscovered = CreatureTracker.Instance.ReportTileDug(this.CurrentGridPosition);
-
-        if (isFullyDiscovered)
+        if ((tool.HasValue && tool.Value == EnumGridTool.IcePick) || (GridGameManager.Instance.CurrentTool == EnumGridTool.IcePick))
         {
-            audioSource.PlayOneShot(creatureCompleteClip);
+            if (InventoryManager.Instance.TryConsumeToolCharge(EnumGridTool.IcePick))
+            {
+                hasBeenDug = true;
 
-            //Sparkles
-        }
-        else
-        {
-            audioSource.PlayOneShot(digCreaturePartClip);
+                base.OnTileClicked(tool);
+
+                this.VisualRenderer.sprite = defaultSprite;
+                VisualRenderer.color = Color.green;
+
+                // Ask the tracker if this was the final piece
+                bool isFullyDiscovered = CreatureTracker.Instance.ReportTileDug(this.CurrentGridPosition);
+
+                if (isFullyDiscovered)
+                {
+                    audioSource.PlayOneShot(creatureCompleteClip);
+
+                    //Sparkles
+                }
+                else
+                {
+                    audioSource.PlayOneShot(digCreaturePartClip);
+                }
+            }
+            else
+            {
+                // They clicked the creature with the Hand or no tool
+                Debug.Log($"<color=yellow>[CreatureTile]</color> You need a tool to dig this up!");
+            }
         }
     }
 }

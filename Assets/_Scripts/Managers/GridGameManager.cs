@@ -35,6 +35,41 @@ public class GridGameManager : Singleton<GridGameManager> {
         OnToolChanged?.Invoke(this._currentTool);
     }
 
+    private void OnEnable()
+    {
+        // Listen to the inventory updates
+        InventoryManager.OnToolChargeChanged += HandleToolChargeChanged;
+    }
+
+    private void OnDisable()
+    {
+        // Always unsubscribe when destroyed to prevent memory leaks
+        InventoryManager.OnToolChargeChanged -= HandleToolChargeChanged;
+    }
+
+    private void HandleToolChargeChanged(EnumGridTool tool, int remainingCharges)
+    {
+        // Only run the Game Over check if the player just used a digging tool
+        if (tool == EnumGridTool.IcePick || tool == EnumGridTool.Hammer)
+        {
+            CheckGameOverCondition();
+        }
+    }
+
+    private void CheckGameOverCondition()
+    {
+        int picks = InventoryManager.Instance.ToolCharges.ContainsKey(EnumGridTool.IcePick) ? InventoryManager.Instance.ToolCharges[EnumGridTool.IcePick] : 0;
+
+        if (picks <= 0)
+        {
+
+            if (this.CurrentState != EnumGridGameState.GameOver)
+            {
+                Debug.Log("<color=red>[Game Over]</color> Player ran out of digging tools!");
+                ChangeGameState(EnumGridGameState.GameOver);
+            }
+        }
+    }
     public async void ChangeGameState(EnumGridGameState newState) {
         await Awaitable.NextFrameAsync();
         //if (newState != EnumGridGameState.SimulatingPlayerEnd) await Awaitable.WaitForSecondsAsync(3f); // TODO; for testing purposes.
@@ -72,7 +107,7 @@ public class GridGameManager : Singleton<GridGameManager> {
                 // Handle win state
                 break;
             case EnumGridGameState.GameOver:
-                // Handle game over state
+                Debug.Log("GAME OVER DUDE");
                 break;
         }
 
