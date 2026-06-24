@@ -29,7 +29,7 @@ public class TreasureTile : TileEntityBase, IScannable
         }
     }
 
-    public override void OnTileClicked()
+    public override void OnTileClicked(EnumGridTool? tool)
     {
         if (hasBeenDug) return;
 
@@ -44,7 +44,7 @@ public class TreasureTile : TileEntityBase, IScannable
 
         hasBeenDug = true;
 
-        base.OnTileClicked();
+        base.OnTileClicked(tool);
 
         if (treasureClip != null && audioSource != null)
         {

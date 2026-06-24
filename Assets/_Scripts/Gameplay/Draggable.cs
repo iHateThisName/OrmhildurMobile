@@ -40,6 +40,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         this.transform.position = this.originalPosition;
         this.draggableImage.raycastTarget = true; // Re-enable raycast target
 
+        PlayerGridInputHandler.Instance.ProcessPointerClick(tool: IsGridTool != EnumGridTool.None ? IsGridTool : null); // Process the click event after dragging ends
         GridGameManager.Instance.CurrentTool = EnumGridTool.Hand;
     }
 }

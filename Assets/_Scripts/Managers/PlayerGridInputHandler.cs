@@ -52,7 +52,7 @@ public class PlayerGridInputHandler : Assets._Scripts.Utilities.Singleton.Single
     /// directly inside an input event callback causes a warning, as it queries the UI state from the previous frame.
     /// Moving it to Update() ensures the EventSystem has processed the current frame before we check for UI clicks.
     /// </summary>
-    private async void ProcessPointerClick() {
+    public async void ProcessPointerClick(EnumGridTool? tool = null) {
         if (this.isOnCooldown) return;
         this.isOnCooldown = true;
 

@@ -252,7 +252,7 @@ public class GridManager : Singleton<GridManager> {
         }
     }
 
-    public void InteractWithTile(Vector3Int cellPosition, EnumGridTool? tool) {
+    public void InteractWithTile(Vector3Int cellPosition, EnumGridTool? tool = null) {
         Vector2Int cellPositionVector2Int = new(cellPosition.x, cellPosition.y);
 
         // Only allow interactions during certain game states, this is to prevent interactions during cutscenes or other non-interactive moments.
