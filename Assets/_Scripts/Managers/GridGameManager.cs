@@ -126,6 +126,24 @@ public class GridGameManager : Singleton<GridGameManager> {
                 return 0;
         }
     }
+    public CreatureTile GetCreatureTileByGridPosition(Vector2Int position) {
+
+        // Retrieve the tile at the anchor position from the GridManager's TileDictionary.
+        if (GridManager.Instance.TileDictionary.TryGetValue(key: position, out TileEntityBase tile)) {
+
+            // Attempt to cast the tile to a CreatureTile assuming that all creature uses the CreatureTile class.
+            CreatureTile creature = tile as CreatureTile;
+            if (creature == null) {
+                Debug.LogError($"GetCreatureTileByGridPosition: Failed to retrieve creature tile at position: {position}");
+                return null;
+            } else {
+                return creature;
+            }
+        } else {
+            Debug.LogError($"GetCreatureTileByGridPosition: Failed to retrieve tile at position: {position}");
+            return null;
+        }
+    }
 }
 public enum EnumGridGameState {
     Loading,

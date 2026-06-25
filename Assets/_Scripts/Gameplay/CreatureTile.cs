@@ -5,7 +5,7 @@ public class CreatureTile : TileEntityBase, IScannable
     [Header("Creature Tile Visuals")]
     [SerializeField] private SpriteRenderer creatureVisualRendere;
     [SerializeField] private SpriteMask mask;
-    [field:SerializeField] public EnumCreatureName creatureName { get; private set; } = EnumCreatureName.None;
+    [field:SerializeField] public EnumCreatureName CreatureName { get; private set; } = EnumCreatureName.None; // Currently only the anchor has the creature name.
 
     [Header("Audio (SFX)")]
     [SerializeField] private AudioSource audioSource;
@@ -31,9 +31,10 @@ public class CreatureTile : TileEntityBase, IScannable
         hasBeenDug = false;
     }
 
-    public void SetAsCreatureAnchorTile() {
+    public void SetAsCreatureAnchorTile(EnumCreatureName creatureName) {
         this.isCreatureAnchor = true;
         this.creatureVisualRendere.gameObject.SetActive(true);
+        this.CreatureName = creatureName;
     }
 
     public void ApplyScannedVisual()
@@ -68,8 +69,11 @@ public class CreatureTile : TileEntityBase, IScannable
 
                 base.OnTileClicked(tool);
 
-                this.VisualRenderer.sprite = defaultSprite;
-                VisualRenderer.color = Color.green;
+                //this.VisualRenderer.sprite = defaultSprite;
+                //VisualRenderer.color = Color.green;
+
+                this.VisualRenderer.gameObject.SetActive(false);
+                this.mask.gameObject.SetActive(true);
 
                 // Ask the tracker if this was the final piece
                 bool isFullyDiscovered = CreatureTracker.Instance.ReportTileDug(this.CurrentGridPosition);
