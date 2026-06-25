@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HexTile : TileEntityBase, IScannable
 {
-    private int healthPoints = 5;
+    // [TEMP DISABLED] private int healthPoints = 5;
     public bool IsInteractable { get; private set; } = true;
 
     [Header("Audio (SFX)")]
@@ -15,25 +15,20 @@ public class HexTile : TileEntityBase, IScannable
     [SerializeField] private Sprite emptyScannedSprite;
     [SerializeField] private Sprite defaultSprite;
 
-    public override void Initialize(Vector2Int gridPosition, Color? visualColor = null) {
+    public override void Initialize(Vector2Int gridPosition, Color? visualColor = null)
+    {
         base.Initialize(gridPosition);
-        // Additional initialization logic specific to HexTile can be added here.
+        IsInteractable = true;
     }
 
     public void ApplyScannedVisual()
     {
-
-        if (!this.IsInteractable || this.healthPoints <= 0)
+        if (!this.IsInteractable)
         {
             return;
         }
 
-        if (emptyScannedSprite == null)
-        {
-            return;
-        }
-
-        if (this.VisualRenderer == null)
+        if (emptyScannedSprite == null || this.VisualRenderer == null)
         {
             return;
         }
@@ -42,16 +37,17 @@ public class HexTile : TileEntityBase, IScannable
         this.VisualRenderer.color = Color.white;
     }
 
-    public override void OnTileClicked(EnumGridTool? tool) {
+    public override void OnTileClicked(EnumGridTool? tool)
+    {
+        if (!this.IsInteractable) return;
 
         if (digClip != null && audioSource != null)
         {
             audioSource.PlayOneShot(digClip);
         }
 
-        if (!this.IsInteractable) return;
-
-        switch (tool.HasValue ? tool.Value : GridGameManager.Instance.CurrentTool) {
+        switch (tool.HasValue ? tool.Value : GridGameManager.Instance.CurrentTool)
+        {
             case EnumGridTool.None:
                 Debug.Log($"HexTile at {CurrentGridPosition} was clicked with no tool.");
                 break;
@@ -59,13 +55,15 @@ public class HexTile : TileEntityBase, IScannable
             case EnumGridTool.IcePick:
                 if (InventoryManager.Instance.TryConsumeToolCharge(EnumGridTool.IcePick))
                 {
-                    DealTileDamage(GridGameManager.Instance.GetToolDamagePoint(EnumGridTool.IcePick));
+                    InstaDigTile();
                 }
                 break;
 
             case EnumGridTool.Hammer:
-                DealTileDamage(GridGameManager.Instance.GetToolDamagePoint(EnumGridTool.Hammer));
-                DealSplashDamage((int)GridGameManager.Instance.GetToolDamagePoint(EnumGridTool.Hammer) / 2);
+                if (InventoryManager.Instance.TryConsumeToolCharge(EnumGridTool.Hammer))
+                {
+                    InstaDigTile();
+                }
                 break;
 
             case EnumGridTool.MagnifyingGlass:
@@ -81,6 +79,23 @@ public class HexTile : TileEntityBase, IScannable
         }
     }
 
+    private void InstaDigTile()
+    {
+        this.IsInteractable = false;
+        if (this.VisualRenderer != null)
+        {
+            this.VisualRenderer.sprite = defaultSprite;
+            this.VisualRenderer.color = Color.saddleBrown;
+        }
+        Debug.Log($"HexTile at {CurrentGridPosition} was dug out. (HP system bypassed)");
+    }
+
+    /* ==========================================
+       [TEMP DISABLED HP LOGIC] 
+       Uncomment below when re-implementing HP
+       ========================================== */
+
+    /*
     private void DealSplashDamage(int splashDamage) {
         List<TileEntityBase> neighbors = GridManager.Instance.GetNeighbors(this.CurrentGridPosition).ToList<TileEntityBase>();
         neighbors.ForEach(neighbor => {
@@ -134,4 +149,5 @@ public class HexTile : TileEntityBase, IScannable
                 break;
         }
     }
+    */
 }
