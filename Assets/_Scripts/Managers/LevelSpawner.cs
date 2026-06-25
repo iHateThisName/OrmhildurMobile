@@ -9,8 +9,8 @@ public class LevelSpawner : Singleton<LevelSpawner>
     [Header("Level Settings")]
     public int TotalCreaturesToSpawn = 5;
     public int MinigameCount = 4;
-    public int TreasureCount = 2; // NEW
-    public int TrackCount = 3;    // NEW
+    public int TreasureCount = 2; 
+    public int TrackCount = 3;   
 
     [Header("Spawns")]
     public List<WeightedCreature> CreaturePool;
@@ -45,8 +45,8 @@ public class LevelSpawner : Singleton<LevelSpawner>
 
         SpawnCreatureShapes(AvailablePool);
         SpawnMinigames(AvailablePool);
-        SpawnTreasures(AvailablePool); // NEW
-        SpawnTracks(AvailablePool);    // NEW
+        SpawnTreasures(AvailablePool); 
+        SpawnTracks(AvailablePool); 
         FillRemainingWithEmpties(AvailablePool);
     }
 
