@@ -148,7 +148,7 @@ public class LevelSpawner : Singleton<LevelSpawner>
 
             if (!IsPlaced)
             {
-                Debug.LogWarning($"Grid too crowded! Could not fit a {ShapeTemplate.ShapeName}.");
+                Debug.LogWarning($"Grid too crowded! Could not fit a {ShapeTemplate.CreatureName}.");
             }
         }
 
@@ -307,7 +307,7 @@ public class LevelSpawner : Singleton<LevelSpawner>
             WeightedCreature creature = kvp.Key;
             int count = kvp.Value;
             float chance = ((float)creature.Weight / totalWeight) * 100f;
-            sb.AppendLine($"- {creature.Shape.ShapeName}: Spawned <b>{count}</b> time(s) (Chance: {chance:F1}%)");
+            sb.AppendLine($"- {creature.Shape.CreatureName}: Spawned <b>{count}</b> time(s) (Chance: {chance:F1}%)");
         }
 
         sb.AppendLine("---------------------------");

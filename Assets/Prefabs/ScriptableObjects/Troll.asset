@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a74c1b0faf65c844aa06727a02a3b00, type: 3}
   m_Name: Troll
   m_EditorClassIdentifier: Assembly-CSharp::CreatureShape
-  ShapeName: Troll
+  CreatureVisualSprite: {fileID: -1760406345, guid: 2eabf089378564c42b813bbb72ef57f5, type: 3}
+  CreatureVisualTransform: {x: 0, y: 0}
+  CreatureName: 3
   CreaturePrefab: {fileID: 2005331747181704781, guid: bb27ac3af91b4d44388564301ba7cdea, type: 3}
   EvenRowOffsets:
   - {x: 0, y: -1}

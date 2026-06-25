@@ -8,7 +8,6 @@ public class CreatureShape : ScriptableObject
     public Sprite CreatureVisualSprite;
     public Vector2 CreatureVisualTransform;
 
-    public string ShapeName; // TODO To be reomved, we will use the EnumCreatureName instead.
     public EnumCreatureName CreatureName = EnumCreatureName.None;
 
     public GameObject CreaturePrefab;
@@ -25,5 +24,10 @@ public class CreatureShape : ScriptableObject
 [Serializable]
 public enum EnumCreatureName {
     None,
-    BirdMan
+    BirdMan,
+
+    // PlaceHolder
+    Snake,
+    Troll,
+    Dog,
 }

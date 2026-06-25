@@ -36,7 +36,7 @@ public class CreatureTracker : Singleton<CreatureTracker>
         if (creature != null)
         {
             creature.FoundParts++;
-            Debug.Log($"Dug part of {creature.Shape.ShapeName}! {creature.FoundParts}/{creature.TileCoordinates.Count} found.");
+            Debug.Log($"Dug part of {creature.Shape.CreatureName}! {creature.FoundParts}/{creature.TileCoordinates.Count} found.");
 
             return creature.IsComplete;
         }
