@@ -13,6 +13,9 @@ public class GridGameManager : Singleton<GridGameManager> {
     };
 
     [SerializeField] private EnumGridTool _currentTool;
+
+    private bool _requiresGameOverCheck = false;
+
     private EnumGridTool _previousTool;
     public EnumGridTool CurrentTool { get => _currentTool; set { ValidateToolChange(value); } }
 
@@ -58,27 +61,32 @@ public class GridGameManager : Singleton<GridGameManager> {
 
     private void HandleToolChargeChanged(EnumGridTool tool, int remainingCharges)
     {
-        // Only run the Game Over check if the player just used a digging tool
-        if (tool == EnumGridTool.IcePick || tool == EnumGridTool.Hammer)
+        if (tool == EnumGridTool.IcePick)
         {
-            CheckGameOverCondition();
+            CheckGameOverConditionAsync();
         }
     }
 
-    private void CheckGameOverCondition()
+    private async void CheckGameOverConditionAsync()
     {
+        await Awaitable.EndOfFrameAsync();
+
+        //Check first if player won
+        if (CreatureTracker.Instance.AreAllCreaturesComplete)
+        {
+            return;
+        }
+
+        //Lose if out of picks
         int picks = InventoryManager.Instance.ToolCharges.ContainsKey(EnumGridTool.IcePick) ? InventoryManager.Instance.ToolCharges[EnumGridTool.IcePick] : 0;
 
-        if (picks <= 0)
+        if (picks <= 0 && this.CurrentState != EnumGridGameState.GameOver && this.CurrentState != EnumGridGameState.Win)
         {
-
-            if (this.CurrentState != EnumGridGameState.GameOver)
-            {
-                Debug.Log("<color=red>[Game Over]</color> Player ran out of digging tools!");
-                ChangeGameState(EnumGridGameState.GameOver);
-            }
+            Debug.Log("<color=red>[Game Over]</color> Player ran out of Ice Picks!");
+            ChangeGameState(EnumGridGameState.GameOver);
         }
     }
+
     public async void ChangeGameState(EnumGridGameState newState) {
         await Awaitable.NextFrameAsync();
         //if (newState != EnumGridGameState.SimulatingPlayerEnd) await Awaitable.WaitForSecondsAsync(3f); // TODO; for testing purposes.
