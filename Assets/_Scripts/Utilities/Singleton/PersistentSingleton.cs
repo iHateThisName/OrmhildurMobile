@@ -7,7 +7,7 @@ namespace Assets._Scripts.Utilities.Singleton {
     /// <typeparam name="T">The generic type parameter. Must be a subclass of Component.</typeparam>
     /// Author: https://github.com/adammyhre
     public class PersistentSingleton<T> : MonoBehaviour where T : Component {
-        public bool AutoUnparentOnAwake = true;
+        [HideInInspector] public bool AutoUnparentOnAwake = true;
         protected static T instance;
 
         public static bool HasInstance => instance != null;

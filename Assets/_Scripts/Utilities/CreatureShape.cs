@@ -21,7 +21,7 @@ public class CreatureShape : ScriptableObject
 
 }
 
-[Serializable]
+[System.Serializable]
 public enum EnumCreatureName {
     None,
     BirdMan,
