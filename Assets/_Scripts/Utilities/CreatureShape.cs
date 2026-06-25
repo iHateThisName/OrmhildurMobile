@@ -1,9 +1,11 @@
+using System;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "NewCreatureShape", menuName = "Grid/Creature Shape")]
 public class CreatureShape : ScriptableObject
 {
     public string ShapeName;
+    public EnumCreatureName CreatureName = EnumCreatureName.None;
     //public Tile CreatureTileAsset; // Using your existing Tile struct
     public GameObject CreaturePrefab;
 
@@ -13,4 +15,10 @@ public class CreatureShape : ScriptableObject
 
     [Tooltip("Offsets if the Anchor tile is placed on an ODD Y row (1, 3, 5)")]
     public Vector2Int[] OddRowOffsets;
+}
+
+[Serializable]
+public enum EnumCreatureName {
+    None,
+    BirdMan
 }
