@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a74c1b0faf65c844aa06727a02a3b00, type: 3}
   m_Name: BirdMan
   m_EditorClassIdentifier: Assembly-CSharp::CreatureShape
+  CreatureVisualSprite: {fileID: 21300000, guid: c679a0214b7d79144807f45cb5d3773a, type: 3}
+  CreatureVisualTransform: {x: 0.2, y: 0.5, z: 0}
   ShapeName: 
   CreatureName: 1
   CreaturePrefab: {fileID: 2005331747181704781, guid: bb27ac3af91b4d44388564301ba7cdea, type: 3}

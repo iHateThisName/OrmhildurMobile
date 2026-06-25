@@ -31,10 +31,15 @@ public class CreatureTile : TileEntityBase, IScannable
         hasBeenDug = false;
     }
 
-    public void SetAsCreatureAnchorTile(EnumCreatureName creatureName) {
+    public void SetAsCreatureAnchorTile(CreatureShape creatureInformation) {
+
         this.isCreatureAnchor = true;
         this.creatureVisualRendere.gameObject.SetActive(true);
-        this.CreatureName = creatureName;
+
+        // Set the creature information on the anchor tile
+        this.CreatureName = creatureInformation.CreatureName;
+        this.creatureVisualRendere.sprite = creatureInformation.CreatureVisualSprite;
+        this.creatureVisualRendere.gameObject.transform.localPosition = creatureInformation.CreatureVisualTransform;
     }
 
     public void ApplyScannedVisual()

@@ -120,7 +120,7 @@ public class LevelSpawner : Singleton<LevelSpawner>
 
                     CreatureTracker.Instance.RegisterNewCreature(ShapeTemplate, TargetPositions);
 
-                    RegisterCreatureAnchorPosition(AnchorPos, ShapeTemplate.CreatureName);
+                    RegisterCreatureAnchorPosition(AnchorPos, ShapeTemplate);
                     
 
                     Vector2Int[] NeighborOffsets;
@@ -155,9 +155,9 @@ public class LevelSpawner : Singleton<LevelSpawner>
         PrintSpawnSummary(SpawnTally, TotalWeight);
     }
 
-    private void RegisterCreatureAnchorPosition(Vector2Int anchorPos, EnumCreatureName creatureName) {
+    private void RegisterCreatureAnchorPosition(Vector2Int anchorPos, CreatureShape creatureInformation) {
         CreatureTile creatureTile = GridGameManager.Instance.GetCreatureTileByGridPosition(anchorPos);
-        creatureTile.SetAsCreatureAnchorTile(creatureName);
+        creatureTile.SetAsCreatureAnchorTile(creatureInformation);
     }
 
 

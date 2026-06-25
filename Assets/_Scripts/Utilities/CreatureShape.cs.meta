@@ -1,2 +1,14 @@
 fileFormatVersion: 2
 guid: 1a74c1b0faf65c844aa06727a02a3b00
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - CreatureVisualSprite: {instanceID: 0}
+  - CreatureVisualTransform: {instanceID: 0}
+  - CreaturePrefab: {fileID: 2005331747181704781, guid: bb27ac3af91b4d44388564301ba7cdea, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
