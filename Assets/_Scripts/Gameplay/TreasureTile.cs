@@ -42,19 +42,30 @@ public class TreasureTile : TileEntityBase, IScannable
             return;
         }
 
-        hasBeenDug = true;
-
-        base.OnTileClicked(tool);
-
-        if (treasureClip != null && audioSource != null)
+        if ((tool.HasValue && tool.Value == EnumGridTool.IcePick) || (GridGameManager.Instance.CurrentTool == EnumGridTool.IcePick))
         {
-            audioSource.PlayOneShot(treasureClip);
+            if (InventoryManager.Instance.TryConsumeToolCharge(EnumGridTool.IcePick))
+            {
+                hasBeenDug = true;
+
+                base.OnTileClicked(tool);
+
+                if (treasureClip != null && audioSource != null)
+                {
+                    audioSource.PlayOneShot(treasureClip);
+                }
+
+                this.VisualRenderer.sprite = defaultSprite;
+                VisualRenderer.color = Color.gold;
+
+                GrantRandomLoot();
+            }
+            else
+            {
+                // They clicked the creature with the Hand or no tool
+                Debug.Log($"<color=yellow>[CreatureTile]</color> You need a tool to dig this up!");
+            }
         }
-
-        this.VisualRenderer.sprite = defaultSprite;
-        VisualRenderer.color = Color.gold;
-
-        GrantRandomLoot();
     }
 
     private void GrantRandomLoot()

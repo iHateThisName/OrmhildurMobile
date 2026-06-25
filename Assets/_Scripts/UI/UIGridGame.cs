@@ -10,8 +10,14 @@ public class UIGridGame : MonoBehaviour {
     //[SerializeField] private TMP_Text gameStateText;
     //[SerializeField] private Button endTurnButton;
 
+    [Header("General UI")]
     [SerializeField] private TMP_Text currentToolText;
     [SerializeField] private Button restartButton;
+
+    [Header("Tool Charge UI")]
+    [SerializeField] private TMP_Text icePickChargeText;
+    [SerializeField] private TMP_Text hammerChargeText;
+    [SerializeField] private TMP_Text magnifyingGlassChargeText;
 
     public void OnMainMenuButton()
     {
@@ -21,10 +27,16 @@ public class UIGridGame : MonoBehaviour {
     public void OnEnable() {
         //GridGameManager.OnGameStateChanged += HandleGameStateChanged;
         GridGameManager.OnToolChanged += HandleToolChanged;
+
+        // Listen to the inventory manager
+        InventoryManager.OnToolChargeChanged += HandleToolChargeChanged;
     }
     public void OnDisable() {
         //GridGameManager.OnGameStateChanged -= HandleGameStateChanged;
         GridGameManager.OnToolChanged -= HandleToolChanged;
+
+        // Always unsubscribe to prevent memory leaks
+        InventoryManager.OnToolChargeChanged -= HandleToolChargeChanged;
     }
 
     private void Start() {
@@ -37,8 +49,28 @@ public class UIGridGame : MonoBehaviour {
         });
     }
 
-    private void HandleToolChanged(EnumGridTool tool) {
-        this.currentToolText.text = $"{tool}";
+    private void HandleToolChanged(EnumGridTool tool)
+    {
+        if (currentToolText != null)
+        {
+            this.currentToolText.text = $"{tool}";
+        }
+    }
+
+    private void HandleToolChargeChanged(EnumGridTool tool, int newChargeCount)
+    {
+        switch (tool)
+        {
+            case EnumGridTool.IcePick:
+                if (icePickChargeText != null) icePickChargeText.text = newChargeCount.ToString();
+                break;
+            case EnumGridTool.Hammer:
+                if (hammerChargeText != null) hammerChargeText.text = newChargeCount.ToString();
+                break;
+            case EnumGridTool.MagnifyingGlass:
+                if (magnifyingGlassChargeText != null) magnifyingGlassChargeText.text = newChargeCount.ToString();
+                break;
+        }
     }
 
     public void OnHandButton() => OnChangeTool(EnumGridTool.Hand);

@@ -36,19 +36,29 @@ public class MiniGameTile : TileEntityBase, IScannable
         }
 
 
-
-        hasBeenTriggered = true;
-
-        base.OnTileClicked(tool);
-        this.VisualRenderer.sprite = defaultSprite;
-        VisualRenderer.color = Color.red;
-
-        if (miniGameClip != null && audioSource != null)
+        if ((tool.HasValue && tool.Value == EnumGridTool.IcePick) || (GridGameManager.Instance.CurrentTool == EnumGridTool.IcePick))
         {
-            audioSource.PlayOneShot(miniGameClip);
-        }
+            if (InventoryManager.Instance.TryConsumeToolCharge(EnumGridTool.IcePick))
+            {
+                hasBeenTriggered = true;
 
-        // Trigger random minigame from the MinigameManager
-        MinigameManager.Instance.TriggerPreloadedMinigame();
+                base.OnTileClicked(tool);
+                this.VisualRenderer.sprite = defaultSprite;
+                VisualRenderer.color = Color.red;
+
+                if (miniGameClip != null && audioSource != null)
+                {
+                    audioSource.PlayOneShot(miniGameClip);
+                }
+
+                // Trigger random minigame from the MinigameManager
+                MinigameManager.Instance.TriggerPreloadedMinigame();
+            }
+        }
+        else
+        {
+            // They clicked the creature with the Hand or no tool
+            Debug.Log($"<color=yellow>[CreatureTile]</color> You need a tool to dig this up!");
+        }
     }
 }
