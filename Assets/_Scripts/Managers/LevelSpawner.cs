@@ -110,7 +110,7 @@ public class LevelSpawner : Singleton<LevelSpawner>
                 if (CanFitPerfectly)
                 {
                     IsPlaced = true;
-
+                    
                     foreach (Vector2Int Pos in TargetPositions)
                     {
                         PlaceTileOnGrid(Pos, ShapeTemplate.CreaturePrefab);
@@ -119,6 +119,8 @@ public class LevelSpawner : Singleton<LevelSpawner>
                     }
 
                     CreatureTracker.Instance.RegisterNewCreature(ShapeTemplate, TargetPositions);
+
+                    RegisterCreatureAnchorPosition(AnchorPos, ShapeTemplate.CreatureName);
 
                     Vector2Int[] NeighborOffsets;
                     foreach (Vector2Int Pos in TargetPositions)
@@ -150,6 +152,23 @@ public class LevelSpawner : Singleton<LevelSpawner>
         }
 
         PrintSpawnSummary(SpawnTally, TotalWeight);
+    }
+
+    private void RegisterCreatureAnchorPosition(Vector2Int anchorPos, EnumCreatureName creatureName) {
+        // Retrieve the tile at the anchor position from the GridManager's TileDictionary.
+        if (GridManager.Instance.TileDictionary.TryGetValue(key: anchorPos, out TileEntityBase tile)) {
+
+            // Attempt to cast the tile to a CreatureTile assuming that all creature uses the CreatureTile class.
+            CreatureTile creature = tile as CreatureTile;
+
+            if (creature == null) {
+                Debug.LogError($"RegisterCreatureAnchorPosition: Failed to retrieve creature tile at position: {anchorPos}, for creature: {creatureName}");
+            } else {
+                creature.SetAsCreatureAnchorTile();
+            }
+        } else {
+            Debug.LogError($"RegisterCreatureAnchorPosition: Failed to retrieve tile at position: {anchorPos}, for creature: {creatureName}");
+        }
     }
 
     private Vector2Int[] GetHexOffsets(Vector2Int position)

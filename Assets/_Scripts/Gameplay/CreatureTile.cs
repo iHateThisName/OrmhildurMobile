@@ -1,8 +1,12 @@
 using UnityEngine;
-using UnityEngine.Localization.SmartFormat.Utilities;
 
 public class CreatureTile : TileEntityBase, IScannable
 {
+    [Header("Creature Tile Visuals")]
+    [SerializeField] private SpriteRenderer creatureVisualRendere;
+    [SerializeField] private SpriteMask mask;
+    [field:SerializeField] public EnumCreatureName creatureName { get; private set; } = EnumCreatureName.None;
+
     [Header("Audio (SFX)")]
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip digCreaturePartClip;
@@ -13,11 +17,23 @@ public class CreatureTile : TileEntityBase, IScannable
     [SerializeField] private Sprite defaultSprite;
 
     private bool hasBeenDug = false;
+    private bool isCreatureAnchor = false;
 
+    private void Awake() {
+        // Hide the mask and creature visual by default, they will be later revealed by the player.
+        this.mask.gameObject.SetActive(false);
+        // Only the anchor tile will show the creature visual, the rest will be hidden behind the mask.
+        this.creatureVisualRendere.gameObject.SetActive(false);
+    }
     public override void Initialize(Vector2Int gridPosition, Color? visualColor = null)
     {
         base.Initialize(gridPosition);
         hasBeenDug = false;
+    }
+
+    public void SetAsCreatureAnchorTile() {
+        this.isCreatureAnchor = true;
+        this.creatureVisualRendere.gameObject.SetActive(true);
     }
 
     public void ApplyScannedVisual()
