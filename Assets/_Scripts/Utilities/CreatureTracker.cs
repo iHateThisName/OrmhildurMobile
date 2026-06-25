@@ -1,3 +1,4 @@
+using System; // REQUIRED for Actions
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -5,7 +6,6 @@ using Assets._Scripts.Utilities.Singleton;
 
 public class CreatureTracker : Singleton<CreatureTracker>
 {
-    // A simple data class to hold the state of a single spawned creature
     public class CreatureInstance
     {
         public CreatureShape Shape;
@@ -17,6 +17,10 @@ public class CreatureTracker : Singleton<CreatureTracker>
 
     private List<CreatureInstance> ActiveCreatures = new List<CreatureInstance>();
 
+    public static event Action OnAllCreaturesFound;
+
+    public bool AreAllCreaturesComplete => ActiveCreatures.Count > 0 && ActiveCreatures.All(c => c.IsComplete);
+
     public void RegisterNewCreature(CreatureShape shape, List<Vector2Int> coordinates)
     {
         CreatureInstance newCreature = new CreatureInstance
@@ -27,10 +31,8 @@ public class CreatureTracker : Singleton<CreatureTracker>
         ActiveCreatures.Add(newCreature);
     }
 
-    // Returns TRUE if this dig completed the entire creature
     public bool ReportTileDug(Vector2Int gridPosition)
     {
-        // Find which creature owns this specific grid coordinate
         CreatureInstance creature = ActiveCreatures.FirstOrDefault(c => c.TileCoordinates.Contains(gridPosition));
 
         if (creature != null)
@@ -38,13 +40,22 @@ public class CreatureTracker : Singleton<CreatureTracker>
             creature.FoundParts++;
             Debug.Log($"Dug part of {creature.Shape.CreatureName}! {creature.FoundParts}/{creature.TileCoordinates.Count} found.");
 
-            return creature.IsComplete;
+            // REVISED: If this specific creature was just finished, check if the whole board is finished
+            if (creature.IsComplete)
+            {
+                if (AreAllCreaturesComplete)
+                {
+                    Debug.Log("<color=cyan>[Level]</color> All creatures have been found! Level Complete.");
+                    OnAllCreaturesFound?.Invoke();
+                }
+
+                return true;
+            }
         }
 
         return false;
     }
 
-    // Call this from LevelSpawner right before you generate a new level
     public void ClearTracker()
     {
         ActiveCreatures.Clear();

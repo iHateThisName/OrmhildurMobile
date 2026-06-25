@@ -39,12 +39,21 @@ public class GridGameManager : Singleton<GridGameManager> {
     {
         // Listen to the inventory updates
         InventoryManager.OnToolChargeChanged += HandleToolChargeChanged;
+        CreatureTracker.OnAllCreaturesFound += HandleLevelComplete;
     }
+
+
 
     private void OnDisable()
     {
         // Always unsubscribe when destroyed to prevent memory leaks
         InventoryManager.OnToolChargeChanged -= HandleToolChargeChanged;
+        CreatureTracker.OnAllCreaturesFound -= HandleLevelComplete;
+    }
+
+    private void HandleLevelComplete()
+    {
+        ChangeGameState(EnumGridGameState.Win);
     }
 
     private void HandleToolChargeChanged(EnumGridTool tool, int remainingCharges)
@@ -104,7 +113,7 @@ public class GridGameManager : Singleton<GridGameManager> {
                 GridManager.Instance.SimulateGrid(isPlayerTurn: false);
                 break;
             case EnumGridGameState.Win:
-                // Handle win state
+                Debug.Log("YOU WIN");
                 break;
             case EnumGridGameState.GameOver:
                 Debug.Log("GAME OVER DUDE");

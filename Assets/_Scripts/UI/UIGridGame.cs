@@ -14,6 +14,16 @@ public class UIGridGame : MonoBehaviour {
     [SerializeField] private TMP_Text currentToolText;
     [SerializeField] private Button restartButton;
 
+    [Header("Buttons")]
+    [SerializeField] private Button mainMenuButton;
+    [SerializeField] private Button addButton;
+    [SerializeField] private Button tryAgainButton;
+
+
+    [Header("UI Panels")]
+    [SerializeField] private GameObject winPanel;
+    [SerializeField] private GameObject losePanel;
+
     [Header("Tool Charge UI")]
     [SerializeField] private TMP_Text icePickChargeText;
     [SerializeField] private TMP_Text hammerChargeText;
@@ -30,13 +40,31 @@ public class UIGridGame : MonoBehaviour {
 
         // Listen to the inventory manager
         InventoryManager.OnToolChargeChanged += HandleToolChargeChanged;
+
+        GridGameManager.OnGameStateChanged += HandleGameStateChanged;
+
+        //Buttons
+        this.mainMenuButton.onClick.AddListener(OnMainMenuButtonClicked);
+        this.tryAgainButton.onClick.AddListener(OnTryAgainButtonClicked);
+        this.addButton.onClick.AddListener(OnAddButtonClicked);
+
     }
+
+
+
     public void OnDisable() {
         //GridGameManager.OnGameStateChanged -= HandleGameStateChanged;
         GridGameManager.OnToolChanged -= HandleToolChanged;
 
         // Always unsubscribe to prevent memory leaks
         InventoryManager.OnToolChargeChanged -= HandleToolChargeChanged;
+
+        GridGameManager.OnGameStateChanged -= HandleGameStateChanged;
+
+        //Buttons
+        this.mainMenuButton.onClick.RemoveAllListeners();
+        this.tryAgainButton.onClick.RemoveAllListeners();
+        this.addButton.onClick.RemoveAllListeners();
     }
 
     private void Start() {
@@ -47,6 +75,25 @@ public class UIGridGame : MonoBehaviour {
         this.restartButton.onClick.AddListener(() => {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         });
+    }
+
+    //Buttons
+    private void OnMainMenuButtonClicked()
+    {
+        this.mainMenuButton.interactable = false;
+        GameSceneManager.Instance.LoadScene(EnumScene.MainMenuScene);
+    }
+
+    private void OnTryAgainButtonClicked()
+    {
+        this.tryAgainButton.interactable = false;
+        GameSceneManager.Instance.LoadScene(EnumScene.MainGame);
+    }
+
+    private void OnAddButtonClicked()
+    {
+        this.addButton.interactable = false;
+        Debug.Log("WATCHING ADD!!");
     }
 
     private void HandleToolChanged(EnumGridTool tool)
@@ -69,6 +116,20 @@ public class UIGridGame : MonoBehaviour {
                 break;
             case EnumGridTool.MagnifyingGlass:
                 if (magnifyingGlassChargeText != null) magnifyingGlassChargeText.text = newChargeCount.ToString();
+                break;
+        }
+    }
+
+    private void HandleGameStateChanged(EnumGridGameState state)
+    {
+        switch (state)
+        {
+            case EnumGridGameState.Win:
+                winPanel.SetActive(true);
+                break;
+
+            case EnumGridGameState.GameOver:
+                losePanel.SetActive(true);
                 break;
         }
     }
