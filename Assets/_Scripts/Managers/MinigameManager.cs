@@ -82,8 +82,17 @@ public class MinigameManager : Singleton<MinigameManager>
     {
         activeMinigame.OnMinigameComplete -= HandleMinigameFinished;
 
-        if (playerWon) Debug.Log("Minigame Won! Give a reward!");
-        else Debug.Log("Minigame Lost!");
+        if (playerWon)
+        {
+            InventoryManager.Instance.AddToolCharge(EnumGridTool.IcePick, 2);
+            Debug.Log("Minigame Won! Give a reward!");
+        }
+
+        else 
+        {
+            InventoryManager.Instance.AddToolCharge(EnumGridTool.IcePick, -2);
+            Debug.Log("Minigame Lost!"); 
+        }
 
         activeMinigame = null;
 
