@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: BirdMan
   m_EditorClassIdentifier: Assembly-CSharp::CreatureShape
   CreatureVisualSprite: {fileID: 21300000, guid: c679a0214b7d79144807f45cb5d3773a, type: 3}
-  CreatureVisualTransform: {x: 0.2, y: 0.5, z: 0}
-  ShapeName: 
+  CreatureVisualTransform: {x: 0.2, y: 0.5}
   CreatureName: 1
   CreaturePrefab: {fileID: 2005331747181704781, guid: bb27ac3af91b4d44388564301ba7cdea, type: 3}
+  TrackHintSprite: {fileID: 21300000, guid: fb70930b9d3c7b44cb49715585278384, type: 3}
+  TrackDugSprite: {fileID: 21300000, guid: a793748ba03f3f7459c3c1507af820cb, type: 3}
   EvenRowOffsets:
   - {x: 0, y: 0}
   - {x: 0, y: 1}

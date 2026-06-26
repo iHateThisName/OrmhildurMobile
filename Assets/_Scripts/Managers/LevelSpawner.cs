@@ -9,8 +9,8 @@ public class LevelSpawner : Singleton<LevelSpawner>
     [Header("Level Settings")]
     public int TotalCreaturesToSpawn = 5;
     public int MinigameCount = 4;
-    public int TreasureCount = 2; 
-    public int TrackCount = 3;   
+    public int TreasureCount = 2;
+    //public int TracksPerCreature = 3;
 
     [Header("Spawns")]
     public List<WeightedCreature> CreaturePool;
@@ -24,14 +24,18 @@ public class LevelSpawner : Singleton<LevelSpawner>
     public int StartingHammers = 5;
     public int StartingMagnifyingGlasses = 2;
 
+    [Header("Track Settings")]
+    [Tooltip("Define how many tracks spawn at specific distances from the creature.")]
+    public List<TrackSpawnRule> TrackSpawnRules;
+
     // To track restricted spawn zones for the buffer
     private HashSet<Vector2Int> RestrictedZones = new HashSet<Vector2Int>();
 
     public void GenerateLevel(Vector2Int gridSize)
     {
         CreatureTracker.Instance.ClearTracker();
-
-        // Feed the level's specific resource limits to the inventory
+        TrackTile.TrackDistances.Clear();
+        TrackTile.TrackSources.Clear();
         InventoryManager.Instance.InitializeLevelResources(StartingIcePicks, StartingHammers, StartingMagnifyingGlasses);
 
         List<Vector2Int> AvailablePool = new List<Vector2Int>();
@@ -45,8 +49,8 @@ public class LevelSpawner : Singleton<LevelSpawner>
 
         SpawnCreatureShapes(AvailablePool);
         SpawnMinigames(AvailablePool);
-        SpawnTreasures(AvailablePool); 
-        SpawnTracks(AvailablePool); 
+        SpawnTreasures(AvailablePool);
+        // Removed SpawnTracks() from here
         FillRemainingWithEmpties(AvailablePool);
     }
 
@@ -69,14 +73,12 @@ public class LevelSpawner : Singleton<LevelSpawner>
 
     private void SpawnCreatureShapes(List<Vector2Int> availablePool)
     {
-        // 1. Calculate the total weight of the pool once
         int TotalWeight = 0;
         foreach (WeightedCreature item in CreaturePool)
         {
             TotalWeight += item.Weight;
         }
 
-        // 2. Setup a dictionary to track our spawns
         Dictionary<WeightedCreature, int> SpawnTally = new Dictionary<WeightedCreature, int>();
 
         for (int i = 0; i < TotalCreaturesToSpawn; i++)
@@ -110,7 +112,8 @@ public class LevelSpawner : Singleton<LevelSpawner>
                 if (CanFitPerfectly)
                 {
                     IsPlaced = true;
-                    
+
+                    // 1. Lock down the exact creature tiles first
                     foreach (Vector2Int Pos in TargetPositions)
                     {
                         PlaceTileOnGrid(Pos, ShapeTemplate.CreaturePrefab);
@@ -119,14 +122,16 @@ public class LevelSpawner : Singleton<LevelSpawner>
                     }
 
                     CreatureTracker.Instance.RegisterNewCreature(ShapeTemplate, TargetPositions);
-
                     RegisterCreatureAnchorPosition(AnchorPos, ShapeTemplate);
-                    
 
-                    Vector2Int[] NeighborOffsets;
+                    // 2. Immediately spawn tracks based on this creature's footprint
+                    SpawnTracksForCreature(TargetPositions, availablePool, ShapeTemplate);
+
+                    // 3. NOW apply the 1-hex buffer restricted zone around the creature
+                    // Tracks placed above bypass this because they already snagged their spots.
                     foreach (Vector2Int Pos in TargetPositions)
                     {
-                        NeighborOffsets = GetHexOffsets(Pos);
+                        Vector2Int[] NeighborOffsets = GetHexOffsets(Pos);
                         foreach (Vector2Int Offset in NeighborOffsets)
                         {
                             RestrictedZones.Add(Pos + Offset);
@@ -155,12 +160,92 @@ public class LevelSpawner : Singleton<LevelSpawner>
         PrintSpawnSummary(SpawnTally, TotalWeight);
     }
 
-    private void RegisterCreatureAnchorPosition(Vector2Int anchorPos, CreatureShape creatureInformation) {
-        CreatureTile creatureTile = GridGameManager.Instance.GetCreatureTileByGridPosition(anchorPos);
-        creatureTile.SetAsCreatureAnchorTile(creatureInformation);
+    private void SpawnTracksForCreature(List<Vector2Int> creatureOccupiedTiles, List<Vector2Int> availablePool, CreatureShape creatureSource)
+    {
+        // Safety check in case the list is empty in the inspector
+        if (TrackSpawnRules == null || TrackSpawnRules.Count == 0) return;
+
+        Dictionary<int, List<Vector2Int>> validSpotsByDistance = new Dictionary<int, List<Vector2Int>>();
+        HashSet<Vector2Int> visited = new HashSet<Vector2Int>(creatureOccupiedTiles);
+        List<Vector2Int> currentRing = new List<Vector2Int>(creatureOccupiedTiles);
+
+        int currentDistance = 1;
+        // Dynamically find the furthest distance we need to calculate based on the inspector list
+        int maxDistance = TrackSpawnRules.Max(rule => rule.Distance);
+
+        // 1. Map out the hex radius using Breadth-First Search
+        while (currentDistance <= maxDistance && currentRing.Count > 0)
+        {
+            List<Vector2Int> nextRing = new List<Vector2Int>();
+            validSpotsByDistance[currentDistance] = new List<Vector2Int>();
+
+            foreach (Vector2Int pos in currentRing)
+            {
+                Vector2Int[] offsets = GetHexOffsets(pos);
+                foreach (Vector2Int offset in offsets)
+                {
+                    Vector2Int absoluteNeighbor = pos + offset;
+
+                    if (!visited.Contains(absoluteNeighbor))
+                    {
+                        visited.Add(absoluteNeighbor);
+                        nextRing.Add(absoluteNeighbor);
+
+                        if (availablePool.Contains(absoluteNeighbor) && !RestrictedZones.Contains(absoluteNeighbor))
+                        {
+                            validSpotsByDistance[currentDistance].Add(absoluteNeighbor);
+                        }
+                    }
+                }
+            }
+
+            currentRing = nextRing;
+            currentDistance++;
+        }
+
+        foreach (TrackSpawnRule rule in TrackSpawnRules)
+        {
+            int distance = rule.Distance;
+            int amountToSpawn = rule.Amount;
+
+            if (validSpotsByDistance.ContainsKey(distance))
+            {
+                List<Vector2Int> validSpots = validSpotsByDistance[distance].OrderBy(x => Random.value).ToList();
+                int spawnedCount = 0;
+
+                for (int i = 0; i < validSpots.Count && spawnedCount < amountToSpawn; i++)
+                {
+                    Vector2Int spawnPos = validSpots[i];
+
+                    PlaceTileOnGrid(spawnPos, TrackPrefab);
+
+                    TrackTile.TrackDistances[spawnPos] = distance;
+
+                    // --- NEW LINE --- Register which creature made this track
+                    TrackTile.TrackSources[spawnPos] = creatureSource;
+
+                    availablePool.Remove(spawnPos);
+                    RestrictedZones.Add(spawnPos);
+
+                    spawnedCount++;
+                }
+
+                if (spawnedCount < amountToSpawn)
+                {
+                    Debug.LogWarning($"Grid too cramped: Only spawned {spawnedCount}/{amountToSpawn} tracks at distance {distance}.");
+                }
+            }
+        }
     }
 
-
+    private void RegisterCreatureAnchorPosition(Vector2Int anchorPos, CreatureShape creatureInformation)
+    {
+        CreatureTile creatureTile = GridGameManager.Instance.GetCreatureTileByGridPosition(anchorPos);
+        if (creatureTile != null)
+        {
+            creatureTile.SetAsCreatureAnchorTile(creatureInformation);
+        }
+    }
 
     private Vector2Int[] GetHexOffsets(Vector2Int position)
     {
@@ -199,16 +284,12 @@ public class LevelSpawner : Singleton<LevelSpawner>
             {
                 PlaceTileOnGrid(ChosenPos, MinigamePrefab);
                 availablePool.RemoveAt(RandomIndex);
-
-                // REVISED: Only restrict the tile itself, removing the neighbor buffer
                 RestrictedZones.Add(ChosenPos);
-
                 PlacedCount++;
             }
         }
     }
 
-    // NEW: Spawns Treasure Chests
     private void SpawnTreasures(List<Vector2Int> availablePool)
     {
         int PlacedCount = 0;
@@ -226,36 +307,7 @@ public class LevelSpawner : Singleton<LevelSpawner>
             {
                 PlaceTileOnGrid(ChosenPos, TreasurePrefab);
                 availablePool.RemoveAt(RandomIndex);
-
-                // Restrict the tile so nothing else overlaps it
                 RestrictedZones.Add(ChosenPos);
-
-                PlacedCount++;
-            }
-        }
-    }
-
-    // NEW: Spawns Track Tiles
-    private void SpawnTracks(List<Vector2Int> availablePool)
-    {
-        int PlacedCount = 0;
-        int Attempts = 0;
-
-        while (PlacedCount < TrackCount && Attempts < 100)
-        {
-            Attempts++;
-            if (availablePool.Count == 0) break;
-
-            int RandomIndex = Random.Range(0, availablePool.Count);
-            Vector2Int ChosenPos = availablePool[RandomIndex];
-
-            if (!RestrictedZones.Contains(ChosenPos))
-            {
-                PlaceTileOnGrid(ChosenPos, TrackPrefab);
-                availablePool.RemoveAt(RandomIndex);
-
-                RestrictedZones.Add(ChosenPos);
-
                 PlacedCount++;
             }
         }
@@ -281,7 +333,6 @@ public class LevelSpawner : Singleton<LevelSpawner>
             GridTileAsset Node = ScriptableObject.CreateInstance<GridTileAsset>();
             Node.Initialize(prefab: entityPrefab, color: Color.white);
             GridManager.Instance.Tilemap.SetTile(CellPosition, Node);
-    
         }
         else
         {
@@ -295,6 +346,16 @@ public class LevelSpawner : Singleton<LevelSpawner>
         public CreatureShape Shape;
         [Tooltip("Higher number = more common. E.g., Common = 10, Rare = 5")]
         public int Weight;
+    }
+
+    [System.Serializable]
+    public struct TrackSpawnRule
+    {
+        [Tooltip("Distance from the creature in hexes (e.g., 1, 2, or 3)")]
+        public int Distance;
+
+        [Tooltip("How many tracks to spawn at this distance")]
+        public int Amount;
     }
 
     private void PrintSpawnSummary(Dictionary<WeightedCreature, int> spawnTally, int totalWeight)

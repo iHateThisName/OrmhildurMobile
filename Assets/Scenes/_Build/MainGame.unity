@@ -1885,19 +1885,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ee10559d6ec14b469410387604136db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelSpawner
-  TotalCreaturesToSpawn: 3
+  TotalCreaturesToSpawn: 2
   MinigameCount: 3
   TreasureCount: 2
-  TrackCount: 6
   CreaturePool:
   - Shape: {fileID: 11400000, guid: 75b53e8397015f647bcf88feb6d515ec, type: 2}
     Weight: 0
   - Shape: {fileID: 11400000, guid: 12974f932c4c0fd49a3c93d41c2b0ec4, type: 2}
-    Weight: 0
+    Weight: 1
   - Shape: {fileID: 11400000, guid: 065d158391a7fac499848c4215e9e303, type: 2}
     Weight: 0
   - Shape: {fileID: 11400000, guid: 78ae1ec6adf38ae45a87cbcf39390cd3, type: 2}
-    Weight: 100
+    Weight: 1
   MinigamePrefab: {fileID: 2384036911072492645, guid: 801f83a4e404dbb4498bce4142717d51, type: 3}
   EmptyPrefab: {fileID: 3419021784060892072, guid: 45a6bf92075afbc469fb80990af75cb0, type: 3}
   TreasurePrefab: {fileID: 6186179629728210561, guid: e7639453ee77ee542a593d2c88b8968c, type: 3}
@@ -1905,6 +1904,13 @@ MonoBehaviour:
   StartingIcePicks: 15
   StartingHammers: 5
   StartingMagnifyingGlasses: 2
+  TrackSpawnRules:
+  - Distance: 1
+    Amount: 1
+  - Distance: 2
+    Amount: 2
+  - Distance: 3
+    Amount: 3
 --- !u!4 &588406831
 Transform:
   m_ObjectHideFlags: 0
@@ -3410,6 +3416,7 @@ Transform:
   - {fileID: 268919108}
   - {fileID: 1841978308}
   - {fileID: 454639538}
+  - {fileID: 1533558467}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1177585773
@@ -4101,6 +4108,55 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!1 &1533558466
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1533558467}
+  - component: {fileID: 1533558468}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1533558467
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1533558466}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 960, y: 540, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1100579652}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1533558468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1533558466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 768e23e2a90bb3e4c9079119b652b19e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  AutoUnparentOnAwake: 1
+  <SaveData>k__BackingField:
+    score: 0
+  DisplaySafeAreaGizmos: 1
+  DisplayMaxAreaGizmos: 1
 --- !u!1 &1569318934
 GameObject:
   m_ObjectHideFlags: 0
