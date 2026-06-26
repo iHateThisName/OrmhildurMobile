@@ -14,6 +14,9 @@ public class LevelSpawner : Singleton<LevelSpawner>
 
     [Header("Spawns")]
     public List<WeightedCreature> CreaturePool;
+    //Common Creatures: Weight 50 x 3 = approx 62.4%
+    //Rare Creatures: Weight 25 x 2 = approx 31.2% total
+    //Legendary Creatures: Weight 10 x 1 = approx 10.51% total
     public GameObject MinigamePrefab;
     public GameObject EmptyPrefab;
     public GameObject TreasurePrefab;
@@ -59,7 +62,8 @@ public class LevelSpawner : Singleton<LevelSpawner>
         int RandomValue = Random.Range(0, totalWeight);
         int CurrentWeight = 0;
 
-        foreach (WeightedCreature item in CreaturePool)
+        // CRITICAL FIX: Loop through 'availableCreatures', not 'CreaturePool'
+        foreach (WeightedCreature item in availableCreatures)
         {
             CurrentWeight += item.Weight;
             if (RandomValue < CurrentWeight)
@@ -68,7 +72,8 @@ public class LevelSpawner : Singleton<LevelSpawner>
             }
         }
 
-        return CreaturePool[0]; // Fallback
+        // CRITICAL FIX: Return from 'availableCreatures' fallback
+        return availableCreatures[0];
     }
 
     private void SpawnCreatureShapes(List<Vector2Int> availablePool)

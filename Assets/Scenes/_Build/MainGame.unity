@@ -1896,7 +1896,7 @@ MonoBehaviour:
   - Shape: {fileID: 11400000, guid: 065d158391a7fac499848c4215e9e303, type: 2}
     Weight: 0
   - Shape: {fileID: 11400000, guid: 78ae1ec6adf38ae45a87cbcf39390cd3, type: 2}
-    Weight: 1
+    Weight: 100
   - Shape: {fileID: 11400000, guid: f4f28154459a10f44bc83544ab45acaa, type: 2}
     Weight: 1
   MinigamePrefab: {fileID: 2384036911072492645, guid: 801f83a4e404dbb4498bce4142717d51, type: 3}
