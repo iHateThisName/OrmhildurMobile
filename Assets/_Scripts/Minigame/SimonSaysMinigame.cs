@@ -55,7 +55,6 @@ public class SimonSaysMinigame : MinigameBase
         }
     }
 
-    // Swapped IEnumerator to async void
     private async void PlaySequenceAnimationAsync()
     {
         isShowingSequence = true;
