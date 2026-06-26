@@ -1888,7 +1888,7 @@ MonoBehaviour:
   TotalCreaturesToSpawn: 3
   MinigameCount: 3
   TreasureCount: 2
-  TrackCount: 0
+  TrackCount: 6
   CreaturePool:
   - Shape: {fileID: 11400000, guid: 75b53e8397015f647bcf88feb6d515ec, type: 2}
     Weight: 0
