@@ -987,7 +987,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91786e8c0b756b941aa575b9d92890c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridManager
-  size: {x: 20, y: 10}
+  size: {x: 10, y: 5}
   <Grid>k__BackingField: {fileID: 1321883116}
   <Tilemap>k__BackingField: {fileID: 164907570}
   randomTiles:
@@ -1885,9 +1885,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ee10559d6ec14b469410387604136db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelSpawner
-  TotalCreaturesToSpawn: 3
-  MinigameCount: 10
-  TreasureCount: 5
+  TotalCreaturesToSpawn: 2
+  MinigameCount: 4
+  TreasureCount: 2
   CreaturePool:
   - Shape: {fileID: 11400000, guid: 75b53e8397015f647bcf88feb6d515ec, type: 2}
     Weight: 0
@@ -4557,6 +4557,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridGameManager
   _currentTool: 0
+  <IsResolvingInteraction>k__BackingField: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -93,6 +93,8 @@ public class MinigameManager : Singleton<MinigameManager>
             InventoryManager.Instance.AddToolCharge(EnumGridTool.IcePick, -2);
             Debug.Log("Minigame Lost!"); 
         }
+        GridGameManager.Instance.IsResolvingInteraction = false;
+
 
         activeMinigame = null;
 

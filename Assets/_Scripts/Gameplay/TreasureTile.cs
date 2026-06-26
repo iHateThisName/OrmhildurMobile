@@ -44,6 +44,7 @@ public class TreasureTile : TileEntityBase, IScannable
 
         if ((tool.HasValue && tool.Value == EnumGridTool.IcePick) || (GridGameManager.Instance.CurrentTool == EnumGridTool.IcePick))
         {
+            GridGameManager.Instance.IsResolvingInteraction = true;
             if (InventoryManager.Instance.TryConsumeToolCharge(EnumGridTool.IcePick))
             {
                 hasBeenDug = true;
@@ -65,6 +66,7 @@ public class TreasureTile : TileEntityBase, IScannable
                 // They clicked the creature with the Hand or no tool
                 Debug.Log($"<color=yellow>[CreatureTile]</color> You need a tool to dig this up!");
             }
+            GridGameManager.Instance.IsResolvingInteraction = false;
         }
     }
 

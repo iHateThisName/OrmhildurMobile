@@ -38,6 +38,7 @@ public class MiniGameTile : TileEntityBase, IScannable
 
         if ((tool.HasValue && tool.Value == EnumGridTool.IcePick) || (GridGameManager.Instance.CurrentTool == EnumGridTool.IcePick))
         {
+            GridGameManager.Instance.IsResolvingInteraction = true;
             if (InventoryManager.Instance.TryConsumeToolCharge(EnumGridTool.IcePick))
             {
                 hasBeenTriggered = true;

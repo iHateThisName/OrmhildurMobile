@@ -14,7 +14,7 @@ public class GridGameManager : Singleton<GridGameManager> {
 
     [SerializeField] private EnumGridTool _currentTool;
 
-    private bool _requiresGameOverCheck = false;
+    [field: SerializeField] public bool IsResolvingInteraction { get; set; } = false;
 
     private EnumGridTool _previousTool;
     public EnumGridTool CurrentTool { get => _currentTool; set { ValidateToolChange(value); } }
@@ -69,6 +69,13 @@ public class GridGameManager : Singleton<GridGameManager> {
 
     private async void CheckGameOverConditionAsync()
     {
+        //Pause the check while a minigame, animation, or treasure is resolving
+        while (IsResolvingInteraction)
+        {
+            await Awaitable.NextFrameAsync();
+        }
+
+        //Wait for the end of the current frame just to be safe
         await Awaitable.EndOfFrameAsync();
 
         //Check first if player won
