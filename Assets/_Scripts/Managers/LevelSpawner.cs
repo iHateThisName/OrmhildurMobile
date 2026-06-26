@@ -54,7 +54,7 @@ public class LevelSpawner : Singleton<LevelSpawner>
         FillRemainingWithEmpties(AvailablePool);
     }
 
-    private WeightedCreature PickRandomCreature(int totalWeight)
+    private WeightedCreature PickRandomCreature(List<WeightedCreature> availableCreatures, int totalWeight)
     {
         int RandomValue = Random.Range(0, totalWeight);
         int CurrentWeight = 0;
@@ -73,17 +73,27 @@ public class LevelSpawner : Singleton<LevelSpawner>
 
     private void SpawnCreatureShapes(List<Vector2Int> availablePool)
     {
-        int TotalWeight = 0;
-        foreach (WeightedCreature item in CreaturePool)
-        {
-            TotalWeight += item.Weight;
-        }
-
+        //Create a temporary working copy of the pool for this level generation
+        List<WeightedCreature> tempCreaturePool = new List<WeightedCreature>(CreaturePool);
         Dictionary<WeightedCreature, int> SpawnTally = new Dictionary<WeightedCreature, int>();
 
         for (int i = 0; i < TotalCreaturesToSpawn; i++)
         {
-            WeightedCreature PickedData = PickRandomCreature(TotalWeight);
+            if (tempCreaturePool.Count == 0)
+            {
+                Debug.LogWarning("Ran out of unique creatures in the pool! Stopping creature spawns early.");
+                break;
+            }
+
+            // Recalculate the Total Weight based ONLY on the remaining creatures
+            int currentTotalWeight = 0;
+            foreach (WeightedCreature item in tempCreaturePool)
+            {
+                currentTotalWeight += item.Weight;
+            }
+
+            // Pass the temp pool and the newly calculated weight
+            WeightedCreature PickedData = PickRandomCreature(tempCreaturePool, currentTotalWeight);
             CreatureShape ShapeTemplate = PickedData.Shape;
 
             bool IsPlaced = false;
@@ -113,7 +123,7 @@ public class LevelSpawner : Singleton<LevelSpawner>
                 {
                     IsPlaced = true;
 
-                    // 1. Lock down the exact creature tiles first
+                    // Lock down the exact creature tiles first
                     foreach (Vector2Int Pos in TargetPositions)
                     {
                         PlaceTileOnGrid(Pos, ShapeTemplate.CreaturePrefab);
@@ -124,11 +134,10 @@ public class LevelSpawner : Singleton<LevelSpawner>
                     CreatureTracker.Instance.RegisterNewCreature(ShapeTemplate, TargetPositions);
                     RegisterCreatureAnchorPosition(AnchorPos, ShapeTemplate);
 
-                    // 2. Immediately spawn tracks based on this creature's footprint
+                    // Immediately spawn tracks based on this creature's footprint
                     SpawnTracksForCreature(TargetPositions, availablePool, ShapeTemplate);
 
-                    // 3. NOW apply the 1-hex buffer restricted zone around the creature
-                    // Tracks placed above bypass this because they already snagged their spots.
+                    // Apply the 1-hex buffer restricted zone around the creature
                     foreach (Vector2Int Pos in TargetPositions)
                     {
                         Vector2Int[] NeighborOffsets = GetHexOffsets(Pos);
@@ -147,7 +156,10 @@ public class LevelSpawner : Singleton<LevelSpawner>
                         SpawnTally[PickedData] = 1;
                     }
 
-                    break;
+                    // Remove the successfully placed creature from the temporary pool!
+                    tempCreaturePool.Remove(PickedData);
+
+                    break; // Break out of the grid-searching loop, move to next creature
                 }
             }
 
@@ -157,7 +169,11 @@ public class LevelSpawner : Singleton<LevelSpawner>
             }
         }
 
-        PrintSpawnSummary(SpawnTally, TotalWeight);
+        // Pass the original total weight to the summary just so the % chance readouts remain accurate to the base data
+        int originalTotalWeight = 0;
+        foreach (WeightedCreature item in CreaturePool) originalTotalWeight += item.Weight;
+
+        PrintSpawnSummary(SpawnTally, originalTotalWeight);
     }
 
     private void SpawnTracksForCreature(List<Vector2Int> creatureOccupiedTiles, List<Vector2Int> availablePool, CreatureShape creatureSource)
