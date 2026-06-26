@@ -1,11 +1,14 @@
 using Assets._Scripts.Utilities.Singleton;
 using Gaskellgames;
-using System;
 using UnityEngine;
 
 [DefaultExecutionOrder(-10)]
 public class GameManager : RegulatorSingelton<GameManager> {
-    [field:SerializeField, ReadOnly] public SaveData SaveData { get; private set; }
+    [field: SerializeField, ReadOnly] public SaveData SaveData { get; private set; }
+
+    [SerializeField] private bool DisplaySafeAreaGizmos = true;
+    [SerializeField] private bool DisplayMaxAreaGizmos = true;
+
 
     protected override void Awake() {
         base.Awake();
@@ -20,6 +23,41 @@ public class GameManager : RegulatorSingelton<GameManager> {
         if (pause) {
             SaveSystem.Save(this.SaveData);
         }
+    }
+
+
+    private void OnDrawGizmos() {
+        if (!(this.DisplaySafeAreaGizmos || this.DisplayMaxAreaGizmos)) return;
+
+        Camera mainCamera = Camera.main;
+        if (mainCamera == null || !mainCamera.orthographic) return;
+
+        // Height visible in world units
+        float worldHeight = mainCamera.orthographicSize * 2f;
+
+        // Center of the camera in world space
+        Vector3 center = mainCamera.transform.position;
+        center.z = 0f;
+
+        // Draw 16:9 safe area
+        if (this.DisplaySafeAreaGizmos) 
+            DrawAspectRect(center, worldHeight, 16f / 9f, new Color(0f, 1f, 0f, 0.15f), Color.green);
+
+        // Draw 20:9 max area
+        if (this.DisplayMaxAreaGizmos) 
+            DrawAspectRect(center, worldHeight, 20f / 9f, new Color(1f, 0f, 0f, 0.15f), Color.yellow);
+    }
+
+    private void DrawAspectRect(Vector3 center, float worldHeight, float aspect, Color fill, Color border) {
+        float width = worldHeight * aspect;
+
+        Vector3 size = new Vector3(width, worldHeight, 0);
+
+        Gizmos.color = fill;
+        Gizmos.DrawCube(center, size);
+
+        Gizmos.color = border;
+        Gizmos.DrawWireCube(center, size);
     }
 
     [ContextMenu("Increase Test Score")]
