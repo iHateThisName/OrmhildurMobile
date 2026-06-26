@@ -1887,15 +1887,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LevelSpawner
   TotalCreaturesToSpawn: 2
   MinigameCount: 3
-  TreasureCount: 2
+  TreasureCount: 1
   CreaturePool:
   - Shape: {fileID: 11400000, guid: 75b53e8397015f647bcf88feb6d515ec, type: 2}
     Weight: 0
   - Shape: {fileID: 11400000, guid: 12974f932c4c0fd49a3c93d41c2b0ec4, type: 2}
-    Weight: 1
+    Weight: 0
   - Shape: {fileID: 11400000, guid: 065d158391a7fac499848c4215e9e303, type: 2}
     Weight: 0
   - Shape: {fileID: 11400000, guid: 78ae1ec6adf38ae45a87cbcf39390cd3, type: 2}
+    Weight: 1
+  - Shape: {fileID: 11400000, guid: f4f28154459a10f44bc83544ab45acaa, type: 2}
     Weight: 1
   MinigamePrefab: {fileID: 2384036911072492645, guid: 801f83a4e404dbb4498bce4142717d51, type: 3}
   EmptyPrefab: {fileID: 3419021784060892072, guid: 45a6bf92075afbc469fb80990af75cb0, type: 3}
@@ -1903,7 +1905,7 @@ MonoBehaviour:
   TrackPrefab: {fileID: 2591338646484683892, guid: 664bc798abebb5847954d14d2e2cf964, type: 3}
   StartingIcePicks: 15
   StartingHammers: 5
-  StartingMagnifyingGlasses: 2
+  StartingMagnifyingGlasses: 1
   TrackSpawnRules:
   - Distance: 1
     Amount: 1
