@@ -40,8 +40,8 @@ public class TrackTile : TileEntityBase, IScannable
 
         if (spriteToUse != null && this.VisualRenderer != null)
         {
-            this.VisualRenderer.sprite = spriteToUse;
-            this.VisualRenderer.color = new Color(1f, 1f, 1f, 0.7f);
+            this.VisualRenderer.sprite = fallbackHintSprite;
+            this.VisualRenderer.color = Color.white;
         }
     }
 
