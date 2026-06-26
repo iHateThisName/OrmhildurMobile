@@ -41,10 +41,7 @@ public class HexTile : TileEntityBase, IScannable
     {
         if (!this.IsInteractable) return;
 
-        if (digClip != null && audioSource != null)
-        {
-            audioSource.PlayOneShot(digClip);
-        }
+
 
         switch (tool.HasValue ? tool.Value : GridGameManager.Instance.CurrentTool)
         {
@@ -55,6 +52,10 @@ public class HexTile : TileEntityBase, IScannable
             case EnumGridTool.IcePick:
                 if (InventoryManager.Instance.TryConsumeToolCharge(EnumGridTool.IcePick))
                 {
+                    if (digClip != null && audioSource != null)
+                    {
+                        audioSource.PlayOneShot(digClip);
+                    }
                     InstaDigTile();
                 }
                 break;

@@ -94,6 +94,11 @@ public class UIGridGame : MonoBehaviour {
     {
         this.addButton.interactable = false;
         Debug.Log("WATCHING ADD!!");
+        InventoryManager.Instance.AddToolCharge(EnumGridTool.IcePick, 5);
+        losePanel.SetActive(false);
+        GridGameManager.Instance.ChangeGameState(EnumGridGameState.PlayerTurn);
+        //Panel that says u got extra digs
+        Debug.Log("YOU HAVE 5 EXTRA DIGS!!");
     }
 
     private void HandleToolChanged(EnumGridTool tool)
