@@ -18,6 +18,7 @@ public class UIGridGame : MonoBehaviour {
     [SerializeField] private Button mainMenuButton;
     [SerializeField] private Button addButton;
     [SerializeField] private Button tryAgainButton;
+    [SerializeField] private Button extraMagnifyingGlassButton;
 
 
     [Header("UI Panels")]
@@ -47,9 +48,9 @@ public class UIGridGame : MonoBehaviour {
         this.mainMenuButton.onClick.AddListener(OnMainMenuButtonClicked);
         this.tryAgainButton.onClick.AddListener(OnTryAgainButtonClicked);
         this.addButton.onClick.AddListener(OnAddButtonClicked);
+        this.extraMagnifyingGlassButton.onClick.AddListener(OnExtraMagnifyingGlassButtonClicked);
 
     }
-
 
 
     public void OnDisable() {
@@ -65,6 +66,7 @@ public class UIGridGame : MonoBehaviour {
         this.mainMenuButton.onClick.RemoveAllListeners();
         this.tryAgainButton.onClick.RemoveAllListeners();
         this.addButton.onClick.RemoveAllListeners();
+        this.extraMagnifyingGlassButton.onClick.RemoveAllListeners();
     }
 
     private void Start() {
@@ -101,6 +103,13 @@ public class UIGridGame : MonoBehaviour {
         Debug.Log("YOU HAVE 5 EXTRA DIGS!!");
     }
 
+    private void OnExtraMagnifyingGlassButtonClicked()
+    {
+        InventoryManager.Instance.AddToolCharge(EnumGridTool.MagnifyingGlass, 1);
+        Debug.Log("YOU GOT 1 MORE MAGNIFYINGGLASS");
+    }
+
+
     private void HandleToolChanged(EnumGridTool tool)
     {
         if (currentToolText != null)
@@ -121,6 +130,14 @@ public class UIGridGame : MonoBehaviour {
                 break;
             case EnumGridTool.MagnifyingGlass:
                 if (magnifyingGlassChargeText != null) magnifyingGlassChargeText.text = newChargeCount.ToString();
+                if (newChargeCount  == 0)
+                {
+                    this.extraMagnifyingGlassButton.interactable = true;
+                }
+                if (newChargeCount > 0)
+                {
+                    this.extraMagnifyingGlassButton.interactable= false;
+                }
                 break;
         }
     }

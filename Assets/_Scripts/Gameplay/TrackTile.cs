@@ -5,7 +5,6 @@ public class TrackTile : TileEntityBase, IScannable
 {
     // STATIC DICTIONARIES:
     public static Dictionary<Vector2Int, int> TrackDistances = new Dictionary<Vector2Int, int>();
-    // NEW: Maps a track's grid position to the CreatureShape that made it
     public static Dictionary<Vector2Int, CreatureShape> TrackSources = new Dictionary<Vector2Int, CreatureShape>();
 
     [Header("Audio (SFX)")]
@@ -18,6 +17,10 @@ public class TrackTile : TileEntityBase, IScannable
     [SerializeField] private Sprite fallbackDugSprite;
 
     private bool hasBeenDug = false;
+
+    [Header("Testing")]
+    [SerializeField] private bool instantReveal = false;
+
     private Vector2Int currentGridPos;
 
     public override void Initialize(Vector2Int gridPosition, Color? visualColor = null)
@@ -31,7 +34,42 @@ public class TrackTile : TileEntityBase, IScannable
     {
         if (hasBeenDug) return;
 
-        // Determine which sprite to use
+        // --- ISOLATED TEST LOGIC: Instant Reveal on Scan ---
+        if (instantReveal)
+        {
+            hasBeenDug = true;
+
+            // Play audio (checking !isPlaying prevents eardrum destruction if an AoE hits 4 tracks at once)
+            if (trackFoundClip != null && audioSource != null && !audioSource.isPlaying)
+            {
+                audioSource.PlayOneShot(trackFoundClip);
+            }
+
+            Sprite testSpriteToUse = fallbackDugSprite;
+            if (TrackSources.TryGetValue(currentGridPos, out CreatureShape testSourceShape) && testSourceShape.TrackDugSprite != null)
+            {
+                testSpriteToUse = testSourceShape.TrackDugSprite;
+            }
+
+            if (this.VisualRenderer != null)
+            {
+                this.VisualRenderer.sprite = testSpriteToUse;
+
+                float testAlpha = 1f;
+                if (TrackDistances.TryGetValue(currentGridPos, out int testDistance))
+                {
+                    if (testDistance == 2) testAlpha = 0.65f;
+                    else if (testDistance >= 3) testAlpha = 0.35f;
+                }
+                this.VisualRenderer.color = new Color(1f, 1f, 1f, testAlpha);
+            }
+
+            // Exit early so we don't apply the hint visuals below
+            return;
+        }
+        // ---------------------------------------------------
+
+        // Standard Hint Logic
         Sprite spriteToUse = fallbackHintSprite;
         if (TrackSources.TryGetValue(currentGridPos, out CreatureShape sourceShape) && sourceShape.TrackHintSprite != null)
         {
@@ -40,6 +78,7 @@ public class TrackTile : TileEntityBase, IScannable
 
         if (spriteToUse != null && this.VisualRenderer != null)
         {
+            // Kept hardcoded to fallbackHintSprite per your request
             this.VisualRenderer.sprite = fallbackHintSprite;
             this.VisualRenderer.color = Color.white;
         }
@@ -49,15 +88,20 @@ public class TrackTile : TileEntityBase, IScannable
     {
         if (hasBeenDug) return;
 
-        if (GridGameManager.Instance.CurrentTool == EnumGridTool.MagnifyingGlass)
+        bool isMagnifyingGlass = (tool.HasValue && tool.Value == EnumGridTool.MagnifyingGlass) ||
+                                 (GridGameManager.Instance.CurrentTool == EnumGridTool.MagnifyingGlass);
+
+        if (isMagnifyingGlass)
         {
             if (InventoryManager.Instance.TryConsumeToolCharge(EnumGridTool.MagnifyingGlass))
             {
+                // We just call the standard scan. ApplyScannedVisual() handles the test logic now!
                 PerformRadarScan();
             }
             return;
         }
 
+        // --- ICE PICK LOGIC ---
         if ((tool.HasValue && tool.Value == EnumGridTool.IcePick) || (GridGameManager.Instance.CurrentTool == EnumGridTool.IcePick))
         {
             if (InventoryManager.Instance.TryConsumeToolCharge(EnumGridTool.IcePick))
@@ -70,7 +114,6 @@ public class TrackTile : TileEntityBase, IScannable
                     audioSource.PlayOneShot(trackFoundClip);
                 }
 
-                // Determine which sprite to use
                 Sprite spriteToUse = fallbackDugSprite;
                 if (TrackSources.TryGetValue(currentGridPos, out CreatureShape sourceShape) && sourceShape.TrackDugSprite != null)
                 {
@@ -79,7 +122,6 @@ public class TrackTile : TileEntityBase, IScannable
 
                 this.VisualRenderer.sprite = spriteToUse;
 
-                // Apply transparency logic based on distance
                 float alpha = 1f;
                 if (TrackDistances.TryGetValue(currentGridPos, out int distance))
                 {
