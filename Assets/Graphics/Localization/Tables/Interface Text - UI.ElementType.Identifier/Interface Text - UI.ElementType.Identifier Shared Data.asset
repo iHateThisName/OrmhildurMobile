@@ -47,6 +47,30 @@ MonoBehaviour:
     m_Key: UI.Button.MainMenu
     m_Metadata:
       m_Items: []
+  - m_Id: 7851235465805824
+    m_Key: UI.TapToWinMinigame.Intro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7851323374223360
+    m_Key: UI.TapToWinMinigame.Win
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7851366021906432
+    m_Key: UI.TapToWinMinigame.Loss
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7851752476688384
+    m_Key: UI.SimonSaysMinigame.Intro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7851756033458176
+    m_Key: UI.SimonSaysMinigame.Win
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7851758080278528
+    m_Key: UI.SimonSaysMinigame.Loss
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

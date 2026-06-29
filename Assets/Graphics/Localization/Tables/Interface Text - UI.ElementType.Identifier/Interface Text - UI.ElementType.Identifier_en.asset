@@ -50,6 +50,38 @@ MonoBehaviour:
     m_Localized: MainMenu
     m_Metadata:
       m_Items: []
+  - m_Id: 7851235465805824
+    m_Localized: Get ready to tap!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7851323374223360
+    m_Localized: 'You are fast!
+
+      +2 Ice picks'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7851366021906432
+    m_Localized: 'Oh no! Too slow.
+
+      -2 Ice picks'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7851752476688384
+    m_Localized: Copy the sequence of the buttons!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7851756033458176
+    m_Localized: 'You have a good memory!
+
+      +2 Ice picks'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7851758080278528
+    m_Localized: 'Wrong button.
+
+      -2 Ice picks'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

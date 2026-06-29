@@ -1,110 +1,187 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using TMPro;
+using UnityEngine.Localization; // 1. Added Localization namespace
 using Assets._Scripts.Utilities.Singleton;
+
+[System.Serializable]
+public struct MinigameUIData
+{
+    public EnumScene MinigameScene;
+
+    [Tooltip("Select the String Table and Key for the Intro text.")]
+    public LocalizedString IntroText; // 2. Changed from string to LocalizedString
+
+    [Tooltip("Select the String Table and Key for the Win text.")]
+    public LocalizedString WinText;   // 2. Changed from string to LocalizedString
+
+    [Tooltip("Select the String Table and Key for the Loss text.")]
+    public LocalizedString LossText;  // 2. Changed from string to LocalizedString
+}
 
 public class MinigameManager : Singleton<MinigameManager>
 {
-    [Header("Minigame Pool")]
+    [Header("Minigame Setup")]
     public List<EnumScene> MinigameScenes;
+
+    public List<MinigameUIData> MinigameTextData;
+
+    [Header("Intro UI")]
+    public GameObject IntroPanel;
+    public Button IntroStartButton;
+    public TMP_Text IntroTextDisplay;
+
+    [Header("Outro UI")]
+    public GameObject OutroPanel;
+    public Button OutroOkButton;
+    public TMP_Text OutroTextDisplay;
 
     private EnumScene currentlyPreloadedScene;
     private MinigameBase activeMinigame;
+    private GameObject activeMinigameCanvas;
 
     private async void Start()
     {
-        // Start preloading the very first minigame when the hex grid loads
+        if (IntroPanel != null) IntroPanel.SetActive(false);
+        if (OutroPanel != null) OutroPanel.SetActive(false);
+
+        IntroStartButton.onClick.AddListener(OnIntroStartClicked);
+        OutroOkButton.onClick.AddListener(OnOutroOkClicked);
+
         await PreloadNextMinigame();
     }
 
     private async Awaitable PreloadNextMinigame()
     {
-        // Pick a random scene from the enum list
         currentlyPreloadedScene = MinigameScenes[Random.Range(0, MinigameScenes.Count)];
-
-        // Ask the GameSceneManager to load it silently
         await GameSceneManager.Instance.PreloadSceneAdditiveAsync(currentlyPreloadedScene);
     }
 
     public void TriggerPreloadedMinigame()
     {
-        string targetSceneName = currentlyPreloadedScene.ToString();
-        Debug.Log($"[Minigame] Attempting to trigger scene: {targetSceneName}");
-
         GridGameManager.Instance.ChangeGameState(EnumGridGameState.MinigameActive);
 
+        string targetSceneName = currentlyPreloadedScene.ToString();
         Scene minigameScene = SceneManager.GetSceneByName(targetSceneName);
 
-        // Debug Check 1: Did the scene actually load?
         if (!minigameScene.IsValid() || !minigameScene.isLoaded)
         {
-            Debug.LogError($"[Minigame Error] Scene '{targetSceneName}' is not loaded or valid. Does your EnumScene exactly match the Scene file name?");
+            Debug.LogError($"[Minigame Error] Scene '{targetSceneName}' is not loaded!");
             return;
         }
 
         activeMinigame = null;
-        GameObject canvasToActivate = null;
+        activeMinigameCanvas = null;
 
-        // Debug Check 2: Searching the root objects
         GameObject[] rootObjects = minigameScene.GetRootGameObjects();
-        Debug.Log($"[Minigame] Found {rootObjects.Length} root objects in the scene.");
-
         foreach (GameObject rootObj in rootObjects)
         {
-            // Look for the script deeply (the 'true' makes it search disabled children too)
             MinigameBase foundScript = rootObj.GetComponentInChildren<MinigameBase>(true);
-
             if (foundScript != null)
             {
                 activeMinigame = foundScript;
-                canvasToActivate = rootObj;
-                Debug.Log($"[Minigame] Found the script on: {rootObj.name}");
-                break; // We found it, stop searching
+                activeMinigameCanvas = rootObj;
+                break;
             }
         }
 
-        // Debug Check 3: Activating the game
-        if (activeMinigame != null && canvasToActivate != null)
+        if (activeMinigame != null && activeMinigameCanvas != null)
         {
-            canvasToActivate.SetActive(true);
-            Debug.Log("[Minigame] Canvas turned ON. Starting minigame logic...");
+            MinigameUIData currentData = GetUIDataForScene(currentlyPreloadedScene);
 
-            activeMinigame.OnMinigameComplete += HandleMinigameFinished;
-            activeMinigame.StartMinigame();
+            // 3. Asynchronously fetch and assign the localized Intro text
+            if (IntroTextDisplay != null && !currentData.IntroText.IsEmpty)
+            {
+                currentData.IntroText.GetLocalizedStringAsync().Completed += (handle) =>
+                {
+                    IntroTextDisplay.text = handle.Result;
+                };
+            }
+
+            IntroPanel.SetActive(true);
         }
         else
         {
-            Debug.LogError($"[Minigame Error] Could not find the TapToWinMinigame script anywhere in the {targetSceneName} scene! Is it attached to the Canvas?");
+            Debug.LogError($"[Minigame Error] Could not find the MinigameBase script in {targetSceneName}!");
         }
     }
 
-    private async void HandleMinigameFinished(bool playerWon)
+    private void OnIntroStartClicked()
+    {
+        IntroPanel.SetActive(false);
+
+        activeMinigameCanvas.SetActive(true);
+        activeMinigame.OnMinigameComplete += HandleMinigameFinished;
+        activeMinigame.StartMinigame();
+    }
+
+    private void HandleMinigameFinished(bool playerWon)
     {
         activeMinigame.OnMinigameComplete -= HandleMinigameFinished;
+        MinigameUIData currentData = GetUIDataForScene(currentlyPreloadedScene);
 
         if (playerWon)
         {
             InventoryManager.Instance.AddToolCharge(EnumGridTool.IcePick, 2);
-            Debug.Log("Minigame Won! Give a reward!");
-        }
+            Debug.Log("Minigame Won!");
 
-        else 
+            // 4. Asynchronously fetch and assign the localized Win text
+            if (OutroTextDisplay != null && !currentData.WinText.IsEmpty)
+            {
+                currentData.WinText.GetLocalizedStringAsync().Completed += (handle) =>
+                {
+                    OutroTextDisplay.text = handle.Result;
+                };
+            }
+        }
+        else
         {
             InventoryManager.Instance.AddToolCharge(EnumGridTool.IcePick, -2);
-            Debug.Log("Minigame Lost!"); 
+            Debug.Log("Minigame Lost!");
+
+            // 5. Asynchronously fetch and assign the localized Loss text
+            if (OutroTextDisplay != null && !currentData.LossText.IsEmpty)
+            {
+                currentData.LossText.GetLocalizedStringAsync().Completed += (handle) =>
+                {
+                    OutroTextDisplay.text = handle.Result;
+                };
+            }
         }
+
         GridGameManager.Instance.IsResolvingInteraction = false;
+        activeMinigameCanvas.SetActive(false);
+        OutroPanel.SetActive(true);
+    }
 
-
+    private async void OnOutroOkClicked()
+    {
+        OutroPanel.SetActive(false);
         activeMinigame = null;
+        activeMinigameCanvas = null;
 
-        // 1. Ask GameSceneManager to instantly dump the scene from memory
         await GameSceneManager.Instance.UnloadSceneAdditiveAsync(currentlyPreloadedScene);
-
-        // 2. Unlock the hex grid
         GridGameManager.Instance.ChangeGameState(EnumGridGameState.PlayerTurn);
-
-        // 3. Secretly preload the next minigame!
         await PreloadNextMinigame();
+    }
+
+    private MinigameUIData GetUIDataForScene(EnumScene scene)
+    {
+        foreach (var data in MinigameTextData)
+        {
+            if (data.MinigameScene == scene)
+            {
+                return data;
+            }
+        }
+        return new MinigameUIData();
+    }
+
+    private void OnDestroy()
+    {
+        if (IntroStartButton != null) IntroStartButton.onClick.RemoveListener(OnIntroStartClicked);
+        if (OutroOkButton != null) OutroOkButton.onClick.RemoveListener(OnOutroOkClicked);
     }
 }
