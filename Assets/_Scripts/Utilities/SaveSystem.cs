@@ -18,7 +18,16 @@ public class SaveSystem : MonoBehaviour {
         if (!PlayerPrefs.HasKey(SAVE_KEY)) return new SaveData(); // First time playing.
 
         string json = PlayerPrefs.GetString(SAVE_KEY);
-        return JsonConvert.DeserializeObject<SaveData>(json);
+
+        SaveData saveData = JsonConvert.DeserializeObject<SaveData>(json);
+
+        // Validate the save file
+        ValidateSave(saveData);
+        return saveData;
+    }
+
+    private static void ValidateSave(SaveData saveData) {
+        saveData.creatureSaveDataLookup ??= new Dictionary<EnumCreatureName, CreatureSaveData>();
     }
 }
 

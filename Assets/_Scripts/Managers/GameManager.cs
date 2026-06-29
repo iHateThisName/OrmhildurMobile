@@ -20,11 +20,13 @@ public class GameManager : RegulatorSingelton<GameManager> {
 
     private void OnApplicationQuit() {
         SaveSystem.Save(this.SaveData);
+        Debug.Log("GameManager: Application quitting, save data.");
     }
 
     private void OnApplicationPause(bool pause) {
         if (pause) {
             SaveSystem.Save(this.SaveData);
+            Debug.Log("GameManager: Application paused, save data.");
         }
     }
 
@@ -78,7 +80,11 @@ public class GameManager : RegulatorSingelton<GameManager> {
 
     [Button, ContextMenu("Debug Creature Data")]
     public void DebugCreatureData() {
-        this.SaveData.creatureSaveDataLookup.Values.ToList().ForEach(data => {
+        System.Collections.Generic.List<CreatureSaveData> creatureSaveDatas = this.SaveData.creatureSaveDataLookup.Values.ToList();
+
+        if (creatureSaveDatas.Count == 0) Debug.Log("No creature data found.");
+        
+        creatureSaveDatas.ForEach(data => {
             Debug.Log($"Creature: {data.creatureName}, Amount: {data.amount}");
         });
     }
