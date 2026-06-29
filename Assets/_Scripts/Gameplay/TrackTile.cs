@@ -125,8 +125,8 @@ public class TrackTile : TileEntityBase, IScannable
                 float alpha = 1f;
                 if (TrackDistances.TryGetValue(currentGridPos, out int distance))
                 {
-                    if (distance == 2) alpha = 0.65f;
-                    else if (distance >= 3) alpha = 0.35f;
+                    if (distance == 2) alpha = 0.60f;
+                    else if (distance >= 3) alpha = 0.25f;
                 }
 
                 this.VisualRenderer.color = new Color(1f, 1f, 1f, alpha);

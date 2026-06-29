@@ -93,7 +93,7 @@ MonoBehaviour:
   audioSource: {fileID: 477691113572977933}
   treasureClip: {fileID: 8300000, guid: dab6d11caad30f548b1d6d186288d0d6, type: 3}
   questionMarkSprite: {fileID: 21300000, guid: fb70930b9d3c7b44cb49715585278384, type: 3}
-  defaultSprite: {fileID: 21300000, guid: 8c7ad7205b4ab2d4fac0539a613f87bc, type: 3}
+  defaultSprite: {fileID: 21300000, guid: 2c347872d5908b0489bc13018c1d389d, type: 3}
 --- !u!82 &477691113572977933
 AudioSource:
   m_ObjectHideFlags: 0
