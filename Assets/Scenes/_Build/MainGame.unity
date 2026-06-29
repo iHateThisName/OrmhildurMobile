@@ -13575,7 +13575,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f55be826de8a53745addade82dc3b844, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MinigameManager
-  MinigameScenes: 0400000005000000
+  MinigameScenes: 06000000
   MinigameTextData:
   - MinigameScene: 4
     IntroText:
@@ -13606,6 +13606,34 @@ MonoBehaviour:
       m_WaitForCompletion: 0
       m_LocalVariables: []
   - MinigameScene: 5
+    IntroText:
+      m_TableReference:
+        m_TableCollectionName: GUID:cae44e0ee1a1a8f46a968ec737ca0764
+      m_TableEntryReference:
+        m_KeyId: 7851752476688384
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    WinText:
+      m_TableReference:
+        m_TableCollectionName: GUID:cae44e0ee1a1a8f46a968ec737ca0764
+      m_TableEntryReference:
+        m_KeyId: 7851756033458176
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    LossText:
+      m_TableReference:
+        m_TableCollectionName: GUID:cae44e0ee1a1a8f46a968ec737ca0764
+      m_TableEntryReference:
+        m_KeyId: 7851758080278528
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+  - MinigameScene: 6
     IntroText:
       m_TableReference:
         m_TableCollectionName: GUID:cae44e0ee1a1a8f46a968ec737ca0764

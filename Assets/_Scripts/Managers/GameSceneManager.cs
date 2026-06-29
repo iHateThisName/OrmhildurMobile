@@ -101,4 +101,5 @@ public enum EnumScene {
     //Minigames
     TapToWinMinigame,
     SimonSaysMinigame,
+    WhackAMoleMinigame,
 }
