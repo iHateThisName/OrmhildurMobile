@@ -30,6 +30,12 @@ public class GameManager : RegulatorSingelton<GameManager> {
         }
     }
 
+    public void ForceSave() {
+        SaveSystem.Save(this.SaveData);
+        Debug.Log("GameManager: Force save data.");
+        Debug.Log(this.SaveData.ToString());
+    }
+
     private void OnDrawGizmos() {
         if (!(this.DisplaySafeAreaGizmos || this.DisplayMaxAreaGizmos)) return;
 

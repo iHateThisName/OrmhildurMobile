@@ -29,6 +29,10 @@ public class SaveSystem : MonoBehaviour {
     private static void ValidateSave(SaveData saveData) {
         saveData.creatureSaveDataLookup ??= new Dictionary<EnumCreatureName, CreatureSaveData>();
     }
+
+    public override string ToString() {
+        return JsonConvert.SerializeObject(this);
+    }
 }
 
 /// <summary>
