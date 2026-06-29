@@ -5,6 +5,7 @@ using UnityEngine;
 [DefaultExecutionOrder(-10)]
 public class GameManager : RegulatorSingelton<GameManager> {
     [field: SerializeField, ReadOnly] public SaveData SaveData { get; private set; }
+    public EnumBiomes CurrentBiomeSelected { get; set; } = EnumBiomes.Cliffs;
 
     [SerializeField] private bool DisplaySafeAreaGizmos = true;
     [SerializeField] private bool DisplayMaxAreaGizmos = true;
@@ -24,7 +25,6 @@ public class GameManager : RegulatorSingelton<GameManager> {
             SaveSystem.Save(this.SaveData);
         }
     }
-
 
     private void OnDrawGizmos() {
         if (!(this.DisplaySafeAreaGizmos || this.DisplayMaxAreaGizmos)) return;
@@ -64,5 +64,13 @@ public class GameManager : RegulatorSingelton<GameManager> {
     public void IncreaseTestScore() {
         this.SaveData.score++;
         Debug.Log($"Score increased to: {this.SaveData.score}");
+    }
+
+    public CreatureSaveData GetCreatureSaveData(EnumCreatureName creatureName) {
+        if (!this.SaveData.creatureSaveDataLookup.TryGetValue(creatureName, out CreatureSaveData creatureSaveData)) {
+            creatureSaveData = new CreatureSaveData { creatureName = creatureName, amount = 0 };
+            this.SaveData.creatureSaveDataLookup[creatureName] = creatureSaveData;
+        }
+        return creatureSaveData;
     }
 }
