@@ -5272,8 +5272,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelSpawner
   TotalCreaturesToSpawn: 2
-  MinigameCount: 7
-  TreasureCount: 4
+  MinigameCount: 10
+  TreasureCount: 6
   CreaturePool:
   - Shape: {fileID: 11400000, guid: 75b53e8397015f647bcf88feb6d515ec, type: 2}
     Weight: 0

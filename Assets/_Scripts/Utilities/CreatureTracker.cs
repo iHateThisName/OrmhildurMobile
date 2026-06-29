@@ -1,8 +1,8 @@
+using Assets._Scripts.Utilities.Singleton;
 using System; // REQUIRED for Actions
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using Assets._Scripts.Utilities.Singleton;
 
 public class CreatureTracker : Singleton<CreatureTracker>
 {
@@ -47,6 +47,12 @@ public class CreatureTracker : Singleton<CreatureTracker>
                 {
                     Debug.Log("<color=cyan>[Level]</color> All creatures have been found! Level Complete.");
                     OnAllCreaturesFound?.Invoke();
+                    foreach (CreatureInstance creatures in ActiveCreatures)
+                    {
+                        CreatureSaveData creatureSaveData = GameManager.Instance.GetCreatureSaveData(creatures.Shape.CreatureName);
+                        creatureSaveData.amount++;
+                        GameManager.Instance.ForceSave();
+                    }
                 }
 
                 return true;

@@ -2246,7 +2246,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91786e8c0b756b941aa575b9d92890c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridManager
-  size: {x: 14, y: 7}
+  size: {x: 10, y: 5}
   <Grid>k__BackingField: {fileID: 1321883116}
   <Tilemap>k__BackingField: {fileID: 164907570}
   randomTiles:
@@ -5272,8 +5272,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelSpawner
   TotalCreaturesToSpawn: 2
-  MinigameCount: 7
-  TreasureCount: 4
+  MinigameCount: 4
+  TreasureCount: 3
   CreaturePool:
   - Shape: {fileID: 11400000, guid: 75b53e8397015f647bcf88feb6d515ec, type: 2}
     Weight: 0
@@ -5291,7 +5291,7 @@ MonoBehaviour:
   TrackPrefab: {fileID: 2591338646484683892, guid: 664bc798abebb5847954d14d2e2cf964, type: 3}
   StartingIcePicks: 15
   StartingHammers: 5
-  StartingMagnifyingGlasses: 2
+  StartingMagnifyingGlasses: 1
   TrackSpawnRules:
   - Distance: 1
     Amount: 1
