@@ -1,5 +1,7 @@
 using Assets._Scripts.Utilities.Singleton;
 using Gaskellgames;
+using System.Diagnostics.Contracts;
+using System.Linq;
 using UnityEngine;
 
 [DefaultExecutionOrder(-10)]
@@ -72,5 +74,12 @@ public class GameManager : RegulatorSingelton<GameManager> {
             this.SaveData.creatureSaveDataLookup[creatureName] = creatureSaveData;
         }
         return creatureSaveData;
+    }
+
+    [Button, ContextMenu("Debug Creature Data")]
+    public void DebugCreatureData() {
+        this.SaveData.creatureSaveDataLookup.Values.ToList().ForEach(data => {
+            Debug.Log($"Creature: {data.creatureName}, Amount: {data.amount}");
+        });
     }
 }

@@ -28,7 +28,7 @@ public class SaveSystem : MonoBehaviour {
 [System.Serializable]
 public class SaveData {
     public int score; // Testing
-    public Dictionary<EnumCreatureName, CreatureSaveData> creatureSaveDataLookup;
+    public Dictionary<EnumCreatureName, CreatureSaveData> creatureSaveDataLookup = new Dictionary<EnumCreatureName, CreatureSaveData>();
 }
 
 /// <summary>
