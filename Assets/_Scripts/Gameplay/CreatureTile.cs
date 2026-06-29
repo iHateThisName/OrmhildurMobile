@@ -31,15 +31,31 @@ public class CreatureTile : TileEntityBase, IScannable
         hasBeenDug = false;
     }
 
-    public void SetAsCreatureAnchorTile(CreatureShape creatureInformation) {
-
+    public void SetAsCreatureAnchorTile(CreatureShape creatureInformation)
+    {
         this.isCreatureAnchor = true;
         this.creatureVisualRendere.gameObject.SetActive(true);
 
-        // Set the creature information on the anchor tile
+        // Keep this so the SpriteRenderer respects your raw image aspect ratio 
+        // before you apply your custom scaling
+        this.creatureVisualRendere.drawMode = SpriteDrawMode.Simple;
+
+        // Set the base information
         this.CreatureName = creatureInformation.CreatureName;
         this.creatureVisualRendere.sprite = creatureInformation.CreatureVisualSprite;
+
+        // Apply custom position
         this.creatureVisualRendere.gameObject.transform.localPosition = creatureInformation.CreatureVisualTransform;
+
+        // Apply custom rotation
+        this.creatureVisualRendere.gameObject.transform.localRotation = Quaternion.Euler(0f, 0f, creatureInformation.CreatureVisualRotation);
+
+        //Apply custom X/Y scale
+        this.creatureVisualRendere.gameObject.transform.localScale = new Vector3(
+            creatureInformation.CreatureVisualScale.x,
+            creatureInformation.CreatureVisualScale.y,
+            1f
+        );
     }
 
     public void ApplyScannedVisual()

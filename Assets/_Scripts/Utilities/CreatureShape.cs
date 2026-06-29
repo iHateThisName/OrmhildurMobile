@@ -7,6 +7,8 @@ public class CreatureShape : ScriptableObject
     [Header("Creature Definition")]
     public Sprite CreatureVisualSprite;
     public Vector2 CreatureVisualTransform;
+    public float CreatureVisualRotation;
+    public Vector2 CreatureVisualScale = new Vector2(1f, 1f);
 
 
     public EnumCreatureName CreatureName = EnumCreatureName.None;
