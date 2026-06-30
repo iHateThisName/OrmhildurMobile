@@ -32,6 +32,6 @@ public class PageController : MonoBehaviour {
 public enum EnumBiomes : int {
     None = 0,
     Cliffs = 1,
-    JaggedMountains = 2,
-    Sea = 3,
+    Sea = 2,
+    JaggedMountains = 3,
 }

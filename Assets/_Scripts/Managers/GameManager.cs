@@ -8,7 +8,7 @@ using UnityEngine;
 [DefaultExecutionOrder(-10)]
 public class GameManager : RegulatorSingelton<GameManager> {
     [field: SerializeField, ReadOnly] public SaveData SaveData { get; private set; }
-    public EnumBiomes CurrentBiomeSelected { get; set; } = EnumBiomes.Cliffs;
+    [field: SerializeField] public EnumBiomes CurrentBiomeSelected { get; set; } = EnumBiomes.Cliffs;
 
     [SerializeField] private bool DisplaySafeAreaGizmos = true;
     [SerializeField] private bool DisplayMaxAreaGizmos = true;

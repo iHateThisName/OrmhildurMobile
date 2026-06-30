@@ -29,6 +29,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/_Build/Minigames/DirtWiperMinigame.unity
     guid: 81d99d89588fc5f48b1d44df3e9ef967
+  - enabled: 1
+    path: Assets/Scenes/_Build/Minigames/FallingObjectsMinigame.unity
+    guid: 0b523a52a20118f429ddb19d38897a30
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 1ff205b80a2ba3743a93ca2c4a7df218, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}

@@ -12,8 +12,9 @@ public class UIBestiary : Singleton<UIBestiary> {
     private Image currentImage;
 
     [Header("Biome Images")]
-    [SerializeField] private Image CliffsBiome;
-    [SerializeField] private Image JaggedBiome;
+    [SerializeField] private Image CliffsBakground;
+    [SerializeField] private Image SeaBakground;
+    [SerializeField] private Image JaggedBackground;
 
     public event System.Action<EnumBiomes> OnBiomeChanged;
 
@@ -34,22 +35,38 @@ public class UIBestiary : Singleton<UIBestiary> {
         this.playButton.onClick.RemoveAllListeners();
     }
 
+    protected override void Awake() {
+        base.Awake();
+        DisableAllBackgrounds();
+    }
+
     private void Start() {
 
         switch (GameManager.Instance.CurrentBiomeSelected) {
             case EnumBiomes.Cliffs:
-                this.currentImage = this.CliffsBiome;
-                this.CliffsBiome.gameObject.SetActive(true);
+                this.currentImage = this.CliffsBakground;
+                this.CliffsBakground.gameObject.SetActive(true);
+                break;
+            case EnumBiomes.Sea:
+                this.currentImage = this.SeaBakground;
+                this.SeaBakground.gameObject.SetActive(true);
                 break;
             case EnumBiomes.JaggedMountains:
-                this.currentImage = this.JaggedBiome;
-                this.JaggedBiome.gameObject.SetActive(true);
+                this.currentImage = this.JaggedBackground;
+                this.JaggedBackground.gameObject.SetActive(true);
                 break;
             default:
                 Debug.LogWarning($"Biome {GameManager.Instance.CurrentBiomeSelected} is not implemented yet.");
                 break;
         }
     }
+
+    private void DisableAllBackgrounds() {
+        this.CliffsBakground.gameObject.SetActive(false);
+        this.SeaBakground.gameObject.SetActive(false);
+        this.JaggedBackground.gameObject.SetActive(false);
+    }
+
     private void OnMainMenuButtonClicked() {
         GameSceneManager.Instance.LoadScene(EnumScene.MainMenuScene);
         this.mainMenuButton.interactable = false;
@@ -68,10 +85,13 @@ public class UIBestiary : Singleton<UIBestiary> {
 
         switch (newBiome) {
             case EnumBiomes.Cliffs:
-                this.currentImage = this.CliffsBiome;
+                this.currentImage = this.CliffsBakground;
+                break;
+            case EnumBiomes.Sea:
+                this.currentImage = this.SeaBakground;
                 break;
             case EnumBiomes.JaggedMountains:
-                this.currentImage = this.JaggedBiome;
+                this.currentImage = this.JaggedBackground;
                 break;
             default:
                 Debug.LogWarning($"Biome {newBiome} is not implemented yet.");

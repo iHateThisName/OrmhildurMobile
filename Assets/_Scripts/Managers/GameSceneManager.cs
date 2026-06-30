@@ -1,4 +1,4 @@
-﻿using Assets._Scripts.Utilities.Singleton;
+using Assets._Scripts.Utilities.Singleton;
 using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -108,5 +108,6 @@ public enum EnumScene {
     TapToWinMinigame,
     SimonSaysMinigame,
     WhackAMoleMinigame,
+    FallingObjectsMinigame,
     DirtWiperMinigame,
 }
