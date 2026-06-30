@@ -71,6 +71,22 @@ MonoBehaviour:
     m_Key: UI.SimonSaysMinigame.Loss
     m_Metadata:
       m_Items: []
+  - m_Id: 8173042521653248
+    m_Key: UI.WhackAMole.Intro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8173106539315200
+    m_Key: 'UI.WhackAMole.Win
+
+'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8173149157638144
+    m_Key: 'UI.WhackAMole.Loss
+
+'
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CreatureShape
   CreatureVisualSprite: {fileID: 21300000, guid: c679a0214b7d79144807f45cb5d3773a, type: 3}
   CreatureVisualTransform: {x: 0.2, y: 0.5}
+  CreatureVisualRotation: 0
+  CreatureVisualScale: {x: 1.5, y: 1.5}
   CreatureName: 1
   CreaturePrefab: {fileID: 2005331747181704781, guid: bb27ac3af91b4d44388564301ba7cdea, type: 3}
   TrackHintSprite: {fileID: 21300000, guid: fb70930b9d3c7b44cb49715585278384, type: 3}

@@ -82,6 +82,22 @@ MonoBehaviour:
       -2 Ice picks'
     m_Metadata:
       m_Items: []
+  - m_Id: 8173042521653248
+    m_Localized: Time to whack!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8173106539315200
+    m_Localized: 'Well done!
+
+      +2 Ice picks'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8173149157638144
+    m_Localized: 'Better luck next time!
+
+      -2'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
