@@ -1,83 +1,96 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
 
 public class DirtWiperMinigame : MinigameBase
 {
-    [Header("Dirt Wiping Setup")]
-    [Tooltip("The main camera the player actually looks through.")]
+    [Header("Cameras")]
+    [Tooltip("The camera the player looks through (can be a local minigame camera)")]
     [SerializeField] private Camera mainCamera;
-    [Tooltip("The camera that strictly renders the brush strokes to the RenderTexture.")]
+    [Tooltip("The camera strictly rendering to the RenderTexture")]
     [SerializeField] private Camera maskCamera;
 
+    [Header("Brushes & Masking")]
     [SerializeField] private GameObject brushPrefab;
     [SerializeField] private Transform brushContainer;
     [SerializeField] private RenderTexture maskRenderTexture;
+    private float brushSpacing = 0.1f;
+
+    [Header("Sponge Cursor Visual")]
+    [Tooltip("The cloth graphic that follows the mouse")]
+    [SerializeField] private GameObject spongePrefab;
+    private GameObject activeSponge;
 
     [Header("Win Condition")]
-    [Tooltip("Percentage of the screen that needs to be wiped clean (0.0 to 1.0)")]
-    [SerializeField, Range(0f, 1f)] private float requiredCleanPercentage = 0.85f;
-    [Tooltip("How often to check the pixels (Checking every frame is bad for performance)")]
+    [Tooltip("Lower this! The sprite doesn't fill the whole screen. Use the debug log to find the sweet spot.")]
+    [SerializeField, Range(0f, 1f)] private float requiredCleanPercentage = 0.15f;
     [SerializeField] private float checkInterval = 0.5f;
 
     private Texture2D textureCheck;
     private Vector3 lastMousePosition;
 
-    // Optional: To make the brush strokes continuous instead of dotted if the mouse moves fast
-    private float brushSpacing = 0.1f;
-
-    public void Start()
-    {
-        base.StartMinigame(); // Sets isPlaying = true and resets timer
-
-        // Initialize the Texture2D used to read the Render Texture
-        // Sized down slightly if performance becomes an issue, but matching RT size is safest for accuracy
-        textureCheck = new Texture2D(maskRenderTexture.width, maskRenderTexture.height, TextureFormat.RGBA32, false);
-
-        StartCoroutine(CheckWinConditionRoutine());
-    }
+    // Tracks the current percentage for the debug log
+    private float currentCleanPercentage = 0f;
 
     public override void StartMinigame()
     {
-        base.StartMinigame(); // Sets isPlaying = true and resets timer
+        ClearRenderTexture();
 
-        // Initialize the Texture2D used to read the Render Texture
-        // Sized down slightly if performance becomes an issue, but matching RT size is safest for accuracy
+        if (spongePrefab != null)
+        {
+            activeSponge = Instantiate(spongePrefab, transform);
+            Cursor.visible = false;
+        }
+
         textureCheck = new Texture2D(maskRenderTexture.width, maskRenderTexture.height, TextureFormat.RGBA32, false);
+        currentCleanPercentage = 0f;
 
+        base.StartMinigame();
         StartCoroutine(CheckWinConditionRoutine());
+    }
+
+    private void ClearRenderTexture()
+    {
+        RenderTexture currentActive = RenderTexture.active;
+        RenderTexture.active = maskRenderTexture;
+        GL.Clear(true, true, Color.clear);
+        RenderTexture.active = currentActive;
     }
 
     protected override void Update()
     {
-        base.Update(); // Critical: Keeps the TimeLimit logic running!
+        base.Update();
 
         if (!isPlaying) return;
 
+        UpdateSpongePosition();
         HandleInput();
+    }
+
+    private void UpdateSpongePosition()
+    {
+        if (activeSponge == null || Mouse.current == null) return;
+
+        Vector3 mousePos = Mouse.current.position.ReadValue();
+        mousePos.z = 10f;
+        activeSponge.transform.position = mainCamera.ScreenToWorldPoint(mousePos);
     }
 
     private void HandleInput()
     {
         if (Mouse.current == null) return;
 
+        Vector3 mousePos = Mouse.current.position.ReadValue();
+        mousePos.z = 10f;
+        Vector3 worldPos = mainCamera.ScreenToWorldPoint(mousePos);
+
         if (Mouse.current.leftButton.wasPressedThisFrame)
         {
-            Vector3 mousePos = Mouse.current.position.ReadValue();
-            mousePos.z = 10f;
-
-            // USE MAIN CAMERA HERE
-            lastMousePosition = mainCamera.ScreenToWorldPoint(mousePos);
+            lastMousePosition = worldPos;
             Instantiate(brushPrefab, lastMousePosition, Quaternion.identity, brushContainer);
         }
         else if (Mouse.current.leftButton.isPressed)
         {
-            Vector3 mousePos = Mouse.current.position.ReadValue();
-            mousePos.z = 10f;
-
-            // USE MAIN CAMERA HERE
-            Vector3 worldPos = mainCamera.ScreenToWorldPoint(mousePos);
-
             if (Vector3.Distance(worldPos, lastMousePosition) > brushSpacing)
             {
                 Instantiate(brushPrefab, worldPos, Quaternion.identity, brushContainer);
@@ -88,7 +101,6 @@ public class DirtWiperMinigame : MinigameBase
 
     private IEnumerator CheckWinConditionRoutine()
     {
-        // Periodically check the pixels while the game is active
         while (isPlaying)
         {
             yield return new WaitForSeconds(checkInterval);
@@ -98,32 +110,20 @@ public class DirtWiperMinigame : MinigameBase
 
     private void CheckCleanPercentage()
     {
-        // 1. Set our mask as the active Render Texture
         RenderTexture.active = maskRenderTexture;
-
-        // 2. Copy the pixels into our Texture2D
         textureCheck.ReadPixels(new Rect(0, 0, maskRenderTexture.width, maskRenderTexture.height), 0, 0);
         textureCheck.Apply();
-
-        // 3. Clear the active Render Texture
         RenderTexture.active = null;
 
-        // 4. Count the pixels
         Color[] pixels = textureCheck.GetPixels();
         int cleanPixels = 0;
 
         for (int i = 0; i < pixels.Length; i++)
         {
-            // Assuming your brush prefab is painting white/opaque onto a transparent/black background.
-            // Adjust this check depending on how your shader is reading the mask (r channel, alpha channel, etc.)
-            if (pixels[i].a > 0.1f)
-            {
-                cleanPixels++;
-            }
+            if (pixels[i].a > 0.1f) cleanPixels++;
         }
 
-        // 5. Calculate percentage
-        float currentCleanPercentage = (float)cleanPixels / pixels.Length;
+        currentCleanPercentage = (float)cleanPixels / pixels.Length;
 
         if (currentCleanPercentage >= requiredCleanPercentage)
         {
@@ -133,7 +133,14 @@ public class DirtWiperMinigame : MinigameBase
 
     protected override void EndMinigame(bool wasVictorious)
     {
-        StopAllCoroutines(); // Stop checking pixels
+        StopAllCoroutines();
+
+        if (activeSponge != null) Destroy(activeSponge);
+        Cursor.visible = true;
+
+        // --- THE DEBUG LOG ---
+        Debug.Log($"<color=cyan>[DirtWiperMinigame]</color> Game Ended. Player cleaned: <b>{(currentCleanPercentage * 100f):0.00}%</b> of the total Render Texture area.");
+
         base.EndMinigame(wasVictorious);
     }
 }

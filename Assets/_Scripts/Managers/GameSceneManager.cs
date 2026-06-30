@@ -108,4 +108,5 @@ public enum EnumScene {
     TapToWinMinigame,
     SimonSaysMinigame,
     WhackAMoleMinigame,
+    DirtWiperMinigame,
 }

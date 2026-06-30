@@ -6614,7 +6614,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 55
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -13377,7 +13377,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f55be826de8a53745addade82dc3b844, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MinigameManager
-  MinigameScenes: 040000000500000006000000
+  MinigameScenes: 07000000
   MinigameTextData:
   - MinigameScene: 4
     IntroText:
@@ -13436,6 +13436,34 @@ MonoBehaviour:
       m_WaitForCompletion: 0
       m_LocalVariables: []
   - MinigameScene: 6
+    IntroText:
+      m_TableReference:
+        m_TableCollectionName: GUID:cae44e0ee1a1a8f46a968ec737ca0764
+      m_TableEntryReference:
+        m_KeyId: 8173042521653248
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    WinText:
+      m_TableReference:
+        m_TableCollectionName: GUID:cae44e0ee1a1a8f46a968ec737ca0764
+      m_TableEntryReference:
+        m_KeyId: 8173106539315200
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    LossText:
+      m_TableReference:
+        m_TableCollectionName: GUID:cae44e0ee1a1a8f46a968ec737ca0764
+      m_TableEntryReference:
+        m_KeyId: 8173149157638144
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+  - MinigameScene: 7
     IntroText:
       m_TableReference:
         m_TableCollectionName: GUID:cae44e0ee1a1a8f46a968ec737ca0764

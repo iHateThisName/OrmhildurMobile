@@ -43,7 +43,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -121,7 +121,315 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: TRANSPARENT-gudrun in dust_0
+      rect:
+        serializedVersion: 2
+        x: 1245
+        y: 1707
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a60557d34ef55464bad211cad29637b3
+      internalID: -1782482292
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TRANSPARENT-gudrun in dust_1
+      rect:
+        serializedVersion: 2
+        x: 1187
+        y: 1692
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6b6fda5180c1e3042a4926d331216780
+      internalID: -649973633
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TRANSPARENT-gudrun in dust_2
+      rect:
+        serializedVersion: 2
+        x: 1252
+        y: 1678
+        width: 15
+        height: 22
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3c2e92b6f2773ff4c86c8ede9e43fdda
+      internalID: 1230692157
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TRANSPARENT-gudrun in dust_3
+      rect:
+        serializedVersion: 2
+        x: 894
+        y: 1018
+        width: 22
+        height: 22
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2474ecbbecd75eb47bb633eb0ec2fcc9
+      internalID: -486388233
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TRANSPARENT-gudrun in dust_4
+      rect:
+        serializedVersion: 2
+        x: 915
+        y: 29
+        width: 601
+        height: 1657
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 396455c539edefa4487117bf8a933058
+      internalID: -1508700680
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TRANSPARENT-gudrun in dust_5
+      rect:
+        serializedVersion: 2
+        x: 894
+        y: 974
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 636ae863fbe761e4b944a848e56da623
+      internalID: -706083776
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TRANSPARENT-gudrun in dust_6
+      rect:
+        serializedVersion: 2
+        x: 1487
+        y: 689
+        width: 36
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 23d1dc133b21b0548871e019355d9287
+      internalID: -1470092326
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TRANSPARENT-gudrun in dust_7
+      rect:
+        serializedVersion: 2
+        x: 1516
+        y: 527
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d31b8a945d655b04fa56f0dd986f6b5c
+      internalID: 1149929438
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TRANSPARENT-gudrun in dust_8
+      rect:
+        serializedVersion: 2
+        x: 1494
+        y: 498
+        width: 29
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 02f64e636d42e1c43bef3b76b308a9db
+      internalID: -1222791342
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TRANSPARENT-gudrun in dust_9
+      rect:
+        serializedVersion: 2
+        x: 1523
+        y: 447
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e65ab20bff6a9054381e8968a4496347
+      internalID: -1641802988
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TRANSPARENT-gudrun in dust_10
+      rect:
+        serializedVersion: 2
+        x: 1128
+        y: 7
+        width: 15
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2ec4ff5df22d5504d86e8cc83677ec53
+      internalID: -217210673
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TRANSPARENT-gudrun in dust_11
+      rect:
+        serializedVersion: 2
+        x: 1311
+        y: 7
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 183f9034351645f43965e24a393c9e9f
+      internalID: -357272766
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TRANSPARENT-gudrun in dust_12
+      rect:
+        serializedVersion: 2
+        x: 1333
+        y: 15
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aa3082fd589083141bc45fb8bbe3d68f
+      internalID: 207734521
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TRANSPARENT-gudrun in dust_13
+      rect:
+        serializedVersion: 2
+        x: 1157
+        y: 0
+        width: 22
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 04da80c4d9a0c8345865ed4db5451b67
+      internalID: 65508183
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -134,8 +442,24 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
-    nameFileIdTable: {}
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      TRANSPARENT-gudrun in dust_0: -1782482292
+      TRANSPARENT-gudrun in dust_1: -649973633
+      TRANSPARENT-gudrun in dust_10: -217210673
+      TRANSPARENT-gudrun in dust_11: -357272766
+      TRANSPARENT-gudrun in dust_12: 207734521
+      TRANSPARENT-gudrun in dust_13: 65508183
+      TRANSPARENT-gudrun in dust_2: 1230692157
+      TRANSPARENT-gudrun in dust_3: -486388233
+      TRANSPARENT-gudrun in dust_4: -1508700680
+      TRANSPARENT-gudrun in dust_5: -706083776
+      TRANSPARENT-gudrun in dust_6: -1470092326
+      TRANSPARENT-gudrun in dust_7: 1149929438
+      TRANSPARENT-gudrun in dust_8: -1222791342
+      TRANSPARENT-gudrun in dust_9: -1641802988
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
