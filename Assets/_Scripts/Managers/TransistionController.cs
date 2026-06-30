@@ -5,19 +5,19 @@ using UnityEngine.UI;
 public class TransistionController : MonoBehaviour {
 
     [SerializeField] private Image CanvasFadeImage;
-    private readonly float fadeDuration = 2f;
-    public async Awaitable FadeOut() {
+    private static readonly float FadeDuration = 1.5f;
+    public async Awaitable FadeOut(float? duration = null) {
         Color currentColor = this.CanvasFadeImage.color;
         currentColor.a = 0;
         this.CanvasFadeImage.color = currentColor;
 
-        await this.CanvasFadeImage.DOFade(1f, this.fadeDuration).AsyncWaitForCompletion();
+        await this.CanvasFadeImage.DOFade(1f, duration ?? FadeDuration).AsyncWaitForCompletion();
     }
 
-    public async Awaitable FadeIn() {
+    public async Awaitable FadeIn(float? duration = null) {
         Color currentColor = this.CanvasFadeImage.color;
         currentColor.a = 1;
         this.CanvasFadeImage.color = currentColor;
-        await this.CanvasFadeImage.DOFade(0f, this.fadeDuration).AsyncWaitForCompletion();
+        await this.CanvasFadeImage.DOFade(0f, duration ?? FadeDuration).AsyncWaitForCompletion();
     }
 }

@@ -33,5 +33,5 @@ public enum EnumBiomes : int {
     None = 0,
     Cliffs = 1,
     JaggedMountains = 2,
-    Desert = 3,
+    Sea = 3,
 }
