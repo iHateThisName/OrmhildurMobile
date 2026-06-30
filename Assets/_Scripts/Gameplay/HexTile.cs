@@ -86,7 +86,7 @@ public class HexTile : TileEntityBase, IScannable
         if (this.VisualRenderer != null)
         {
             this.VisualRenderer.sprite = defaultSprite;
-            this.VisualRenderer.color = Color.saddleBrown;
+            //this.VisualRenderer.color = Color.saddleBrown;
         }
         Debug.Log($"HexTile at {CurrentGridPosition} was dug out. (HP system bypassed)");
     }

@@ -24,6 +24,10 @@ PrefabInstance:
       propertyPath: m_WasSpriteAssigned
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2516637646650690668, guid: 0bcc6084535af324cafb3ac9d6ca3611, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3387041701688198452, guid: 0bcc6084535af324cafb3ac9d6ca3611, type: 3}
       propertyPath: m_Name
       value: HexTilePrefab
@@ -110,7 +114,7 @@ MonoBehaviour:
   audioSource: {fileID: 942360492368614589}
   digClip: {fileID: 8300000, guid: 6ce9d44d53aaf8543b47a63e512b735d, type: 3}
   emptyScannedSprite: {fileID: 21300000, guid: 2e0ebf76889fa77468542da9911e0b8b, type: 3}
-  defaultSprite: {fileID: 21300000, guid: 8c7ad7205b4ab2d4fac0539a613f87bc, type: 3}
+  defaultSprite: {fileID: 21300000, guid: 271b23ab5c8667f44b95debcbcc0437f, type: 3}
 --- !u!82 &942360492368614589
 AudioSource:
   m_ObjectHideFlags: 0
