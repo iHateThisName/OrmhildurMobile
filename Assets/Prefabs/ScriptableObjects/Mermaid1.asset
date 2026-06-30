@@ -14,10 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CreatureShape
   CreatureVisualSprite: {fileID: 21300000, guid: 551fe34224dc58e439550f4afe0849e3, type: 3}
   CreatureVisualTransform: {x: 0, y: -0.25}
+  CreatureVisualRotation: 0
+  CreatureVisualScale: {x: 1, y: 1}
   CreatureName: 2
   CreaturePrefab: {fileID: 2005331747181704781, guid: bb27ac3af91b4d44388564301ba7cdea, type: 3}
   TrackHintSprite: {fileID: 21300000, guid: fb70930b9d3c7b44cb49715585278384, type: 3}
   TrackDugSprite: {fileID: 21300000, guid: 76872b6e3985364488640ac0552a8288, type: 3}
+  TrackDistance1Sprite: {fileID: 21300000, guid: 76872b6e3985364488640ac0552a8288, type: 3}
+  TrackDistance2Sprite: {fileID: 21300000, guid: 76872b6e3985364488640ac0552a8288, type: 3}
+  TrackDistance3Sprite: {fileID: 21300000, guid: 76872b6e3985364488640ac0552a8288, type: 3}
   EvenRowOffsets:
   - {x: 0, y: 0}
   - {x: 1, y: 0}

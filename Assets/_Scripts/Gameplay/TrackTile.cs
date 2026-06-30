@@ -46,22 +46,21 @@ public class TrackTile : TileEntityBase, IScannable
             }
 
             Sprite testSpriteToUse = fallbackDugSprite;
-            if (TrackSources.TryGetValue(currentGridPos, out CreatureShape testSourceShape) && testSourceShape.TrackDugSprite != null)
+
+            // Get the distance (default to 1 if not found for some reason)
+            int testDistance = 1;
+            TrackDistances.TryGetValue(currentGridPos, out testDistance);
+
+            // Ask the SO for the specific sprite based on distance
+            if (TrackSources.TryGetValue(currentGridPos, out CreatureShape testSourceShape))
             {
-                testSpriteToUse = testSourceShape.TrackDugSprite;
+                testSpriteToUse = testSourceShape.GetTrackSpriteForDistance(testDistance, fallbackDugSprite);
             }
 
             if (this.VisualRenderer != null)
             {
                 this.VisualRenderer.sprite = testSpriteToUse;
-
-                float testAlpha = 1f;
-                if (TrackDistances.TryGetValue(currentGridPos, out int testDistance))
-                {
-                    if (testDistance == 2) testAlpha = 0.65f;
-                    else if (testDistance >= 3) testAlpha = 0.35f;
-                }
-                this.VisualRenderer.color = new Color(1f, 1f, 1f, testAlpha);
+                this.VisualRenderer.color = Color.white; // Full opacity!
             }
 
             // Exit early so we don't apply the hint visuals below
@@ -78,8 +77,7 @@ public class TrackTile : TileEntityBase, IScannable
 
         if (spriteToUse != null && this.VisualRenderer != null)
         {
-            // Kept hardcoded to fallbackHintSprite per your request
-            this.VisualRenderer.sprite = fallbackHintSprite;
+            this.VisualRenderer.sprite = spriteToUse;
             this.VisualRenderer.color = Color.white;
         }
     }
@@ -95,7 +93,6 @@ public class TrackTile : TileEntityBase, IScannable
         {
             if (InventoryManager.Instance.TryConsumeToolCharge(EnumGridTool.MagnifyingGlass))
             {
-                // We just call the standard scan. ApplyScannedVisual() handles the test logic now!
                 PerformRadarScan();
             }
             return;
@@ -115,21 +112,19 @@ public class TrackTile : TileEntityBase, IScannable
                 }
 
                 Sprite spriteToUse = fallbackDugSprite;
-                if (TrackSources.TryGetValue(currentGridPos, out CreatureShape sourceShape) && sourceShape.TrackDugSprite != null)
+
+                // Get the distance (default to 1 if missing)
+                int distance = 1;
+                TrackDistances.TryGetValue(currentGridPos, out distance);
+
+                // Fetch the tiered sprite
+                if (TrackSources.TryGetValue(currentGridPos, out CreatureShape sourceShape))
                 {
-                    spriteToUse = sourceShape.TrackDugSprite;
+                    spriteToUse = sourceShape.GetTrackSpriteForDistance(distance, fallbackDugSprite);
                 }
 
                 this.VisualRenderer.sprite = spriteToUse;
-
-                float alpha = 1f;
-                if (TrackDistances.TryGetValue(currentGridPos, out int distance))
-                {
-                    if (distance == 2) alpha = 0.60f;
-                    else if (distance >= 3) alpha = 0.25f;
-                }
-
-                this.VisualRenderer.color = new Color(1f, 1f, 1f, alpha);
+                this.VisualRenderer.color = Color.white; // Full opacity!
             }
             else
             {

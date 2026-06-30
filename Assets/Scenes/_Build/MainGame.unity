@@ -5278,7 +5278,7 @@ MonoBehaviour:
   - Shape: {fileID: 11400000, guid: 75b53e8397015f647bcf88feb6d515ec, type: 2}
     Weight: 0
   - Shape: {fileID: 11400000, guid: 12974f932c4c0fd49a3c93d41c2b0ec4, type: 2}
-    Weight: 1
+    Weight: 0
   - Shape: {fileID: 11400000, guid: 065d158391a7fac499848c4215e9e303, type: 2}
     Weight: 0
   - Shape: {fileID: 11400000, guid: 78ae1ec6adf38ae45a87cbcf39390cd3, type: 2}
