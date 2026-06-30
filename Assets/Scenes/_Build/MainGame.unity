@@ -2370,7 +2370,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91786e8c0b756b941aa575b9d92890c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridManager
-  size: {x: 14, y: 7}
+  size: {x: 16, y: 8}
   <Grid>k__BackingField: {fileID: 1321883116}
   <Tilemap>k__BackingField: {fileID: 164907570}
   randomTiles:
@@ -5286,9 +5286,9 @@ MonoBehaviour:
   EmptyPrefab: {fileID: 3419021784060892072, guid: 45a6bf92075afbc469fb80990af75cb0, type: 3}
   TreasurePrefab: {fileID: 6186179629728210561, guid: e7639453ee77ee542a593d2c88b8968c, type: 3}
   TrackPrefab: {fileID: 2591338646484683892, guid: 664bc798abebb5847954d14d2e2cf964, type: 3}
-  StartingIcePicks: 15
+  StartingIcePicks: 20
   StartingHammers: 5
-  StartingMagnifyingGlasses: 2
+  StartingMagnifyingGlasses: 3
   TrackSpawnRules:
   - Distance: 1
     Amount: 1
@@ -13377,7 +13377,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f55be826de8a53745addade82dc3b844, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MinigameManager
-  MinigameScenes: 07000000
+  MinigameScenes: 04000000050000000600000007000000
   MinigameTextData:
   - MinigameScene: 4
     IntroText:
@@ -13468,7 +13468,7 @@ MonoBehaviour:
       m_TableReference:
         m_TableCollectionName: GUID:cae44e0ee1a1a8f46a968ec737ca0764
       m_TableEntryReference:
-        m_KeyId: 8173042521653248
+        m_KeyId: 8285818195853312
         m_Key: 
       m_FallbackState: 0
       m_WaitForCompletion: 0
@@ -13477,7 +13477,7 @@ MonoBehaviour:
       m_TableReference:
         m_TableCollectionName: GUID:cae44e0ee1a1a8f46a968ec737ca0764
       m_TableEntryReference:
-        m_KeyId: 8173106539315200
+        m_KeyId: 8285929659482112
         m_Key: 
       m_FallbackState: 0
       m_WaitForCompletion: 0
@@ -13486,7 +13486,7 @@ MonoBehaviour:
       m_TableReference:
         m_TableCollectionName: GUID:cae44e0ee1a1a8f46a968ec737ca0764
       m_TableEntryReference:
-        m_KeyId: 8173149157638144
+        m_KeyId: 8286039416029184
         m_Key: 
       m_FallbackState: 0
       m_WaitForCompletion: 0

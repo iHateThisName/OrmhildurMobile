@@ -87,6 +87,20 @@ MonoBehaviour:
 '
     m_Metadata:
       m_Items: []
+  - m_Id: 8285818195853312
+    m_Key: UI.DirtWiper.Intro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8285929659482112
+    m_Key: 'UI.DirtWiper.Win
+
+'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8286039416029184
+    m_Key: UI.DirtWiper.Loss
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -98,6 +98,22 @@ MonoBehaviour:
       -2'
     m_Metadata:
       m_Items: []
+  - m_Id: 8285818195853312
+    m_Localized: Clean up your friends!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8285929659482112
+    m_Localized: 'Thank you!
+
+      +2'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8286039416029184
+    m_Localized: 'Nooo! I''m still muddy.
+
+      -2'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
