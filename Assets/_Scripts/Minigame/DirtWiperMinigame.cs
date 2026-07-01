@@ -17,7 +17,7 @@ public class DirtWiperMinigame : MinigameBase
     private float brushSpacing = 0.1f;
 
     [Header("Sponge Cursor Visual")]
-    [Tooltip("The cloth graphic that follows the mouse")]
+    [Tooltip("The cloth graphic that follows the mouse/finger")]
     [SerializeField] private GameObject spongePrefab;
     private GameObject activeSponge;
 
@@ -27,7 +27,7 @@ public class DirtWiperMinigame : MinigameBase
     [SerializeField] private float checkInterval = 0.5f;
 
     private Texture2D textureCheck;
-    private Vector3 lastMousePosition;
+    private Vector3 lastPointerPosition;
 
     // Tracks the current percentage for the debug log
     private float currentCleanPercentage = 0f;
@@ -39,6 +39,7 @@ public class DirtWiperMinigame : MinigameBase
         if (spongePrefab != null)
         {
             activeSponge = Instantiate(spongePrefab, transform);
+            // Hiding the cursor only matters for PC, but is harmless on mobile
             Cursor.visible = false;
         }
 
@@ -69,32 +70,43 @@ public class DirtWiperMinigame : MinigameBase
 
     private void UpdateSpongePosition()
     {
-        if (activeSponge == null || Mouse.current == null) return;
+        // Changed Mouse.current to Pointer.current
+        if (activeSponge == null || Pointer.current == null) return;
 
-        Vector3 mousePos = Mouse.current.position.ReadValue();
-        mousePos.z = 10f;
-        activeSponge.transform.position = mainCamera.ScreenToWorldPoint(mousePos);
+        // Optionally, hide the sponge when not touching on mobile so it doesn't awkwardly float
+        if (!Pointer.current.press.isPressed && Touchscreen.current != null)
+        {
+            activeSponge.SetActive(false);
+            return;
+        }
+
+        activeSponge.SetActive(true);
+        Vector3 pointerPos = Pointer.current.position.ReadValue();
+        pointerPos.z = 10f;
+        activeSponge.transform.position = mainCamera.ScreenToWorldPoint(pointerPos);
     }
 
     private void HandleInput()
     {
-        if (Mouse.current == null) return;
+        // Changed Mouse.current to Pointer.current
+        if (Pointer.current == null) return;
 
-        Vector3 mousePos = Mouse.current.position.ReadValue();
-        mousePos.z = 10f;
-        Vector3 worldPos = mainCamera.ScreenToWorldPoint(mousePos);
+        Vector3 pointerPos = Pointer.current.position.ReadValue();
+        pointerPos.z = 10f;
+        Vector3 worldPos = mainCamera.ScreenToWorldPoint(pointerPos);
 
-        if (Mouse.current.leftButton.wasPressedThisFrame)
+        // Pointer.current.press replaces Mouse.current.leftButton
+        if (Pointer.current.press.wasPressedThisFrame)
         {
-            lastMousePosition = worldPos;
-            Instantiate(brushPrefab, lastMousePosition, Quaternion.identity, brushContainer);
+            lastPointerPosition = worldPos;
+            Instantiate(brushPrefab, lastPointerPosition, Quaternion.identity, brushContainer);
         }
-        else if (Mouse.current.leftButton.isPressed)
+        else if (Pointer.current.press.isPressed)
         {
-            if (Vector3.Distance(worldPos, lastMousePosition) > brushSpacing)
+            if (Vector3.Distance(worldPos, lastPointerPosition) > brushSpacing)
             {
                 Instantiate(brushPrefab, worldPos, Quaternion.identity, brushContainer);
-                lastMousePosition = worldPos;
+                lastPointerPosition = worldPos;
             }
         }
     }
@@ -138,7 +150,6 @@ public class DirtWiperMinigame : MinigameBase
         if (activeSponge != null) Destroy(activeSponge);
         Cursor.visible = true;
 
-        // --- THE DEBUG LOG ---
         Debug.Log($"<color=cyan>[DirtWiperMinigame]</color> Game Ended. Player cleaned: <b>{(currentCleanPercentage * 100f):0.00}%</b> of the total Render Texture area.");
 
         base.EndMinigame(wasVictorious);

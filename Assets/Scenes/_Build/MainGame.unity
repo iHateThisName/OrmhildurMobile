@@ -2370,7 +2370,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91786e8c0b756b941aa575b9d92890c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridManager
-  size: {x: 16, y: 8}
+  size: {x: 14, y: 7}
   <Grid>k__BackingField: {fileID: 1321883116}
   <Tilemap>k__BackingField: {fileID: 164907570}
   randomTiles:

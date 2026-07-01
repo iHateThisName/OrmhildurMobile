@@ -662,6 +662,13 @@ MonoBehaviour:
   - CharacterName: Raudur
     NormalSprite: {fileID: -1768407290, guid: 3fff863375fea974baa1c857c14579aa, type: 3}
     HitSprite: {fileID: -1414206859, guid: bc5d7f8a052000a43b302f530ecc0a50, type: 3}
+    CustomSize: {x: 0, y: 0}
+    PositionalOffset: {x: 0, y: 0}
+  - CharacterName: Gusti
+    NormalSprite: {fileID: -1507303686, guid: 019cc784fdbb8304ca0ddabd8cb63492, type: 3}
+    HitSprite: {fileID: -1692174952, guid: 1bfbaad8f28dcc149b62cfc065fca739, type: 3}
+    CustomSize: {x: 0.5, y: 0.5}
+    PositionalOffset: {x: 0, y: 100}
 --- !u!4 &1193606400
 Transform:
   m_ObjectHideFlags: 0
@@ -1066,13 +1073,13 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: 0.08816054, w: 0.9961063}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1120140107}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 10.116}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 600, y: 385}
+  m_AnchoredPosition: {x: 617, y: 385}
   m_SizeDelta: {x: 349.4731, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2021393566

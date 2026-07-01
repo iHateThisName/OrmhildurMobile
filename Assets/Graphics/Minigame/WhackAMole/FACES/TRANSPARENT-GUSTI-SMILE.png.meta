@@ -126,12 +126,12 @@ TextureImporter:
       name: TRANSPARENT-GUSTI-SMILE_0
       rect:
         serializedVersion: 2
-        x: 768
+        x: 767
         y: 0
-        width: 990
+        width: 986
         height: 1451
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
