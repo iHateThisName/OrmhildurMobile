@@ -23,16 +23,16 @@ public class PlayerGridInputHandler : Assets._Scripts.Utilities.Singleton.Single
         this.tapAction.Enable();
         this.holdAction.Enable();
 
-        this.holdAction.performed += ProcessPointerHold;
-        this.holdAction.canceled += ProcessPointerHold;
+        //this.holdAction.performed += ProcessPointerHold;
+        //this.holdAction.canceled += ProcessPointerHold;
     }
 
     private void OnDisable() {
         this.tapAction.Disable();
         this.holdAction.Disable();
 
-        this.holdAction.performed -= ProcessPointerHold;
-        this.holdAction.canceled -= ProcessPointerHold;
+        //this.holdAction.performed -= ProcessPointerHold;
+        //this.holdAction.canceled -= ProcessPointerHold;
     }
 
     private void Update() {
@@ -107,18 +107,17 @@ public class PlayerGridInputHandler : Assets._Scripts.Utilities.Singleton.Single
         return gridPlane;
     }
 
-    private void ProcessPointerHold(InputAction.CallbackContext context) {
-        return;
-        if (context.performed) {
-            this.isOnHold = true;
-            Debug.Log("Pointer hold started.");
+    //private void ProcessPointerHold(InputAction.CallbackContext context) {
+        //if (context.performed) {
+        //    this.isOnHold = true;
+        //    Debug.Log("Pointer hold started.");
 
-        } else if (context.canceled && this.isOnHold) {
+        //} else if (context.canceled && this.isOnHold) {
 
-            this.isOnHold = false;
-            Debug.Log("Pointer hold ended.");
-        }
-    }
+        //    this.isOnHold = false;
+        //    Debug.Log("Pointer hold ended.");
+        //}
+    //}
 
     public static Vector3 ScreenToWorldPosition(Vector2 screenPosition, out bool success) {
         // Convert to World, then to Grid 
