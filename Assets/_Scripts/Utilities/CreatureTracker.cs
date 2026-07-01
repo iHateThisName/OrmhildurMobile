@@ -17,6 +17,8 @@ public class CreatureTracker : Singleton<CreatureTracker>
 
     private List<CreatureInstance> ActiveCreatures = new List<CreatureInstance>();
 
+    public static event Action<HashSet<Vector2Int>> OnCreatureDiscovered;
+
     public static event Action OnAllCreaturesFound;
 
     public bool AreAllCreaturesComplete => ActiveCreatures.Count > 0 && ActiveCreatures.All(c => c.IsComplete);
@@ -43,6 +45,7 @@ public class CreatureTracker : Singleton<CreatureTracker>
             // REVISED: If this specific creature was just finished, check if the whole board is finished
             if (creature.IsComplete)
             {
+                OnCreatureDiscovered?.Invoke(creature.TileCoordinates);
                 if (AreAllCreaturesComplete)
                 {
                     Debug.Log("<color=cyan>[Level]</color> All creatures have been found! Level Complete.");

@@ -54,8 +54,17 @@ public class GridGameManager : Singleton<GridGameManager> {
         CreatureTracker.OnAllCreaturesFound -= HandleLevelComplete;
     }
 
-    private void HandleLevelComplete()
+private async void HandleLevelComplete()
     {
+        // Pause the Win state trigger while the stuuf is going on
+        while (IsResolvingInteraction)
+        {
+            await Awaitable.NextFrameAsync();
+        }
+
+        // Wait for the end of the current frame just to be safe
+        await Awaitable.EndOfFrameAsync();
+
         ChangeGameState(EnumGridGameState.Win);
     }
 

@@ -10,21 +10,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1a74c1b0faf65c844aa06727a02a3b00, type: 3}
-  m_Name: SEA_BabyNenni
+  m_Name: Forest_BearKing
   m_EditorClassIdentifier: Assembly-CSharp::CreatureShape
-  CreatureVisualSprite: {fileID: 21300000, guid: 296bc4e4ec362c14da636094336073cc, type: 3}
-  CreatureVisualTransform: {x: 0.106, y: 0}
+  CreatureVisualSprite: {fileID: 21300000, guid: 7d9ce487d29390f409cfdd18204c4ef7, type: 3}
+  CreatureVisualTransform: {x: 0.281, y: 0.721}
   CreatureVisualRotation: 0
-  CreatureVisualScale: {x: 0.71, y: 0.71}
-  CreatureDiscoveredSprite: {fileID: 21300000, guid: 1c16ed711f6406047b3ba6e1810fb76e, type: 3}
-  CreatureName: 2
+  CreatureVisualScale: {x: 0.75, y: 0.75}
+  CreatureName: 0
   CreaturePrefab: {fileID: 2005331747181704781, guid: bb27ac3af91b4d44388564301ba7cdea, type: 3}
   TrackHintSprite: {fileID: 21300000, guid: fb70930b9d3c7b44cb49715585278384, type: 3}
-  TrackDugSprite: {fileID: 21300000, guid: 8c6ab4f787d02db4db9a96fb121f69e5, type: 3}
+  TrackDugSprite: {fileID: 21300000, guid: 27e7ead5d57653c4ab520a0a2c9fb7d8, type: 3}
   TrackDistance1Sprite: {fileID: 21300000, guid: 27e7ead5d57653c4ab520a0a2c9fb7d8, type: 3}
   TrackDistance2Sprite: {fileID: 21300000, guid: 2cbdf39c9dc310d4387dc03878ce5b6b, type: 3}
   TrackDistance3Sprite: {fileID: 21300000, guid: 72bf3fbaa83b8404eb5eee4a48edc965, type: 3}
   EvenRowOffsets:
   - {x: 0, y: 0}
+  - {x: 0, y: -1}
+  - {x: 0, y: 1}
+  - {x: 1, y: 0}
+  - {x: 1, y: 1}
   OddRowOffsets:
   - {x: 0, y: 0}
+  - {x: 1, y: -1}
+  - {x: 1, y: 1}
+  - {x: 1, y: 0}
+  - {x: 2, y: 1}

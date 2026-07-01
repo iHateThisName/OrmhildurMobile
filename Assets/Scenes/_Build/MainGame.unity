@@ -5268,20 +5268,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ee10559d6ec14b469410387604136db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelSpawner
-  TotalCreaturesToSpawn: 2
+  TotalCreaturesToSpawn: 3
   MinigameCount: 0
   TreasureCount: 0
   CreaturePool:
   - Shape: {fileID: 11400000, guid: f4f28154459a10f44bc83544ab45acaa, type: 2}
-    Weight: 3
+    Weight: 2
   - Shape: {fileID: 11400000, guid: 45e99580640ca564fb7006fe0ad8f46b, type: 2}
-    Weight: 4
+    Weight: 2
   - Shape: {fileID: 11400000, guid: cbc06dfb6a400bc4bb4cb37f7734592e, type: 2}
-    Weight: 1
+    Weight: 2
   - Shape: {fileID: 11400000, guid: 40b9a12c5e8ada24c8a9c0bc9898b89e, type: 2}
-    Weight: 3
+    Weight: 2
   - Shape: {fileID: 11400000, guid: 99294b5d4588c5b4ba8c5b30c27dd95b, type: 2}
     Weight: 2
+  - Shape: {fileID: 11400000, guid: 7fb23744e97333c46a6df8c937a005a5, type: 2}
+    Weight: 0
+  - Shape: {fileID: 11400000, guid: 293144bcef056b145b695cdb8f310fbe, type: 2}
+    Weight: 0
+  - Shape: {fileID: 11400000, guid: 21706987c549eed46b9844bdbeac202d, type: 2}
+    Weight: 0
+  - Shape: {fileID: 11400000, guid: 1f3c48bd2e90c0341843a9534627efbc, type: 2}
+    Weight: 0
+  - Shape: {fileID: 11400000, guid: 6fe04a410e7a415418d843fd18242577, type: 2}
+    Weight: 0
   MinigamePrefab: {fileID: 2384036911072492645, guid: 801f83a4e404dbb4498bce4142717d51, type: 3}
   EmptyPrefab: {fileID: 3419021784060892072, guid: 45a6bf92075afbc469fb80990af75cb0, type: 3}
   TreasurePrefab: {fileID: 6186179629728210561, guid: e7639453ee77ee542a593d2c88b8968c, type: 3}

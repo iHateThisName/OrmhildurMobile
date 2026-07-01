@@ -16,6 +16,7 @@ MonoBehaviour:
   CreatureVisualTransform: {x: 0, y: 0.408}
   CreatureVisualRotation: 0
   CreatureVisualScale: {x: 0.67, y: 0.67}
+  CreatureDiscoveredSprite: {fileID: 21300000, guid: 659e8beb0540f2e4b9a2f04d62df2217, type: 3}
   CreatureName: 3
   CreaturePrefab: {fileID: 2005331747181704781, guid: bb27ac3af91b4d44388564301ba7cdea, type: 3}
   TrackHintSprite: {fileID: 21300000, guid: fb70930b9d3c7b44cb49715585278384, type: 3}

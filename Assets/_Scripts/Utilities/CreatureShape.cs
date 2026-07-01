@@ -10,6 +10,8 @@ public class CreatureShape : ScriptableObject
     public float CreatureVisualRotation;
     public Vector2 CreatureVisualScale = new Vector2(1f, 1f);
 
+    [Tooltip("The sprite to display when the entire creature has been dug up (e.g., eyes open).")]
+    public Sprite CreatureDiscoveredSprite;
 
     public EnumCreatureName CreatureName = EnumCreatureName.None;
 
@@ -66,6 +68,13 @@ public enum EnumCreatureName {
     Mermaid2,
     SeaBeast,
     Kraki,
+
+    //FOREST
+    BearKing,
+    Finngalkn,
+    NaddiGreen,
+    NaddiGray,
+    Raven,
 
     // PlaceHolder
     Snake,
