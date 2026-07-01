@@ -1,6 +1,8 @@
+using DG.Tweening;
 using Gaskellgames;
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public abstract class MinigameBase : MonoBehaviour
 {
@@ -40,5 +42,27 @@ public abstract class MinigameBase : MonoBehaviour
     {
         isPlaying = false;
         OnMinigameComplete?.Invoke(wasVictorious);
+    }
+
+    public static Sequence CreateSequenceCycle(Image image, Sprite[] cycle, float frameTime) {
+        Sequence sequence = DOTween.Sequence().Pause();
+
+        //walkSequence?.Kill();
+        //walkSequence = DOTween.Sequence()
+        //    //.SetAutoKill(false)
+        //    .Pause();
+
+        for (int i = 0; i < cycle.Length; i++) {
+            int index = i;
+
+            sequence.AppendCallback(() => {
+                image.sprite = cycle[index];
+            });
+
+            sequence.AppendInterval(frameTime);
+        }
+
+        sequence.SetLoops(-1);
+        return sequence;
     }
 }

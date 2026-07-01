@@ -137,6 +137,8 @@ public struct CharaterSprite {
     public EnumBiomes Biome;
     public Image ImageRefrence;
 
+    public Sprite[] IdleCycleSprite;
+
     [Header("Hit Sprite")]
     public Sprite HitSprite;
     public Vector3 HitSpriteScale;

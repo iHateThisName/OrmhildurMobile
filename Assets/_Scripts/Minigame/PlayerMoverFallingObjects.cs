@@ -23,7 +23,9 @@ public class PlayerMoverFallingObjects : MonoBehaviour, IPointerDownHandler, IDr
 
     private Camera cam;
     private Sequence walkSequence;
+    private Sequence idleSequence;
     [SerializeField, ReadOnly] private bool isFacingRight;
+    private readonly float walkCycleAnimationSpeed = 0.1f;
 
     private void Awake() {
         this.cam = miniGameController.FallingObjectsCamera;
@@ -47,7 +49,8 @@ public class PlayerMoverFallingObjects : MonoBehaviour, IPointerDownHandler, IDr
         Image reference = this.miniGameController.CurrentCharacterSprite.ImageRefrence;
         Sprite[] walkSprite = this.miniGameController.CurrentCharacterSprite.WalkCycle;
         reference.transform.localScale = this.miniGameController.CurrentCharacterSprite.WalkCycleScale;
-        CreateWalkCycle(reference, walkSprite, 0.25f);
+        this.walkSequence = MinigameBase.CreateSequenceCycle(reference, walkSprite, this.walkCycleAnimationSpeed);
+        this.idleSequence = MinigameBase.CreateSequenceCycle(reference, this.miniGameController.CurrentCharacterSprite.IdleCycleSprite, this.walkCycleAnimationSpeed);
 
         this.isFacingRight = this.miniGameController.CurrentCharacterSprite.isWalkCycleFacingRight;
     }
@@ -61,6 +64,11 @@ public class PlayerMoverFallingObjects : MonoBehaviour, IPointerDownHandler, IDr
             this.moveSpeed * Time.deltaTime);
 
         DetectDirection();
+    }
+
+    private void OnDestroy() {
+        this.walkSequence?.Kill();
+        this.idleSequence?.Kill();
     }
 
     private void DetectDirection() {
@@ -83,29 +91,13 @@ public class PlayerMoverFallingObjects : MonoBehaviour, IPointerDownHandler, IDr
         }
     }
 
-    private void CreateWalkCycle(Image image, Sprite[] cycle, float frameTime) {
-        walkSequence?.Kill();
 
-        walkSequence = DOTween.Sequence()
-            //.SetAutoKill(false)
-            .Pause();
-
-        for (int i = 0; i < cycle.Length; i++) {
-            int index = i;
-
-            walkSequence.AppendCallback(() => {
-                image.sprite = cycle[index];
-            });
-
-            walkSequence.AppendInterval(frameTime);
-        }
-
-        walkSequence.SetLoops(-1);
-    }
 
     public void OnPointerDown(PointerEventData eventData) {
         isMoving = true;
         this.targetWorldPosition = UpdateTarget(eventData.position);
+
+        this.idleSequence.Pause();
         this.walkSequence.Play();
     }
 
@@ -115,7 +107,9 @@ public class PlayerMoverFallingObjects : MonoBehaviour, IPointerDownHandler, IDr
 
     public void OnPointerUp(PointerEventData eventData) {
         isMoving = false;
+
         this.walkSequence.Pause();
+        this.idleSequence.Play();
     }
 
     private Vector2 UpdateTarget(Vector2 screenPos) {

@@ -231,7 +231,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &150639643
 Transform:
   m_ObjectHideFlags: 0
@@ -286,7 +286,7 @@ MonoBehaviour:
   fallDuration: 5
   xBounds: {x: 0, y: 0}
   <FallingObjectsCamera>k__BackingField: {fileID: 1796688802}
-  playerMover: {fileID: 0}
+  playerMover: {fileID: 1824727952}
   seaFalling: {fileID: 1152977022}
   cliffFalling: {fileID: 1838532667}
   jaggedMountainsFalling: {fileID: 147960135}
@@ -294,6 +294,7 @@ MonoBehaviour:
   <CurrentCharacterSprite>k__BackingField:
     Biome: 0
     ImageRefrence: {fileID: 0}
+    IdleCycleSprite: []
     HitSprite: {fileID: 0}
     HitSpriteScale: {x: 0, y: 0, z: 0}
     isWalkCycleFacingRight: 0
@@ -302,6 +303,20 @@ MonoBehaviour:
   characterSprites:
   - Biome: 1
     ImageRefrence: {fileID: 2108984957}
+    IdleCycleSprite:
+    - {fileID: 1955999573, guid: df4daa3bc6f03d0448e4ebd5176e3c1e, type: 3}
+    - {fileID: 1301556007, guid: df4daa3bc6f03d0448e4ebd5176e3c1e, type: 3}
+    - {fileID: 1417701073, guid: df4daa3bc6f03d0448e4ebd5176e3c1e, type: 3}
+    - {fileID: 119268104, guid: df4daa3bc6f03d0448e4ebd5176e3c1e, type: 3}
+    - {fileID: 1976203646, guid: df4daa3bc6f03d0448e4ebd5176e3c1e, type: 3}
+    - {fileID: 157317507, guid: df4daa3bc6f03d0448e4ebd5176e3c1e, type: 3}
+    - {fileID: 465916076, guid: df4daa3bc6f03d0448e4ebd5176e3c1e, type: 3}
+    - {fileID: 2145073844, guid: df4daa3bc6f03d0448e4ebd5176e3c1e, type: 3}
+    - {fileID: -1112450860, guid: df4daa3bc6f03d0448e4ebd5176e3c1e, type: 3}
+    - {fileID: 934766690, guid: df4daa3bc6f03d0448e4ebd5176e3c1e, type: 3}
+    - {fileID: -165525678, guid: df4daa3bc6f03d0448e4ebd5176e3c1e, type: 3}
+    - {fileID: -1345538771, guid: df4daa3bc6f03d0448e4ebd5176e3c1e, type: 3}
+    - {fileID: 24807054, guid: df4daa3bc6f03d0448e4ebd5176e3c1e, type: 3}
     HitSprite: {fileID: -2072266093, guid: 6eb8b53a4c7d23c4f85ed267463ecd8b, type: 3}
     HitSpriteScale: {x: 0.7, y: 0.7, z: 1}
     isWalkCycleFacingRight: 1
@@ -558,6 +573,7 @@ RectTransform:
   - {fileID: 2057677923}
   - {fileID: 1824727949}
   - {fileID: 2097658348}
+  - {fileID: 1251132816}
   m_Father: {fileID: 150639643}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -662,6 +678,81 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &1251132815
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1251132816}
+  - component: {fileID: 1251132818}
+  - component: {fileID: 1251132817}
+  m_Layer: 7
+  m_Name: ForeGround
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1251132816
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1251132815}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1120140107}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1251132817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1251132815}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: f704941938c778e45823dd4e03e2c5f0, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1251132818
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1251132815}
+  m_CullTransparentMesh: 1
 --- !u!1 &1321390773
 GameObject:
   m_ObjectHideFlags: 0
