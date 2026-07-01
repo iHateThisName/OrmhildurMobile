@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 4149947ce1c36f74e896784aae19e0ce
+guid: 2f48f37b641fe8942834b1abfce1237f
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -123,13 +123,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: TRANSPARENT-gudrun clean_0
+      name: TRANSPARENT GUDRUN OVERLAPPING_1
       rect:
         serializedVersion: 2
-        x: 826
-        y: 99
-        width: 563
-        height: 1616
+        x: 655
+        y: 84
+        width: 456
+        height: 1283
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -138,8 +138,30 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7082b29f51d01544391fd1c4565c6c97
-      internalID: -1629950140
+      spriteID: a06b39f3238d6df47b40c69f03467b38
+      internalID: -194270421
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TRANSPARENT GUDRUN OVERLAPPING_4
+      rect:
+        serializedVersion: 2
+        x: 1182
+        y: 84
+        width: 475
+        height: 1290
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: df557b71df84a054992d9df726da5794
+      internalID: 265035659
       vertices: []
       indices: 
       edges: []
@@ -148,7 +170,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 384d336f4a2b9a844b110420ee98b3c1
     internalID: 0
     vertices: []
     indices: 
@@ -160,16 +182,12 @@ TextureImporter:
       - key: SpriteEditor.SliceSettings
         value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      TRANSPARENT-gudrun clean_0: -1629950140
-      TRANSPARENT-gudrun clean_1: -1104838169
-      TRANSPARENT-gudrun clean_2: 1519048261
-      TRANSPARENT-gudrun clean_3: 1023977459
-      TRANSPARENT-gudrun clean_4: -420042469
-      TRANSPARENT-gudrun clean_5: -611881053
-      TRANSPARENT-gudrun clean_6: -1455342840
-      TRANSPARENT-gudrun clean_7: -6970245
-      TRANSPARENT-gudrun clean_8: -929864088
-      TRANSPARENT-gudrun clean_9: -1081880892
+      TRANSPARENT GUDRUN OVERLAPPING_0: -1813055257
+      TRANSPARENT GUDRUN OVERLAPPING_1: -194270421
+      TRANSPARENT GUDRUN OVERLAPPING_2: -34607791
+      TRANSPARENT GUDRUN OVERLAPPING_3: 385501999
+      TRANSPARENT GUDRUN OVERLAPPING_4: 265035659
+      TRANSPARENT GUDRUN OVERLAPPING_5: -1512371305
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

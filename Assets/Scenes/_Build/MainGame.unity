@@ -13378,7 +13378,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f55be826de8a53745addade82dc3b844, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MinigameManager
-  MinigameScenes: 06000000
+  MinigameScenes: 08000000
   MinigameTextData:
   - MinigameScene: 4
     IntroText:
@@ -13464,7 +13464,7 @@ MonoBehaviour:
       m_FallbackState: 0
       m_WaitForCompletion: 0
       m_LocalVariables: []
-  - MinigameScene: 7
+  - MinigameScene: 8
     IntroText:
       m_TableReference:
         m_TableCollectionName: GUID:cae44e0ee1a1a8f46a968ec737ca0764

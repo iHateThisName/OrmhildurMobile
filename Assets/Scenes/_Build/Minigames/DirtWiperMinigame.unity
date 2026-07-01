@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: 307365458}
   - component: {fileID: 307365457}
   m_Layer: 7
-  m_Name: TRANSPARENT-gudrun clean
+  m_Name: Clean-Gudrun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -185,7 +185,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -1629950140, guid: 4149947ce1c36f74e896784aae19e0ce, type: 3}
+  m_Sprite: {fileID: -194270421, guid: 2f48f37b641fe8942834b1abfce1237f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -222,7 +222,7 @@ GameObject:
   - component: {fileID: 329523941}
   - component: {fileID: 329523943}
   m_Layer: 7
-  m_Name: TRANSPARENT-gudrun in dust
+  m_Name: Dirty-Gudrun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -277,7 +277,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -1508700680, guid: 0d53602801d96e74e93de7c215de8756, type: 3}
+  m_Sprite: {fileID: 265035659, guid: 2f48f37b641fe8942834b1abfce1237f, type: 3}
   m_Color: {r: 0.2905661, g: 0.2905661, b: 0.2905661, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -340,7 +340,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 6.011434, y: 16.570002}
+    oldSize: {x: 4.75, y: 12.9}
     newSize: {x: 6.011434, y: 16.570002}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
