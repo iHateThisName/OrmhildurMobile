@@ -1,3 +1,4 @@
+using Gaskellgames;
 using System;
 using UnityEngine;
 
@@ -8,7 +9,9 @@ public abstract class MinigameBase : MonoBehaviour
 
     protected float timeRemaining;
     protected bool isPlaying = false;
+    public bool isTimeOutWinConditon = false;
 
+    [Button]
     public virtual void StartMinigame()
     {
         timeRemaining = TimeLimit;
@@ -22,7 +25,14 @@ public abstract class MinigameBase : MonoBehaviour
         timeRemaining -= Time.deltaTime;
         if (timeRemaining <= 0)
         {
-            EndMinigame(false); // Time out!
+            if (isTimeOutWinConditon)
+            {
+                EndMinigame(true); // Time out, but player won
+            }
+            else
+            {
+                EndMinigame(false); // Time out!
+            }
         }
     }
 
