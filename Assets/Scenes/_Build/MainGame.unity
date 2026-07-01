@@ -5268,19 +5268,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ee10559d6ec14b469410387604136db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelSpawner
-  TotalCreaturesToSpawn: 3
+  TotalCreaturesToSpawn: 2
   MinigameCount: 0
   TreasureCount: 0
   CreaturePool:
   - Shape: {fileID: 11400000, guid: f4f28154459a10f44bc83544ab45acaa, type: 2}
     Weight: 2
-  - Shape: {fileID: 11400000, guid: 45e99580640ca564fb7006fe0ad8f46b, type: 2}
-    Weight: 2
-  - Shape: {fileID: 11400000, guid: cbc06dfb6a400bc4bb4cb37f7734592e, type: 2}
-    Weight: 2
   - Shape: {fileID: 11400000, guid: 40b9a12c5e8ada24c8a9c0bc9898b89e, type: 2}
     Weight: 2
+  - Shape: {fileID: 11400000, guid: 45e99580640ca564fb7006fe0ad8f46b, type: 2}
+    Weight: 2
   - Shape: {fileID: 11400000, guid: 99294b5d4588c5b4ba8c5b30c27dd95b, type: 2}
+    Weight: 2
+  - Shape: {fileID: 11400000, guid: cbc06dfb6a400bc4bb4cb37f7734592e, type: 2}
     Weight: 2
   - Shape: {fileID: 11400000, guid: 7fb23744e97333c46a6df8c937a005a5, type: 2}
     Weight: 0
