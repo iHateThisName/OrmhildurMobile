@@ -12923,6 +12923,7 @@ MonoBehaviour:
   AutoUnparentOnAwake: 1
   <SaveData>k__BackingField:
     score: 0
+  <CurrentBiomeSelected>k__BackingField: 1
   DisplaySafeAreaGizmos: 0
   DisplayMaxAreaGizmos: 0
 --- !u!1001 &1535619422
@@ -13377,7 +13378,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f55be826de8a53745addade82dc3b844, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MinigameManager
-  MinigameScenes: 04000000050000000600000007000000
+  MinigameScenes: 06000000
   MinigameTextData:
   - MinigameScene: 4
     IntroText:

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: bc5d7f8a052000a43b302f530ecc0a50
+guid: 1bfbaad8f28dcc149b62cfc065fca739
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -123,13 +123,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Raudur_8_0
+      name: TRANSPARENT-GUSTI-SAD_0
       rect:
         serializedVersion: 2
-        x: 594
-        y: 54
-        width: 728
-        height: 1002
+        x: 768
+        y: 0
+        width: 995
+        height: 1451
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -138,8 +138,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bbfffc62b5f79564084812de1b77878b
-      internalID: -1414206859
+      spriteID: 3009f925e7bf8fe45b8830408ecbb9b9
+      internalID: -1692174952
       vertices: []
       indices: 
       edges: []
@@ -160,7 +160,13 @@ TextureImporter:
       - key: SpriteEditor.SliceSettings
         value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      Raudur_8_0: -1414206859
+      TRANSPARENT-GUSTI-SAD_0: -1692174952
+      TRANSPARENT-GUSTI-SAD_1: -895289779
+      TRANSPARENT-GUSTI-SAD_2: 2063391988
+      TRANSPARENT-GUSTI-SAD_3: 539421351
+      TRANSPARENT-GUSTI-SAD_4: 1792512073
+      TRANSPARENT-GUSTI-SAD_5: -430443487
+      TRANSPARENT-GUSTI-SAD_6: 327755854
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

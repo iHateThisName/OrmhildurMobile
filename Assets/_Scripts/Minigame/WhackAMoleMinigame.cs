@@ -1,5 +1,14 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+
+[System.Serializable]
+public struct CharacterSprites
+{
+    public string CharacterName;
+    public Sprite NormalSprite;
+    public Sprite HitSprite;
+}
 
 public class WhackAMoleMinigame : MinigameBase
 {
@@ -10,39 +19,52 @@ public class WhackAMoleMinigame : MinigameBase
     [Tooltip("Assign the 6 clickable mole buttons here.")]
     public Button[] MoleButtons;
 
+    [Header("Character Settings")]
+    [Tooltip("Assign your 4 character sprite pairs here.")]
+    public CharacterSprites[] AvailableCharacters;
+
     private int currentScore = 0;
     private int currentMoleIndex = -1;
 
+    // Tracks the character chosen for the current round
+    private CharacterSprites currentCharacter;
+
+    // Prevents the player from double-clicking during the 1-second delay
+    private bool isWaitingForDelay = false;
+
     public override void StartMinigame()
     {
-        // 1. Call the base method to start the timer
         base.StartMinigame();
 
         currentScore = 0;
+        isWaitingForDelay = false;
 
-        // 2. Hide all moles and hook up their click events
+        // 2. Pick a random character for this playthrough
+        if (AvailableCharacters.Length > 0)
+        {
+            int randomCharIndex = Random.Range(0, AvailableCharacters.Length);
+            currentCharacter = AvailableCharacters[randomCharIndex];
+        }
+
+        // Hook up the click events and hide moles
         for (int i = 0; i < MoleButtons.Length; i++)
         {
             MoleButtons[i].gameObject.SetActive(false);
-
-            // Clean up old listeners just in case, then add the click event
             MoleButtons[i].onClick.RemoveAllListeners();
             MoleButtons[i].onClick.AddListener(OnMoleClicked);
         }
 
-        // 3. Spawn the very first mole
         SpawnRandomMole();
     }
 
     protected override void Update()
     {
-        // Keep the timer ticking from MinigameBase
         base.Update();
     }
 
     private void SpawnRandomMole()
     {
-        // Hide the current mole if there is one
+        // Hide the old mole
         if (currentMoleIndex != -1)
         {
             MoleButtons[currentMoleIndex].gameObject.SetActive(false);
@@ -50,25 +72,53 @@ public class WhackAMoleMinigame : MinigameBase
 
         // Pick a completely random new mole
         int newMoleIndex = Random.Range(0, MoleButtons.Length);
-
-        // Optional: Ensure it doesn't spawn in the exact same spot twice in a row
         if (newMoleIndex == currentMoleIndex && MoleButtons.Length > 1)
         {
             newMoleIndex = (newMoleIndex + 1) % MoleButtons.Length;
         }
 
         currentMoleIndex = newMoleIndex;
+        Button newMoleButton = MoleButtons[currentMoleIndex];
+
+        // Reset the button state and apply the "Normal" sprite
+        newMoleButton.interactable = true;
+        Image moleImage = newMoleButton.GetComponent<Image>();
+        if (moleImage != null)
+        {
+            moleImage.sprite = currentCharacter.NormalSprite;
+        }
 
         // Show the new mole
-        MoleButtons[currentMoleIndex].gameObject.SetActive(true);
+        newMoleButton.gameObject.SetActive(true);
     }
 
     private void OnMoleClicked()
     {
-        // Ignore clicks if the game isn't running (e.g., time just ran out)
-        if (!isPlaying) return;
+        // Ignore clicks if game over, or if we are already waiting for the hit delay
+        if (!isPlaying || isWaitingForDelay) return;
 
+        isWaitingForDelay = true;
         currentScore++;
+
+        //Change to the "Hit" expression and disable clicking
+        Button hitMoleButton = MoleButtons[currentMoleIndex];
+        hitMoleButton.interactable = false; // Stops double-clicks
+
+        Image moleImage = hitMoleButton.GetComponent<Image>();
+        if (moleImage != null)
+        {
+            moleImage.sprite = currentCharacter.HitSprite;
+        }
+
+        StartCoroutine(HitDelayRoutine());
+    }
+
+    private IEnumerator HitDelayRoutine()
+    {
+        // Wait for exactly 1 second
+        yield return new WaitForSeconds(1f);
+
+        isWaitingForDelay = false;
 
         if (currentScore >= ScoreToWin)
         {
@@ -77,7 +127,7 @@ public class WhackAMoleMinigame : MinigameBase
         }
         else
         {
-            // Instantly spawn the next one
+            // Spawn the next one
             SpawnRandomMole();
         }
     }
