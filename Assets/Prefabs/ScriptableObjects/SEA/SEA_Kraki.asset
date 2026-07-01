@@ -10,22 +10,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1a74c1b0faf65c844aa06727a02a3b00, type: 3}
-  m_Name: Mermaid1
+  m_Name: SEA_Kraki
   m_EditorClassIdentifier: Assembly-CSharp::CreatureShape
-  CreatureVisualSprite: {fileID: 21300000, guid: 551fe34224dc58e439550f4afe0849e3, type: 3}
-  CreatureVisualTransform: {x: 0, y: -0.25}
+  CreatureVisualSprite: {fileID: 21300000, guid: 2941b4be9330f3548a5195b7b94fc6ac, type: 3}
+  CreatureVisualTransform: {x: 0.57, y: 0.61}
   CreatureVisualRotation: 0
-  CreatureVisualScale: {x: 1, y: 1}
-  CreatureName: 2
+  CreatureVisualScale: {x: 0.58, y: 0.58}
+  CreatureName: 6
   CreaturePrefab: {fileID: 2005331747181704781, guid: bb27ac3af91b4d44388564301ba7cdea, type: 3}
   TrackHintSprite: {fileID: 21300000, guid: fb70930b9d3c7b44cb49715585278384, type: 3}
-  TrackDugSprite: {fileID: 21300000, guid: 76872b6e3985364488640ac0552a8288, type: 3}
-  TrackDistance1Sprite: {fileID: 21300000, guid: c096bd5cced0a3641a447d51a45a3567, type: 3}
-  TrackDistance2Sprite: {fileID: 21300000, guid: 9743d6c8e8fd4824d9683414ac54299d, type: 3}
-  TrackDistance3Sprite: {fileID: 21300000, guid: 37913333fd6e88e449f8369dd6e96adc, type: 3}
+  TrackDugSprite: {fileID: 21300000, guid: 8c6ab4f787d02db4db9a96fb121f69e5, type: 3}
+  TrackDistance1Sprite: {fileID: 21300000, guid: 27e7ead5d57653c4ab520a0a2c9fb7d8, type: 3}
+  TrackDistance2Sprite: {fileID: 21300000, guid: 2cbdf39c9dc310d4387dc03878ce5b6b, type: 3}
+  TrackDistance3Sprite: {fileID: 21300000, guid: 72bf3fbaa83b8404eb5eee4a48edc965, type: 3}
   EvenRowOffsets:
   - {x: 0, y: 0}
   - {x: 1, y: 0}
+  - {x: 0, y: 1}
+  - {x: 1, y: 1}
+  - {x: 1, y: 2}
   OddRowOffsets:
   - {x: 0, y: 0}
   - {x: 1, y: 0}
+  - {x: 1, y: 1}
+  - {x: 2, y: 1}
+  - {x: 1, y: 2}

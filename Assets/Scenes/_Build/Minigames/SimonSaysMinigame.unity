@@ -377,7 +377,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e647f980e161f584ca24c1b1e365a95a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SimonSaysMinigame
-  TimeLimit: 5
+  TimeLimit: 8
   TimerText: {fileID: 1888765281}
   SimonButtons:
   - {fileID: 241856848}

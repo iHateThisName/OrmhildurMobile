@@ -59,7 +59,13 @@ public class CreatureShape : ScriptableObject
 public enum EnumCreatureName {
     None,
     BirdMan,
-    Mermaid1,
+
+    //SEA
+    BabyNenni,
+    Mermaid1, 
+    Mermaid2,
+    SeaBeast,
+    Kraki,
 
     // PlaceHolder
     Snake,

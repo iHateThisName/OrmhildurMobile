@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a74c1b0faf65c844aa06727a02a3b00, type: 3}
+  m_Name: SEA_SeaBeast
+  m_EditorClassIdentifier: Assembly-CSharp::CreatureShape
+  CreatureVisualSprite: {fileID: 21300000, guid: 0059a43e9c12ce14a9bff608eecc7655, type: 3}
+  CreatureVisualTransform: {x: 0.14, y: 0.49}
+  CreatureVisualRotation: 4.399
+  CreatureVisualScale: {x: 0.54, y: 0.54}
+  CreatureName: 5
+  CreaturePrefab: {fileID: 2005331747181704781, guid: bb27ac3af91b4d44388564301ba7cdea, type: 3}
+  TrackHintSprite: {fileID: 21300000, guid: fb70930b9d3c7b44cb49715585278384, type: 3}
+  TrackDugSprite: {fileID: 21300000, guid: 8c6ab4f787d02db4db9a96fb121f69e5, type: 3}
+  TrackDistance1Sprite: {fileID: 21300000, guid: 27e7ead5d57653c4ab520a0a2c9fb7d8, type: 3}
+  TrackDistance2Sprite: {fileID: 21300000, guid: 2cbdf39c9dc310d4387dc03878ce5b6b, type: 3}
+  TrackDistance3Sprite: {fileID: 21300000, guid: 72bf3fbaa83b8404eb5eee4a48edc965, type: 3}
+  EvenRowOffsets:
+  - {x: 0, y: 0}
+  - {x: 0, y: -1}
+  - {x: 0, y: 1}
+  - {x: 1, y: 0}
+  OddRowOffsets:
+  - {x: 0, y: 0}
+  - {x: 1, y: -1}
+  - {x: 1, y: 1}
+  - {x: 1, y: 0}

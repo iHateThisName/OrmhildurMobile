@@ -11,7 +11,7 @@ public class SimonSaysMinigame : MinigameBase
 
     [Header("Game Rules")]
     public int SequenceLength = 4;
-    public float FlashSpeed = 0.3f;
+    public float FlashSpeed = 0.5f;
 
     private List<int> currentSequence = new List<int>();
     private int playerProgressIndex = 0;
