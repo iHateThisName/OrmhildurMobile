@@ -5273,15 +5273,15 @@ MonoBehaviour:
   TreasureCount: 3
   CreaturePool:
   - Shape: {fileID: 11400000, guid: f4f28154459a10f44bc83544ab45acaa, type: 2}
-    Weight: 1
+    Weight: 3
   - Shape: {fileID: 11400000, guid: 40b9a12c5e8ada24c8a9c0bc9898b89e, type: 2}
-    Weight: 1
+    Weight: 3
   - Shape: {fileID: 11400000, guid: 45e99580640ca564fb7006fe0ad8f46b, type: 2}
-    Weight: 0
+    Weight: 3
   - Shape: {fileID: 11400000, guid: 99294b5d4588c5b4ba8c5b30c27dd95b, type: 2}
-    Weight: 0
+    Weight: 2
   - Shape: {fileID: 11400000, guid: cbc06dfb6a400bc4bb4cb37f7734592e, type: 2}
-    Weight: 0
+    Weight: 2
   - Shape: {fileID: 11400000, guid: 7fb23744e97333c46a6df8c937a005a5, type: 2}
     Weight: 0
   - Shape: {fileID: 11400000, guid: 293144bcef056b145b695cdb8f310fbe, type: 2}
@@ -5296,14 +5296,14 @@ MonoBehaviour:
   EmptyPrefab: {fileID: 3419021784060892072, guid: 45a6bf92075afbc469fb80990af75cb0, type: 3}
   TreasurePrefab: {fileID: 6186179629728210561, guid: e7639453ee77ee542a593d2c88b8968c, type: 3}
   TrackPrefab: {fileID: 2591338646484683892, guid: 664bc798abebb5847954d14d2e2cf964, type: 3}
-  StartingIcePicks: 12
+  StartingIcePicks: 15
   StartingHammers: 5
   StartingMagnifyingGlasses: 2
   TrackSpawnRules:
   - Distance: 1
     Amount: 1
   - Distance: 2
-    Amount: 2
+    Amount: 1
   - Distance: 3
     Amount: 3
 --- !u!4 &588406831
@@ -13388,7 +13388,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f55be826de8a53745addade82dc3b844, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MinigameManager
-  MinigameScenes: 0400000005000000060000000800000007000000
+  MinigameScenes: 04000000050000000600000008000000
   MinigameTextData:
   - MinigameScene: 4
     IntroText:

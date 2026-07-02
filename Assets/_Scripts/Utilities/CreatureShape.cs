@@ -41,6 +41,10 @@ public class CreatureShape : ScriptableObject
     [Tooltip("Offsets if the Anchor tile is placed on an ODD Y row (1, 3, 5)")]
     public Vector2Int[] OddRowOffsets;
 
+    [Header("Track Color")]
+    public Color trackColor = Color.white; // Defaults to RGBA (1, 1, 1, 1) - Fully opaque white
+
+
     /// <summary>
     /// Fetches the correct track sprite based on hex distance.
     /// </summary>

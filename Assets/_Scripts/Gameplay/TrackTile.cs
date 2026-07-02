@@ -46,21 +46,23 @@ public class TrackTile : TileEntityBase, IScannable
             }
 
             Sprite testSpriteToUse = fallbackDugSprite;
+            Color trackTint = Color.white; // Default fallback color
 
             // Get the distance (default to 1 if not found for some reason)
             int testDistance = 1;
             TrackDistances.TryGetValue(currentGridPos, out testDistance);
 
-            // Ask the SO for the specific sprite based on distance
+            // Ask the SO for the specific sprite and color based on distance
             if (TrackSources.TryGetValue(currentGridPos, out CreatureShape testSourceShape))
             {
                 testSpriteToUse = testSourceShape.GetTrackSpriteForDistance(testDistance, fallbackDugSprite);
+                trackTint = testSourceShape.trackColor; // Grab the color!
             }
 
             if (this.VisualRenderer != null)
             {
                 this.VisualRenderer.sprite = testSpriteToUse;
-                this.VisualRenderer.color = Color.white; // Full opacity!
+                this.VisualRenderer.color = trackTint; // Apply the custom color
             }
 
             // Exit early so we don't apply the hint visuals below
@@ -70,15 +72,21 @@ public class TrackTile : TileEntityBase, IScannable
 
         // Standard Hint Logic
         Sprite spriteToUse = fallbackHintSprite;
-        if (TrackSources.TryGetValue(currentGridPos, out CreatureShape sourceShape) && sourceShape.TrackHintSprite != null)
+        Color hintTint = Color.white; // Default fallback color
+
+        if (TrackSources.TryGetValue(currentGridPos, out CreatureShape sourceShape))
         {
-            spriteToUse = sourceShape.TrackHintSprite;
+            if (sourceShape.TrackHintSprite != null)
+            {
+                spriteToUse = sourceShape.TrackHintSprite;
+            }
+            hintTint = sourceShape.trackColor; // Grab the color!
         }
 
         if (spriteToUse != null && this.VisualRenderer != null)
         {
             this.VisualRenderer.sprite = spriteToUse;
-            this.VisualRenderer.color = Color.white;
+            this.VisualRenderer.color = hintTint; // Apply the custom color
         }
     }
 
@@ -112,19 +120,21 @@ public class TrackTile : TileEntityBase, IScannable
                 }
 
                 Sprite spriteToUse = fallbackDugSprite;
+                Color dugTint = Color.white; // Default fallback color
 
                 // Get the distance (default to 1 if missing)
                 int distance = 1;
                 TrackDistances.TryGetValue(currentGridPos, out distance);
 
-                // Fetch the tiered sprite
+                // Fetch the tiered sprite and color
                 if (TrackSources.TryGetValue(currentGridPos, out CreatureShape sourceShape))
                 {
                     spriteToUse = sourceShape.GetTrackSpriteForDistance(distance, fallbackDugSprite);
+                    dugTint = sourceShape.trackColor; // Grab the color!
                 }
 
                 this.VisualRenderer.sprite = spriteToUse;
-                this.VisualRenderer.color = Color.white; // Full opacity!
+                this.VisualRenderer.color = dugTint; // Apply the custom color
             }
             else
             {

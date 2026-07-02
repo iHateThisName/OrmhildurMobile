@@ -357,6 +357,12 @@ public class GridManager : Singleton<GridManager> {
             return hexOddOffsets;
         }
     }
+    public bool IsInBounds(Vector2Int position)
+    {
+        // Returns true only if the position is strictly within the 0 to size-1 range
+        return position.x >= 0 && position.x < size.x &&
+               position.y >= 0 && position.y < size.y;
+    }
 }
 
 [System.Serializable]
@@ -364,3 +370,5 @@ public struct Tile {
     public TileEntityBase TilePrefab;
     public Color TileColor;
 }
+
+

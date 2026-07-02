@@ -21,9 +21,9 @@ MonoBehaviour:
   CreaturePrefab: {fileID: 2005331747181704781, guid: bb27ac3af91b4d44388564301ba7cdea, type: 3}
   TrackHintSprite: {fileID: 21300000, guid: fb70930b9d3c7b44cb49715585278384, type: 3}
   TrackDugSprite: {fileID: 21300000, guid: 8c6ab4f787d02db4db9a96fb121f69e5, type: 3}
-  TrackDistance1Sprite: {fileID: 21300000, guid: e11338c034bc37541a35a47e83f9b395, type: 3}
-  TrackDistance2Sprite: {fileID: 21300000, guid: e11338c034bc37541a35a47e83f9b395, type: 3}
-  TrackDistance3Sprite: {fileID: 21300000, guid: e11338c034bc37541a35a47e83f9b395, type: 3}
+  TrackDistance1Sprite: {fileID: 21300000, guid: ddb1fd5401c928f4e8794eb2f603bde7, type: 3}
+  TrackDistance2Sprite: {fileID: 21300000, guid: 12f84454b72790a46a74f3aaa5095c38, type: 3}
+  TrackDistance3Sprite: {fileID: 21300000, guid: 75ac8311f901dcc4889ec9e6b7070435, type: 3}
   EvenRowOffsets:
   - {x: 0, y: 0}
   - {x: 1, y: 0}
@@ -36,3 +36,4 @@ MonoBehaviour:
   - {x: 1, y: 1}
   - {x: 2, y: 1}
   - {x: 1, y: 2}
+  trackColor: {r: 1, g: 1, b: 1, a: 1}
