@@ -527,7 +527,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1120140104
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -649,7 +649,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4434afcdf337144e87054b2eb5fe7a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WhackAMoleMinigame
-  TimeLimit: 10
+  TimeLimit: 20
+  isTimeOutWinConditon: 0
   ScoreToWin: 5
   MoleButtons:
   - {fileID: 1952247228}
@@ -662,13 +663,9 @@ MonoBehaviour:
   - CharacterName: Raudur
     NormalSprite: {fileID: -1768407290, guid: 3fff863375fea974baa1c857c14579aa, type: 3}
     HitSprite: {fileID: -1414206859, guid: bc5d7f8a052000a43b302f530ecc0a50, type: 3}
-    CustomSize: {x: 0, y: 0}
-    PositionalOffset: {x: 0, y: 0}
   - CharacterName: Gusti
     NormalSprite: {fileID: -1507303686, guid: 019cc784fdbb8304ca0ddabd8cb63492, type: 3}
     HitSprite: {fileID: -1692174952, guid: 1bfbaad8f28dcc149b62cfc065fca739, type: 3}
-    CustomSize: {x: 0.5, y: 0.5}
-    PositionalOffset: {x: 0, y: 100}
 --- !u!4 &1193606400
 Transform:
   m_ObjectHideFlags: 0

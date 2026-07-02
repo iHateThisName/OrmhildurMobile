@@ -137,7 +137,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &71498993
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -377,7 +377,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e647f980e161f584ca24c1b1e365a95a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SimonSaysMinigame
-  TimeLimit: 8
+  TimeLimit: 15
+  isTimeOutWinConditon: 0
   TimerText: {fileID: 1888765281}
   SimonButtons:
   - {fileID: 241856848}
