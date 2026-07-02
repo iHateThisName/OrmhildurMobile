@@ -15,7 +15,7 @@ public class StickerController : MonoBehaviour {
     private bool isStickerDisplayed = false;
     private int stickerCount = 0;
     private bool IsStickerCollected => stickerCount > 0;
-    private bool IsCorrectBiome => GameManager.GetCreatureBiome(this.creatureName) == GameManager.Instance.CurrentBiomeSelected;
+    private bool IsCorrectBiome => Helper.GetCreatureBiome(this.creatureName) == GameManager.Instance.CurrentBiomeSelected;
 
     private void OnEnable() {
         this.stickerButton.onClick.AddListener(OnClick);

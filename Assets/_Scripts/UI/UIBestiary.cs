@@ -79,7 +79,7 @@ public class UIBestiary : Singleton<UIBestiary> {
 
         //EnumBiomes oldBiome = GameManager.Instance.CurrentBiomeSelected;
         EnumBiomes currentBiomeSelected = GameManager.Instance.CurrentBiomeSelected;
-        EnumBiomes newBiome = GameManager.NextBiome(biome: currentBiomeSelected, setValue: true);
+        EnumBiomes newBiome = Helper.NextBiome(biome: currentBiomeSelected, setValue: true);
 
         this.currentImage.gameObject.SetActive(false); // Hide the old biome image
 

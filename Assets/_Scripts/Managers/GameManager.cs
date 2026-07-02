@@ -13,9 +13,6 @@ public class GameManager : RegulatorSingelton<GameManager> {
     [SerializeField] private bool DisplaySafeAreaGizmos = true;
     [SerializeField] private bool DisplayMaxAreaGizmos = true;
 
-    public static readonly List<EnumCreatureName> CliffCreatures = new List<EnumCreatureName> { EnumCreatureName.BirdMan };
-    public static readonly List<EnumCreatureName> SeaCreatures = new List<EnumCreatureName> { EnumCreatureName.Mermaid1 };
-
     protected override void Awake() {
         base.Awake();
         this.SaveData = SaveSystem.Load();
@@ -85,41 +82,6 @@ public class GameManager : RegulatorSingelton<GameManager> {
             this.SaveData.creatureSaveDataLookup[creatureName] = creatureSaveData;
         }
         return creatureSaveData;
-    }
-
-    public static EnumBiomes NextBiome(EnumBiomes biome, bool setValue = false) {
-        List<EnumBiomes> biomes = Enum.GetValues(typeof(EnumBiomes)).Cast<EnumBiomes>().Where(b => b != EnumBiomes.None).ToList();
-        EnumBiomes nextBiome;
-
-        foreach (var item in biomes) {
-            Debug.Log($"{biomes.IndexOf(item)}, {item}");
-        }
-
-        if (biome == EnumBiomes.None) nextBiome = biomes.First();
-        else if (biome == biomes.Last()) nextBiome = biomes.First();
-        else nextBiome = biomes[biomes.IndexOf(biome) + 1];
-
-        if (setValue) GameManager.Instance.CurrentBiomeSelected = nextBiome;
-        return nextBiome;
-    }
-
-    public static EnumBiomes PreviousBiome(EnumBiomes biome, bool setValue = false) {
-        List<EnumBiomes> biomes = Enum.GetValues(typeof(EnumBiomes)).Cast<EnumBiomes>().Where(b => b != EnumBiomes.None).ToList();
-        EnumBiomes previousBiome;
-
-        if (biome == EnumBiomes.None) previousBiome = biomes.Last();
-        else if (biome == biomes.First()) previousBiome = biomes.Last();
-        else previousBiome = biomes[biomes.IndexOf(biome) - 1];
-
-        if (setValue) GameManager.Instance.CurrentBiomeSelected = previousBiome;
-        return previousBiome;
-    }
-
-    public static EnumBiomes GetCreatureBiome(EnumCreatureName creatureName) {
-
-        if (CliffCreatures.Contains(creatureName)) return EnumBiomes.Cliffs;
-        else if (SeaCreatures.Contains(creatureName)) return EnumBiomes.Sea;
-        else return EnumBiomes.None;
     }
 
     [ContextMenu("Increase Test Score")]

@@ -22,8 +22,10 @@ public class PlayerMoverFallingObjects : MonoBehaviour, IPointerDownHandler, IDr
     private RectTransform walkableRectTransform;
 
     private Camera cam;
+
     private Sequence walkSequence;
     private Sequence idleSequence;
+
     [SerializeField, ReadOnly] private bool isFacingRight;
     private readonly float walkCycleAnimationSpeed = 0.1f;
 
@@ -49,8 +51,9 @@ public class PlayerMoverFallingObjects : MonoBehaviour, IPointerDownHandler, IDr
         Image reference = this.miniGameController.CurrentCharacterSprite.ImageRefrence;
         Sprite[] walkSprite = this.miniGameController.CurrentCharacterSprite.WalkCycle;
         reference.transform.localScale = this.miniGameController.CurrentCharacterSprite.WalkCycleScale;
-        this.walkSequence = MinigameBase.CreateSequenceCycle(reference, walkSprite, this.walkCycleAnimationSpeed);
-        this.idleSequence = MinigameBase.CreateSequenceCycle(reference, this.miniGameController.CurrentCharacterSprite.IdleCycleSprite, this.walkCycleAnimationSpeed);
+
+        this.walkSequence = Helper.CreateSequenceCycle(reference, walkSprite, this.walkCycleAnimationSpeed);
+        this.idleSequence = Helper.CreateSequenceCycle(reference, this.miniGameController.CurrentCharacterSprite.IdleCycleSprite, this.walkCycleAnimationSpeed);
 
         this.isFacingRight = this.miniGameController.CurrentCharacterSprite.isWalkCycleFacingRight;
     }
