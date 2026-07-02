@@ -12933,7 +12933,7 @@ MonoBehaviour:
   AutoUnparentOnAwake: 1
   <SaveData>k__BackingField:
     score: 0
-  <CurrentBiomeSelected>k__BackingField: 1
+  <CurrentBiomeSelected>k__BackingField: 2
   DisplaySafeAreaGizmos: 0
   DisplayMaxAreaGizmos: 0
 --- !u!1001 &1535619422
