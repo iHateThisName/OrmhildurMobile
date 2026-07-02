@@ -666,6 +666,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TapToWinMinigame
   TimeLimit: 5
+  isTimeOutWinConditon: 0
   TimerText: {fileID: 260201290}
   TapCountText: {fileID: 902738878}
   MashButton: {fileID: 1973069289}

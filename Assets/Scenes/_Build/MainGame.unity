@@ -5269,19 +5269,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelSpawner
   TotalCreaturesToSpawn: 2
-  MinigameCount: 5
+  MinigameCount: 4
   TreasureCount: 3
   CreaturePool:
   - Shape: {fileID: 11400000, guid: f4f28154459a10f44bc83544ab45acaa, type: 2}
-    Weight: 2
+    Weight: 1
   - Shape: {fileID: 11400000, guid: 40b9a12c5e8ada24c8a9c0bc9898b89e, type: 2}
-    Weight: 2
+    Weight: 1
   - Shape: {fileID: 11400000, guid: 45e99580640ca564fb7006fe0ad8f46b, type: 2}
-    Weight: 2
+    Weight: 0
   - Shape: {fileID: 11400000, guid: 99294b5d4588c5b4ba8c5b30c27dd95b, type: 2}
-    Weight: 2
+    Weight: 0
   - Shape: {fileID: 11400000, guid: cbc06dfb6a400bc4bb4cb37f7734592e, type: 2}
-    Weight: 2
+    Weight: 0
   - Shape: {fileID: 11400000, guid: 7fb23744e97333c46a6df8c937a005a5, type: 2}
     Weight: 0
   - Shape: {fileID: 11400000, guid: 293144bcef056b145b695cdb8f310fbe, type: 2}
@@ -13388,7 +13388,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f55be826de8a53745addade82dc3b844, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MinigameManager
-  MinigameScenes: 04000000050000000600000008000000
+  MinigameScenes: 0400000005000000060000000800000007000000
   MinigameTextData:
   - MinigameScene: 4
     IntroText:
@@ -13475,6 +13475,34 @@ MonoBehaviour:
       m_WaitForCompletion: 0
       m_LocalVariables: []
   - MinigameScene: 8
+    IntroText:
+      m_TableReference:
+        m_TableCollectionName: GUID:cae44e0ee1a1a8f46a968ec737ca0764
+      m_TableEntryReference:
+        m_KeyId: 8285818195853312
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    WinText:
+      m_TableReference:
+        m_TableCollectionName: GUID:cae44e0ee1a1a8f46a968ec737ca0764
+      m_TableEntryReference:
+        m_KeyId: 8285929659482112
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+    LossText:
+      m_TableReference:
+        m_TableCollectionName: GUID:cae44e0ee1a1a8f46a968ec737ca0764
+      m_TableEntryReference:
+        m_KeyId: 8286039416029184
+        m_Key: 
+      m_FallbackState: 0
+      m_WaitForCompletion: 0
+      m_LocalVariables: []
+  - MinigameScene: 7
     IntroText:
       m_TableReference:
         m_TableCollectionName: GUID:cae44e0ee1a1a8f46a968ec737ca0764

@@ -114,7 +114,7 @@ MonoBehaviour:
   audioSource: {fileID: 942360492368614589}
   digClip: {fileID: 8300000, guid: 6ce9d44d53aaf8543b47a63e512b735d, type: 3}
   emptyScannedSprite: {fileID: 21300000, guid: 2e0ebf76889fa77468542da9911e0b8b, type: 3}
-  defaultSprite: {fileID: 21300000, guid: 271b23ab5c8667f44b95debcbcc0437f, type: 3}
+  defaultSprite: {fileID: 21300000, guid: 5ce4083a7158e20498a39754f95b4d43, type: 3}
 --- !u!82 &942360492368614589
 AudioSource:
   m_ObjectHideFlags: 0
