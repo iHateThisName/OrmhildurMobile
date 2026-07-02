@@ -101,6 +101,7 @@ public class LevelSpawner : Singleton<LevelSpawner>
                 bool CanFitPerfectly = true;
                 List<Vector2Int> TargetPositions = new List<Vector2Int>();
 
+                // Check if the body fits
                 foreach (Vector2Int Offset in OffsetsToUse)
                 {
                     Vector2Int CheckPos = AnchorPos + Offset;
@@ -115,39 +116,60 @@ public class LevelSpawner : Singleton<LevelSpawner>
 
                 if (CanFitPerfectly)
                 {
-                    IsPlaced = true;
+                    // --- NEW LOGIC: Test the tracks virtually BEFORE committing to the grid ---
+                    Dictionary<Vector2Int, int> calculatedTracks;
+                    bool tracksSucceeded = TryCalculateTracks(TargetPositions, availablePool, out calculatedTracks);
 
-                    // Lock down the exact creature tiles
-                    foreach (Vector2Int Pos in TargetPositions)
+                    if (tracksSucceeded)
                     {
-                        PlaceTileOnGrid(Pos, ShapeTemplate.CreaturePrefab);
-                        availablePool.Remove(Pos);
-                        RestrictedZones.Add(Pos);
+                        IsPlaced = true;
+
+                        // 1. Commit the Creature Body to the Grid
+                        foreach (Vector2Int Pos in TargetPositions)
+                        {
+                            PlaceTileOnGrid(Pos, ShapeTemplate.CreaturePrefab);
+                            availablePool.Remove(Pos);
+                            RestrictedZones.Add(Pos);
+                        }
+
+                        CreatureTracker.Instance.RegisterNewCreature(ShapeTemplate, TargetPositions);
+                        RegisterCreatureAnchorPosition(AnchorPos, ShapeTemplate);
+
+                        // 2. Commit the Tracks to the Grid
+                        foreach (var kvp in calculatedTracks)
+                        {
+                            Vector2Int trackPos = kvp.Key;
+                            int trackTier = kvp.Value;
+
+                            PlaceTileOnGrid(trackPos, TrackPrefab);
+
+                            TrackTile.TrackDistances[trackPos] = trackTier;
+                            TrackTile.TrackSources[trackPos] = ShapeTemplate;
+
+                            availablePool.Remove(trackPos);
+                            RestrictedZones.Add(trackPos);
+                        }
+
+                        // 3. Tally and break the loop to move to the next creature
+                        if (SpawnTally.ContainsKey(PickedData))
+                        {
+                            SpawnTally[PickedData]++;
+                        }
+                        else
+                        {
+                            SpawnTally[PickedData] = 1;
+                        }
+
+                        tempCreaturePool.Remove(PickedData);
+                        break;
                     }
-
-                    CreatureTracker.Instance.RegisterNewCreature(ShapeTemplate, TargetPositions);
-                    RegisterCreatureAnchorPosition(AnchorPos, ShapeTemplate);
-
-                    // Spawn tracks. (The 1-hex buffer restriction loop has been removed below this).
-                    SpawnTracksForCreature(TargetPositions, availablePool, ShapeTemplate);
-
-                    if (SpawnTally.ContainsKey(PickedData))
-                    {
-                        SpawnTally[PickedData]++;
-                    }
-                    else
-                    {
-                        SpawnTally[PickedData] = 1;
-                    }
-
-                    tempCreaturePool.Remove(PickedData);
-                    break;
+                    // If tracksSucceeded is false, the loop simply continues and tries the next AnchorPos!
                 }
             }
 
             if (!IsPlaced)
             {
-                Debug.LogWarning($"Grid too crowded! Could not fit a {ShapeTemplate.CreatureName}.");
+                Debug.LogWarning($"Grid too crowded! Could not find a valid body AND track combination for {ShapeTemplate.CreatureName}.");
             }
         }
 
@@ -157,9 +179,15 @@ public class LevelSpawner : Singleton<LevelSpawner>
         PrintSpawnSummary(SpawnTally, originalTotalWeight);
     }
 
-    private void SpawnTracksForCreature(List<Vector2Int> creatureOccupiedTiles, List<Vector2Int> availablePool, CreatureShape creatureSource)
+    /// <summary>
+    /// Calculates the tracks virtually. Returns true if a path is found, outputting the path dictionary. 
+    /// Does NOT place anything on the physical grid.
+    /// </summary>
+    private bool TryCalculateTracks(List<Vector2Int> creatureOccupiedTiles, List<Vector2Int> availablePool, out Dictionary<Vector2Int, int> proposedTracks)
     {
-        if (TrackSpawnRules == null || TrackSpawnRules.Count == 0) return;
+        proposedTracks = new Dictionary<Vector2Int, int>();
+
+        if (TrackSpawnRules == null || TrackSpawnRules.Count == 0) return true; // No rules = instant success
 
         // 1. BFS mapping to get absolute true distances from the creature's footprint
         Dictionary<int, List<Vector2Int>> validSpotsByDistance = new Dictionary<int, List<Vector2Int>>();
@@ -188,6 +216,8 @@ public class LevelSpawner : Singleton<LevelSpawner>
                         visited.Add(absoluteNeighbor);
                         nextRing.Add(absoluteNeighbor);
 
+                        // Because the creature body hasn't been removed from availablePool yet, it's technically still there.
+                        // The `visited` hashset prevents us from putting tracks ON the creature body.
                         if (availablePool.Contains(absoluteNeighbor) && !RestrictedZones.Contains(absoluteNeighbor))
                         {
                             validSpotsByDistance[currentDistance].Add(absoluteNeighbor);
@@ -201,16 +231,12 @@ public class LevelSpawner : Singleton<LevelSpawner>
 
         // 2. Flatten track rules into a sequence for DFS Backtracking (The "Snake" Approach)
         var sortedRules = TrackSpawnRules.OrderBy(r => r.Distance).ToList();
-
-        // Tuple structure: (Requires specific map distance, The target distance, The visual tier to assign)
         List<(bool requiresSpecificDistance, int targetDistance, int visualTier)> trackSequence = new List<(bool, int, int)>();
 
         foreach (var rule in sortedRules)
         {
             for (int i = 0; i < rule.Amount; i++)
             {
-                // Only the FIRST track of a specific distance rule is strictly bound to that exact geographic ring.
-                // Subsequent tracks (the "tail") drop the geographic rule and just act as a snake extension.
                 bool isFirst = (i == 0);
                 trackSequence.Add((isFirst, rule.Distance, rule.Distance));
             }
@@ -219,10 +245,9 @@ public class LevelSpawner : Singleton<LevelSpawner>
         List<Vector2Int> finalPath = new List<Vector2Int>();
         Dictionary<Vector2Int, int> finalDistances = new Dictionary<Vector2Int, int>();
 
-        // 3. Local Recursive DFS Function (Self-Avoiding Walk)
+        // 3. Local Recursive DFS Function
         bool FindPath(int currentIndex, List<Vector2Int> currentPath, Dictionary<Vector2Int, int> currentDistances)
         {
-            // Base case: Sequence complete, path is valid!
             if (currentIndex >= trackSequence.Count)
             {
                 finalPath = new List<Vector2Int>(currentPath);
@@ -233,7 +258,7 @@ public class LevelSpawner : Singleton<LevelSpawner>
             var req = trackSequence[currentIndex];
             bool requiresSpecificDistance = req.requiresSpecificDistance;
             int targetDistance = req.targetDistance;
-            int visualTier = req.visualTier; // Keeps the sprite looking like a Dist 3 track, even if it snakes into Dist 4 or 5
+            int visualTier = req.visualTier;
 
             List<Vector2Int> candidatePool;
 
@@ -247,9 +272,11 @@ public class LevelSpawner : Singleton<LevelSpawner>
             }
             else
             {
-                // "Tail" mode: Can be anywhere on the available board as long as it isn't blocked
+                // Must ensure "Tail" spots don't accidentally fall ON the currently testing creature body
                 candidatePool = availablePool
-                    .Where(p => !currentPath.Contains(p) && !RestrictedZones.Contains(p))
+                    .Where(p => !currentPath.Contains(p)
+                             && !RestrictedZones.Contains(p)
+                             && !creatureOccupiedTiles.Contains(p))
                     .OrderBy(x => Random.value)
                     .ToList();
             }
@@ -262,11 +289,9 @@ public class LevelSpawner : Singleton<LevelSpawner>
                 {
                     Vector2Int prevSpot = currentPath[currentIndex - 1];
 
-                    // Rule A: Must physically touch the previous track in the sequence
                     bool touchesPrev = IsAdjacentToAny(spot, new List<Vector2Int> { prevSpot });
                     if (!touchesPrev) isValid = false;
 
-                    // Rule B: Must NOT touch any older tracks in the sequence (Prevents looping and clumping)
                     if (isValid && currentIndex >= 2)
                     {
                         List<Vector2Int> olderTracks = currentPath.GetRange(0, currentIndex - 1);
@@ -279,17 +304,14 @@ public class LevelSpawner : Singleton<LevelSpawner>
 
                 if (isValid)
                 {
-                    // Apply candidate state
                     currentPath.Add(spot);
                     currentDistances[spot] = visualTier;
 
-                    // Dig deeper
                     if (FindPath(currentIndex + 1, currentPath, currentDistances))
                     {
                         return true;
                     }
 
-                    // Backtrack if we hit a dead end
                     currentPath.RemoveAt(currentPath.Count - 1);
                     currentDistances.Remove(spot);
                 }
@@ -301,24 +323,14 @@ public class LevelSpawner : Singleton<LevelSpawner>
         // 4. Start DFS
         bool success = FindPath(0, new List<Vector2Int>(), new Dictionary<Vector2Int, int>());
 
-        // 5. Commit Path to Grid
+        // 5. Output Result
         if (success)
         {
-            foreach (Vector2Int pos in finalPath)
-            {
-                PlaceTileOnGrid(pos, TrackPrefab);
-
-                TrackTile.TrackDistances[pos] = finalDistances[pos];
-                TrackTile.TrackSources[pos] = creatureSource;
-
-                availablePool.Remove(pos);
-                RestrictedZones.Add(pos);
-            }
+            proposedTracks = finalDistances;
+            return true;
         }
-        else
-        {
-            Debug.LogWarning($"Grid Cramped: DFS Backtracking could not find a valid {trackSequence.Count}-length path for {creatureSource.CreatureName}.");
-        }
+
+        return false;
     }
 
     private void RegisterCreatureAnchorPosition(Vector2Int anchorPos, CreatureShape creatureInformation)
