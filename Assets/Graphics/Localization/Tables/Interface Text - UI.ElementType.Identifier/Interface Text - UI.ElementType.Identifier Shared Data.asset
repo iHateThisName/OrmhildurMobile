@@ -101,6 +101,18 @@ MonoBehaviour:
     m_Key: UI.DirtWiper.Loss
     m_Metadata:
       m_Items: []
+  - m_Id: 9000539777712128
+    m_Key: UI.FallingObjects.Intro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9000696678236160
+    m_Key: UI.FallingObjects.Win
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9000758657466368
+    m_Key: UI.FallingObjects.Loss
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

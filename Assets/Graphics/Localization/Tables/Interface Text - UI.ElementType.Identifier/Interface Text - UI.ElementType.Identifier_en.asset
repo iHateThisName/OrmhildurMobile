@@ -114,6 +114,22 @@ MonoBehaviour:
       -2'
     m_Metadata:
       m_Items: []
+  - m_Id: 9000539777712128
+    m_Localized: Don't get hit!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9000696678236160
+    m_Localized: 'You made it!
+
+      +2'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9000758657466368
+    m_Localized: 'Ouch!
+
+      -2'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
