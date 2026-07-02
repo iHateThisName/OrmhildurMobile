@@ -13,6 +13,8 @@ public class StickerController : MonoBehaviour {
 
     private Vector2 defaulttickerScale;
     private bool isStickerDisplayed = false;
+    private bool isStickerAnimationPlaying = false;
+    public static EnumCreatureName CurrentStickerSelected { get; private set; } = EnumCreatureName.None;
     private int stickerCount = 0;
     private bool IsStickerCollected => stickerCount > 0;
     private bool IsCorrectBiome => Helper.GetCreatureBiome(this.creatureName) == GameManager.Instance.CurrentBiomeSelected;
@@ -52,10 +54,18 @@ public class StickerController : MonoBehaviour {
     [Button]
     public void DisplayStickerWithAnimation() {
         DisplaySticker();
+        PlayStickerAnimation();
+    }
+
+    public void PlayStickerAnimation() {
+        float scalePower = defaulttickerScale.x * 1.5f;
 
         this.stickerCreatuerGameObject.transform.DOLocalJump(new Vector3(0, 0, 0), .25f, 1, 0.5f).SetEase(Ease.OutBounce).OnComplete(() => {
-            this.stickerCreatuerGameObject.transform.DOScale(new Vector3(1.5f, 1.5f, 1), 2f).SetEase(Ease.InSine).SetLoops(-1, LoopType.Yoyo);
+            this.stickerCreatuerGameObject.transform.DOScale(new Vector3(scalePower, scalePower, 1), 2f).SetEase(Ease.InSine).SetLoops(-1, LoopType.Yoyo);
         });
+
+        this.isStickerAnimationPlaying = true;
+        CurrentStickerSelected = this.creatureName;
     }
 
     private void DisplaySticker() {
@@ -84,6 +94,9 @@ public class StickerController : MonoBehaviour {
         // Disable sticker effect and animations
         this.stickerCreatuerGameObject.transform.DOKill(false); // stop all tweens.
         this.stickerCreatuerGameObject.transform.localScale = this.defaulttickerScale;
+
+        this.isStickerAnimationPlaying = false;
+        CurrentStickerSelected = EnumCreatureName.None;
     }
 
     public void DisableSticker() {
@@ -101,10 +114,15 @@ public class StickerController : MonoBehaviour {
             return;
         }
 
-        if (!this.isStickerDisplayed) {
-            DisplayStickerWithAnimation();
+        if (CurrentStickerSelected != EnumCreatureName.None && CurrentStickerSelected != this.creatureName) {
+            // TODO:Another sticker is already selected, disable its animation and play this one instead
+            return;
+        }
+
+        if (this.isStickerAnimationPlaying) {
+            DisableStickerAnimation();
         } else {
-            HideSticker();
+            PlayStickerAnimation();
         }
 
         UIBestiary.Instance.DisplayCreatureDetails(this.creatureName, this.isStickerDisplayed);

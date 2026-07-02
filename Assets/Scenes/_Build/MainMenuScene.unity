@@ -686,6 +686,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   AutoUnparentOnAwake: 1
+  <SaveData>k__BackingField:
+    score: 0
+  <CurrentBiomeSelected>k__BackingField: 2
+  DisplaySafeAreaGizmos: 1
+  DisplayMaxAreaGizmos: 1
 --- !u!1 &650857833
 GameObject:
   m_ObjectHideFlags: 0
@@ -1240,7 +1245,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 58.45
+  m_fontSize: 72
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1

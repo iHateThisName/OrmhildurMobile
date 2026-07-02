@@ -8,7 +8,7 @@ using UnityEngine;
 [DefaultExecutionOrder(-10)]
 public class GameManager : RegulatorSingelton<GameManager> {
     [field: SerializeField, ReadOnly] public SaveData SaveData { get; private set; }
-    [field: SerializeField] public EnumBiomes CurrentBiomeSelected { get; set; } = EnumBiomes.Cliffs;
+    [field: SerializeField] public EnumBiomes CurrentBiomeSelected { get; set; } = EnumBiomes.Sea;
 
     [SerializeField] private bool DisplaySafeAreaGizmos = true;
     [SerializeField] private bool DisplayMaxAreaGizmos = true;
@@ -100,5 +100,14 @@ public class GameManager : RegulatorSingelton<GameManager> {
         creatureSaveDatas.ForEach(data => {
             Debug.Log($"Creature: {data.creatureName}, Amount: {data.amount}");
         });
+    }
+
+    [Button, ContextMenu("Debug Increase All Creature Amounts")]
+    public void DebugOneOfAllCreatureAmountIncrease() {
+        foreach (EnumCreatureName creatureName in Enum.GetValues(typeof(EnumCreatureName))) {
+            CreatureSaveData creatureData = GetCreatureSaveData(creatureName);
+            creatureData.amount++;
+            Debug.Log($"Increased {creatureName} amount to: {creatureData.amount}");
+        }
     }
 }
