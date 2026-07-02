@@ -18,10 +18,15 @@ public static class Helper {
         EnumCreatureName.BabyNenni, EnumCreatureName.Mermaid1, EnumCreatureName.Mermaid2, EnumCreatureName.SeaBeast, EnumCreatureName.Kraki
     };
 
+    public static readonly List<EnumCreatureName> ForestCreatures = new List<EnumCreatureName> {
+        EnumCreatureName.BearKing, EnumCreatureName.Finngalkn, EnumCreatureName.NaddiGreen, EnumCreatureName.NaddiGray, EnumCreatureName.Raven
+    };
+
     public static EnumBiomes GetCreatureBiome(EnumCreatureName creatureName) {
 
         if (CliffCreatures.Contains(creatureName)) return EnumBiomes.Cliffs;
         else if (SeaCreatures.Contains(creatureName)) return EnumBiomes.Sea;
+        else if (ForestCreatures.Contains(creatureName)) return EnumBiomes.Forest;
         else return EnumBiomes.None;
     }
 
