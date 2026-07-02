@@ -31,7 +31,11 @@ public class FallingObjectsMiniGame : MinigameBase {
     [field:SerializeField, ReadOnly] public CharaterSprite CurrentCharacterSprite { get; private set; }
     [SerializeField] private List<CharaterSprite> characterSprites = new List<CharaterSprite>();
 
-    private void Start() {
+    public bool isHit { get; private set; } = false;
+
+    public override void Start() {
+        base.Start();
+
         this.isTimeOutWinConditon = true;
 
         if (this.playerMover == null) {
@@ -124,6 +128,7 @@ public class FallingObjectsMiniGame : MinigameBase {
     }
 
     public void OnFallingObjectHitPlayer() {
+        this.isHit = true;
         Debug.Log("Falling object hit player!");
         Image imageRefrence = this.CurrentCharacterSprite.ImageRefrence;
         imageRefrence.transform.localScale = this.CurrentCharacterSprite.HitSpriteScale;

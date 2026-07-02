@@ -2,6 +2,7 @@ using DG.Tweening;
 using Gaskellgames;
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public abstract class MinigameBase : MonoBehaviour
@@ -18,6 +19,10 @@ public abstract class MinigameBase : MonoBehaviour
     {
         timeRemaining = TimeLimit;
         isPlaying = true;
+    }
+
+    public virtual void Start() {
+        DisableRoot();
     }
 
     protected virtual void Update()
@@ -64,5 +69,13 @@ public abstract class MinigameBase : MonoBehaviour
 
         sequence.SetLoops(-1);
         return sequence;
+    }
+
+    private void DisableRoot() {
+        if (SceneManager.sceneCount > 1) {
+            this.transform.root.gameObject.SetActive(false);
+        } else {
+            this.transform.root.gameObject.SetActive(true);
+        }
     }
 }

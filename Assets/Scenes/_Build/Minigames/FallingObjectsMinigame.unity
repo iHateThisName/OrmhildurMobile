@@ -261,7 +261,7 @@ GameObject:
   m_Component:
   - component: {fileID: 359468152}
   - component: {fileID: 359468151}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FallingObjectsMiniGame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -280,7 +280,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd855c7dd7fe0b8418f143f87b4c2bf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FallingObjectsMiniGame
-  TimeLimit: 60
+  TimeLimit: 20
   isTimeOutWinConditon: 0
   catchY: -3
   fallDuration: 5
@@ -356,7 +356,7 @@ GameObject:
   - component: {fileID: 684239058}
   - component: {fileID: 684239057}
   - component: {fileID: 684239056}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: EventSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -434,7 +434,7 @@ GameObject:
   m_Component:
   - component: {fileID: 825153008}
   - component: {fileID: 825153009}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -839,7 +839,7 @@ GameObject:
   - component: {fileID: 1796688803}
   - component: {fileID: 1796688802}
   - component: {fileID: 1796688800}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: MiniGameCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1156,7 +1156,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1984054042}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Managers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
